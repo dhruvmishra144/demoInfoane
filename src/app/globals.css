@@ -1,0 +1,279 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Design tokens.
+
+   Palette is taken from the Infoane logo: a bright cyan-blue highlight running
+   into a deep navy, on white. Tailwind v4 reads this block and generates the
+   matching utilities, so `bg-brand-600` / `text-ink-500` all come from here —
+   change a hex and the whole site follows.
+--------------------------------------------------------------------------- */
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* Blue: 500 is the logo highlight, 700–950 the dark end of its gradient. */
+  --color-brand-50: #eff7ff;
+  --color-brand-100: #dbedfe;
+  --color-brand-200: #bfe0fd;
+  --color-brand-300: #8ccdfb;
+  --color-brand-400: #4fb2f5;
+  --color-brand-500: #1e97e5;
+  --color-brand-600: #0f79c6;
+  --color-brand-700: #0d61a1;
+  --color-brand-800: #114f80;
+  --color-brand-900: #123f66;
+  --color-brand-950: #0a2540;
+
+  /* Cool, blue-tinted neutrals so greys never read warm next to the blue. */
+  --color-ink-50: #f6f9fc;
+  --color-ink-100: #eef3f8;
+  --color-ink-200: #dde5ef;
+  --color-ink-300: #c2cede;
+  --color-ink-400: #8f9fb5;
+  --color-ink-500: #697b95;
+  --color-ink-600: #4e6079;
+  --color-ink-700: #38485e;
+  --color-ink-800: #22303f;
+  --color-ink-900: #14202c;
+  --color-ink-950: #0a141d;
+
+  --radius-4xl: 2rem;
+  --radius-5xl: 2.5rem;
+
+  /* Shared motion curve — an ease-out expo, matching the reference site's feel. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Anchor links land below the floating header instead of under it. */
+    scroll-padding-top: 7rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink-50);
+    color: var(--color-ink-700);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink-900);
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary {
+    list-style: none;
+    cursor: pointer;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Layout
+
+   Everything on the site — including the header and the full-width dark
+   sections — sits inside this container. Wide sections are rendered as rounded
+   cards within it rather than bleeding to the viewport edge.
+--------------------------------------------------------------------------- */
+@utility container-x {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 88rem; /* 1408px */
+  padding-inline: 1.25rem;
+
+  @media (width >= 768px) {
+    padding-inline: 2rem;
+  }
+
+  @media (width >= 1280px) {
+    padding-inline: 3rem;
+  }
+}
+
+/* Inner measure for centred copy blocks. */
+@utility measure {
+  max-width: 42rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Surfaces
+--------------------------------------------------------------------------- */
+
+/* Soft blue glow behind hero and dark panels. */
+@utility mesh {
+  background-image:
+    radial-gradient(55rem 28rem at 12% -10%, rgba(30, 151, 229, 0.45), transparent 60%),
+    radial-gradient(42rem 24rem at 88% 4%, rgba(79, 178, 245, 0.3), transparent 55%),
+    radial-gradient(38rem 38rem at 50% 115%, rgba(13, 97, 161, 0.5), transparent 60%);
+}
+
+/* Very light page-level wash used behind white cards. */
+@utility mesh-light {
+  background-image:
+    radial-gradient(50rem 26rem at 10% -5%, rgba(30, 151, 229, 0.1), transparent 60%),
+    radial-gradient(40rem 22rem at 90% 0%, rgba(79, 178, 245, 0.08), transparent 55%);
+}
+
+/* Fine grid, decorative, used inside dark panels. */
+@utility grid-lines {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* Gradient text using the logo's blue ramp. */
+@utility text-gradient {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-brand-400),
+    var(--color-brand-600) 45%,
+    var(--color-brand-800)
+  );
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   Motion
+
+   Scroll reveals are driven by a `data-reveal` attribute that an
+   IntersectionObserver flips to `data-reveal="in"` (see ui/Reveal.tsx). Doing it
+   with attributes rather than inline styles keeps the animation definition here
+   in CSS, and keeps the whole thing inert for reduced-motion users.
+--------------------------------------------------------------------------- */
+/* The whole reveal system is gated behind `scripting: enabled`.
+
+   Only JavaScript can flip an element to `data-reveal="in"`, so if scripting is
+   unavailable these rules must not apply — otherwise the content would sit at
+   opacity 0 forever. Browsers that do not support the media feature also skip
+   the block, which fails in the safe direction: content visible, unanimated. */
+@media (scripting: enabled) {
+  @layer utilities {
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(1.5rem);
+      transition:
+        opacity 0.75s var(--ease-out-expo),
+        transform 0.75s var(--ease-out-expo);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    [data-reveal="in"] {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Slide-in variants for side-by-side blocks. */
+    [data-reveal-x="left"] {
+      transform: translateX(-1.5rem);
+    }
+    [data-reveal-x="right"] {
+      transform: translateX(1.5rem);
+    }
+    [data-reveal="in"][data-reveal-x] {
+      transform: none;
+    }
+
+    /* Scale-in for large media cards. */
+    [data-reveal-scale] {
+      transform: translateY(2rem) scale(0.97);
+    }
+    [data-reveal="in"][data-reveal-scale] {
+      transform: none;
+    }
+  }
+}
+
+/* Continuous, decorative float on the hero's stacked cards. */
+@utility float-slow {
+  animation: float 7s ease-in-out infinite;
+}
+@utility float-slower {
+  animation: float 9s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.75rem);
+  }
+}
+
+/* Logo marquee. The track holds two copies of the list, so translating it by
+   -50% loops seamlessly. */
+@utility marquee-track {
+  animation: marquee 38s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Accordion open/close. `grid-template-rows: 0fr → 1fr` animates to the
+   content's natural height without JavaScript measuring it. */
+@utility accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--ease-out-expo);
+}
+details[open] .accordion-panel {
+  grid-template-rows: 1fr;
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion: everything decorative stops, and every revealed element is
+   shown immediately so no content can be trapped behind an animation.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

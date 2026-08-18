@@ -1,0 +1,74 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "infotech-website",
+  "main": ".open-next/worker.js",
+  // nodejs_compat is mandatory for the OpenNext adapter; the date must be
+  // 2024-09-23 or later for it to take effect.
+  "compatibility_date": "2026-08-18",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+
+  "d1_databases": [
+    {
+      // Site content, users, sessions and the audit log.
+      "binding": "DB",
+      "database_name": "infotech-content",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "drizzle/migrations"
+    },
+    {
+      // Next.js tag cache — powers revalidateTag()/revalidatePath() so that
+      // publishing in the admin panel refreshes only the affected pages.
+      // Kept in its own database: the adapter manages these tables itself and
+      // they should not sit next to application tables.
+      "binding": "NEXT_TAG_CACHE_D1",
+      "database_name": "infotech-next-cache",
+      "database_id": "REPLACE_WITH_CACHE_D1_DATABASE_ID"
+    }
+  ],
+
+  "r2_buckets": [
+    {
+      // Incremental cache: the rendered HTML/RSC payloads for ISR pages.
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",
+      "bucket_name": "infotech-next-cache"
+    },
+    {
+      // Editor uploads (logos, team photos, case study imagery). Files go here,
+      // never into D1 — D1 has a 1 MB row limit and mishandles BLOBs on export.
+      "binding": "MEDIA",
+      "bucket_name": "infotech-media"
+    }
+  ],
+
+  // Required by the incremental cache so the Worker can call back into itself
+  // when regenerating a page.
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "infotech-website"
+    }
+  ],
+
+  // Durable Object queue for time-based revalidation.
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "NEXT_CACHE_DO_QUEUE",
+        "class_name": "DOQueueHandler"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["DOQueueHandler"]
+    }
+  ]
+}
