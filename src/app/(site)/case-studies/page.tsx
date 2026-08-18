@@ -10,6 +10,7 @@ import { routes, serviceHref } from "@/lib/routes";
 import { caseStudiesPage } from "@/content/pages";
 import { caseStudies } from "@/content/home";
 import { servicePages } from "@/content/services";
+import { testimonialFallback } from "@/server/content/static-fallback";
 
 export const metadata: Metadata = {
   title: caseStudiesPage.metaTitle,
@@ -91,7 +92,7 @@ export default function CaseStudiesPage() {
         </p>
       </Section>
 
-      <Testimonials />
+      <Testimonials testimonials={testimonialFallback} />
 
       <Section
         id="services-behind"

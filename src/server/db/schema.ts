@@ -118,6 +118,8 @@ export const COLLECTIONS = [
   "engagementModel",
   "page",
   "settings",
+  "process",
+  "techStack",
 ] as const;
 export type Collection = (typeof COLLECTIONS)[number];
 

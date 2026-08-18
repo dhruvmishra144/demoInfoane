@@ -1,8 +1,10 @@
 import { Button } from "../ui/Button";
 import { Reveal } from "../ui/Reveal";
 import { icons } from "../ui/Icons";
-import { techStack } from "@/content/home";
 import { routes } from "@/lib/routes";
+import type { CollectionData } from "@/server/content/schemas";
+
+type TechStackGroup = CollectionData["techStack"] & { slug: string };
 
 /**
  * "Works with your stack" — the reference design's integrations block.
@@ -11,7 +13,7 @@ import { routes } from "@/lib/routes";
  * "[technology] development company" far more often than for generic terms, and
  * the chips are real text, so those words are indexable.
  */
-export function TechStack() {
+export function TechStack({ techStack }: { techStack: TechStackGroup[] }) {
   const chips = techStack.flatMap((group) => group.items).slice(0, 16);
 
   return (

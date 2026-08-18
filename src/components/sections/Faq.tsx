@@ -1,7 +1,9 @@
 import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
-import { faqs } from "@/content/home";
 import { routes } from "@/lib/routes";
+import type { CollectionData } from "@/server/content/schemas";
+
+type FaqItem = CollectionData["faq"] & { slug: string };
 
 /**
  * FAQ in the reference design's two-column layout: heading and CTA on the left,
@@ -13,7 +15,7 @@ import { routes } from "@/lib/routes";
  * in AI answers. The open/close height animation is the CSS grid-rows trick, so
  * nothing measures the DOM at runtime.
  */
-export function Faq() {
+export function Faq({ faqs }: { faqs: FaqItem[] }) {
   return (
     <section
       id="faq"
@@ -53,7 +55,7 @@ export function Faq() {
 
           <div className="space-y-3">
             {faqs.map((faq, index) => (
-              <Reveal key={faq.question} delay={index * 60}>
+              <Reveal key={faq.slug} delay={index * 60}>
                 <details className="group rounded-3xl border border-ink-200 bg-white px-6 transition-colors duration-300 hover:border-brand-200 open:border-brand-200 open:shadow-lg open:shadow-brand-950/5">
                   <summary className="flex items-start justify-between gap-6 py-5 text-left">
                     <h3 className="text-base font-semibold text-ink-900">

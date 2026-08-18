@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { icons } from "./ui/Icons";
-import { site } from "@/config/site";
 
 /**
  * Enquiry form.
@@ -17,7 +16,13 @@ import { site } from "@/config/site";
  * one — the markup and validation can stay exactly as they are. See
  * CONTENT-TODO.md.
  */
-export function EnquiryForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
+export function EnquiryForm({
+  tone = "dark",
+  contactEmail,
+}: {
+  tone?: "dark" | "light";
+  contactEmail: string;
+}) {
   const [sent, setSent] = useState(false);
   const dark = tone === "dark";
 
@@ -31,7 +36,7 @@ export function EnquiryForm({ tone = "dark" }: { tone?: "dark" | "light" }) {
     const subject = `Enquiry from ${name}`;
     const body = `${message}\n\n—\n${name}\n${email}`;
 
-    window.location.href = `mailto:${site.contact.email}?subject=${encodeURIComponent(
+    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(body)}`;
     setSent(true);

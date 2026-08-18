@@ -3,8 +3,10 @@ import { Section } from "../ui/Section";
 import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
 import { icons } from "../ui/Icons";
-import { caseStudies } from "@/content/home";
 import { routes } from "@/lib/routes";
+import type { CollectionData } from "@/server/content/schemas";
+
+type CaseStudy = CollectionData["caseStudy"] & { slug: string };
 
 /**
  * Success stories, in the reference design's 2×2 card grid.
@@ -21,7 +23,7 @@ const cardTints = [
   "from-brand-200 to-brand-500",
 ];
 
-export function CaseStudies() {
+export function CaseStudies({ caseStudies }: { caseStudies: CaseStudy[] }) {
   return (
     <Section
       id="work"
@@ -33,7 +35,7 @@ export function CaseStudies() {
     >
       <ul className="grid gap-5 md:grid-cols-2">
         {caseStudies.map((study, index) => (
-          <Reveal as="li" key={index} delay={index * 90}>
+          <Reveal as="li" key={study.slug} delay={index * 90}>
             <article className="group h-full overflow-hidden rounded-4xl border border-ink-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-2xl hover:shadow-brand-950/10">
               {/* Media panel */}
               <div

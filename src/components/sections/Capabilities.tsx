@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { icons } from "../ui/Icons";
-import { process } from "@/content/home";
+import type { CollectionData } from "@/server/content/schemas";
+
+type ProcessStep = CollectionData["process"] & { slug: string };
 
 /**
  * Tabbed delivery-process panel, mirroring the reference design's pill switcher.
@@ -20,7 +22,7 @@ const tabVisuals = [
   { label: "Operations", rows: ["Monitoring", "Runbooks", "Handover"] },
 ];
 
-export function Capabilities() {
+export function Capabilities({ steps }: { steps: ProcessStep[] }) {
   const [active, setActive] = useState(0);
 
   function onKeyDown(event: React.KeyboardEvent) {
@@ -28,8 +30,8 @@ export function Capabilities() {
     event.preventDefault();
     const next =
       event.key === "ArrowRight"
-        ? (active + 1) % process.length
-        : (active - 1 + process.length) % process.length;
+        ? (active + 1) % steps.length
+        : (active - 1 + steps.length) % steps.length;
     setActive(next);
     document.getElementById(`capability-tab-${next}`)?.focus();
   }
@@ -64,7 +66,7 @@ export function Capabilities() {
           onKeyDown={onKeyDown}
           className="mx-auto mt-10 flex w-full max-w-2xl flex-wrap items-center justify-center gap-1 rounded-full border border-ink-200 bg-white p-1.5 shadow-sm"
         >
-          {process.map((step, index) => (
+          {steps.map((step, index) => (
             <button
               key={step.title}
               id={`capability-tab-${index}`}
@@ -87,7 +89,7 @@ export function Capabilities() {
 
         {/* Panels */}
         <div className="mt-10">
-          {process.map((step, index) => {
+          {steps.map((step, index) => {
             const visual = tabVisuals[index];
             return (
               <div

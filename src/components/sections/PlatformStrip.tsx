@@ -1,6 +1,5 @@
 import { Marquee } from "../ui/Marquee";
 import { Reveal } from "../ui/Reveal";
-import { platformStrip } from "@/content/home";
 
 /**
  * Scrolling platform strip below the hero.
@@ -9,7 +8,7 @@ import { platformStrip } from "@/content/home";
  * would — swap it for real client marks once you have permission to display them,
  * since those are a much stronger trust signal.
  */
-export function PlatformStrip() {
+export function PlatformStrip({ platformStrip }: { platformStrip: string[] }) {
   return (
     <section aria-labelledby="platforms-heading" className="bg-white py-12 lg:py-16">
       <div className="container-x">

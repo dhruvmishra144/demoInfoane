@@ -2,14 +2,13 @@ import Link from "next/link";
 import { Section } from "../ui/Section";
 import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
-import { icons, type IconName } from "../ui/Icons";
-import { services } from "@/content/home";
+import { icons } from "../ui/Icons";
 import { routes, serviceHref } from "@/lib/routes";
+import type { CollectionData } from "@/server/content/schemas";
 
-/** Icon per service, in the same order as the content file. */
-const serviceIcons: IconName[] = ["code", "cloud", "refresh", "data", "spark", "team"];
+type Service = CollectionData["service"] & { slug: string };
 
-export function Services() {
+export function Services({ services }: { services: Service[] }) {
   return (
     <Section
       id="services"
@@ -20,7 +19,7 @@ export function Services() {
     >
       <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service, index) => {
-          const Icon = icons[serviceIcons[index] ?? "code"];
+          const Icon = icons[service.iconName];
           return (
             <Reveal as="li" key={service.slug} delay={(index % 3) * 90}>
               <article className="group flex h-full flex-col rounded-4xl border border-ink-200 bg-white p-7 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-2xl hover:shadow-brand-950/8">

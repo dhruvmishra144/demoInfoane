@@ -124,7 +124,7 @@ export default function ContactPage() {
               has shipped work like yours. No sales script, no obligation.
             </p>
             <div className="mt-7">
-              <EnquiryForm tone="light" />
+              <EnquiryForm tone="light" contactEmail={site.contact.email} />
             </div>
           </div>
         </div>

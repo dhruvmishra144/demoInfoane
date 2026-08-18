@@ -1,7 +1,7 @@
 import { Reveal } from "../ui/Reveal";
 import { EnquiryForm } from "../EnquiryForm";
 import { icons } from "../ui/Icons";
-import { site } from "@/config/site";
+import type { CollectionData } from "@/server/content/schemas";
 
 /**
  * "Start your journey" — the closing conversion panel, contained rather than
@@ -10,7 +10,7 @@ import { site } from "@/config/site";
  * Contact details on the left work today with no backend; the form on the right
  * composes a prefilled email (see EnquiryForm).
  */
-export function FinalCta() {
+export function FinalCta({ settings }: { settings: CollectionData["settings"] }) {
   return (
     <section
       id="contact"
@@ -43,7 +43,7 @@ export function FinalCta() {
                     Let&apos;s start building something great together
                   </h2>
                   <p className="mt-5 max-w-md leading-relaxed text-ink-300">
-                    Book a free {site.promises.consultationLength} consultation.
+                    Book a free {settings.promises.consultationLength} consultation.
                     You will talk to an engineer, not an account manager, and you
                     will leave with a concrete opinion on your options — whether or
                     not you hire us.
@@ -52,24 +52,24 @@ export function FinalCta() {
 
                 <div className="mt-10 space-y-4">
                   <a
-                    href={`tel:${site.contact.phone}`}
+                    href={`tel:${settings.contact.phone}`}
                     className="flex items-center gap-3 text-lg font-semibold text-white transition-colors hover:text-brand-200"
                   >
                     <icons.phone className="h-5 w-5 shrink-0 text-brand-400" />
-                    {site.contact.phoneDisplay}
+                    {settings.contact.phoneDisplay}
                   </a>
                   <a
-                    href={`mailto:${site.contact.email}`}
+                    href={`mailto:${settings.contact.email}`}
                     className="flex items-center gap-3 text-lg font-semibold text-white transition-colors hover:text-brand-200"
                   >
                     <icons.mail className="h-5 w-5 shrink-0 text-brand-400" />
-                    {site.contact.email}
+                    {settings.contact.email}
                   </a>
 
                   <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-4 text-sm text-ink-400">
                     <li className="inline-flex items-center gap-2">
                       <icons.check className="h-4 w-4 text-brand-400" />
-                      Replies within {site.promises.responseTime}
+                      Replies within {settings.promises.responseTime}
                     </li>
                     <li className="inline-flex items-center gap-2">
                       <icons.check className="h-4 w-4 text-brand-400" />
@@ -80,7 +80,7 @@ export function FinalCta() {
               </div>
 
               <div className="rounded-4xl border border-white/15 bg-white/[0.07] p-6 backdrop-blur-sm lg:p-8">
-                <EnquiryForm />
+                <EnquiryForm contactEmail={settings.contact.email} />
               </div>
             </div>
           </div>

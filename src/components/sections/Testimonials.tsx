@@ -1,6 +1,8 @@
 import { Section } from "../ui/Section";
 import { Reveal } from "../ui/Reveal";
-import { testimonials } from "@/content/home";
+import type { CollectionData } from "@/server/content/schemas";
+
+type Testimonial = CollectionData["testimonial"] & { slug: string };
 
 /**
  * Client quotes in the reference design's staggered card layout.
@@ -9,7 +11,7 @@ import { testimonials } from "@/content/home";
  * section: Google prohibits self-serving review markup for your own business, and
  * using it risks a manual action against the whole site.
  */
-export function Testimonials() {
+export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) {
   return (
     <Section
       id="testimonials"
@@ -22,7 +24,7 @@ export function Testimonials() {
         {testimonials.map((testimonial, index) => (
           <Reveal
             as="li"
-            key={index}
+            key={testimonial.slug}
             delay={index * 110}
             // Vertical offset on the middle card gives the staggered look.
             className={index === 1 ? "lg:mt-8" : undefined}

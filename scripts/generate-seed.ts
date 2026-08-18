@@ -27,8 +27,18 @@ import {
   industries,
   pillars,
   testimonials,
+  // Renamed on import: `process` would otherwise shadow Node's global.
+  process as processSteps,
+  techStack as techStackGroups,
 } from "../src/content/home";
-import { industriesPage } from "../src/content/pages";
+import {
+  industriesPage,
+  about,
+  careersPage,
+  technologyPage,
+  contactPage,
+  caseStudiesPage,
+} from "../src/content/pages";
 import { site } from "../src/config/site";
 import { collectionSchemas } from "../src/server/content/schemas";
 import type { Collection } from "../src/server/db/schema";
@@ -158,6 +168,28 @@ pillars.forEach((pillar, index) => {
   });
 });
 
+/* --------------------------------------------------------------- process ---- */
+
+processSteps.forEach((step, index) => {
+  rows.push({
+    collection: "process",
+    slug: `process-${step.step}`,
+    sortOrder: index,
+    data: { step: step.step, title: step.title, body: step.body },
+  });
+});
+
+/* ------------------------------------------------------------ tech stack ---- */
+
+techStackGroups.forEach((group, index) => {
+  rows.push({
+    collection: "techStack",
+    slug: group.group.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+    sortOrder: index,
+    data: { group: group.group, items: [...group.items] },
+  });
+});
+
 /* ---------------------------------------------------- engagement models ---- */
 
 engagementModels.forEach((model, index) => {
@@ -175,6 +207,93 @@ engagementModels.forEach((model, index) => {
       popular: model.popular,
     },
   });
+});
+
+/* ------------------------------------------------------------------ pages ---- */
+
+rows.push({
+  collection: "page",
+  slug: "about",
+  sortOrder: 0,
+  data: {
+    metaTitle: about.metaTitle,
+    metaDescription: about.metaDescription,
+    heading: about.heading,
+    intro: [...about.intro],
+    principles: about.principles.map((p) => ({ ...p })),
+    leadership: about.leadership.map((person) => ({ ...person })),
+    milestones: about.milestones.map((m) => ({ ...m })),
+  },
+});
+
+rows.push({
+  collection: "page",
+  slug: "careers",
+  sortOrder: 0,
+  data: {
+    metaTitle: careersPage.metaTitle,
+    metaDescription: careersPage.metaDescription,
+    heading: careersPage.heading,
+    intro: [...careersPage.intro],
+    benefits: careersPage.benefits.map((b) => ({ ...b })),
+    hiringProcess: careersPage.hiringProcess.map((step) => ({ ...step })),
+    openings: careersPage.openings.map((opening) => ({ ...opening })),
+  },
+});
+
+rows.push({
+  collection: "page",
+  slug: "technology",
+  sortOrder: 0,
+  data: {
+    metaTitle: technologyPage.metaTitle,
+    metaDescription: technologyPage.metaDescription,
+    heading: technologyPage.heading,
+    intro: [...technologyPage.intro],
+    principles: technologyPage.principles.map((p) => ({ ...p })),
+    techGroups: technologyPage.groups.map((group) => ({
+      group: group.group,
+      body: group.body,
+      items: [...group.items],
+    })),
+  },
+});
+
+rows.push({
+  collection: "page",
+  slug: "contact",
+  sortOrder: 0,
+  data: {
+    metaTitle: contactPage.metaTitle,
+    metaDescription: contactPage.metaDescription,
+    heading: contactPage.heading,
+    intro: [...contactPage.intro],
+    expectations: [...contactPage.expectations],
+  },
+});
+
+rows.push({
+  collection: "page",
+  slug: "case-studies",
+  sortOrder: 0,
+  data: {
+    metaTitle: caseStudiesPage.metaTitle,
+    metaDescription: caseStudiesPage.metaDescription,
+    heading: caseStudiesPage.heading,
+    intro: [...caseStudiesPage.intro],
+  },
+});
+
+rows.push({
+  collection: "page",
+  slug: "industries",
+  sortOrder: 0,
+  data: {
+    metaTitle: industriesPage.metaTitle,
+    metaDescription: industriesPage.metaDescription,
+    heading: industriesPage.heading,
+    intro: [...industriesPage.intro],
+  },
 });
 
 /* -------------------------------------------------------------- settings ---- */

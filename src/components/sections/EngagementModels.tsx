@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useState } from "react";
 import { icons } from "../ui/Icons";
-import { engagementModels } from "@/content/home";
 import { routes } from "@/lib/routes";
-import { site } from "@/config/site";
+import type { CollectionData } from "@/server/content/schemas";
+
+type EngagementModel = CollectionData["engagementModel"] & { slug: string };
+type Stat = { value: string; label: string };
 
 /**
  * Engagement models, in the reference design's pricing layout: a selector list on
@@ -19,7 +21,15 @@ import { site } from "@/config/site";
  * All three options are rendered in the HTML; the selector only toggles
  * visibility, so every option is crawlable.
  */
-export function EngagementModels() {
+export function EngagementModels({
+  engagementModels,
+  primaryStat,
+  secondaryStat,
+}: {
+  engagementModels: EngagementModel[];
+  primaryStat: Stat;
+  secondaryStat: Stat;
+}) {
   const [active, setActive] = useState(
     Math.max(0, engagementModels.findIndex((model) => model.popular)),
   );
@@ -109,10 +119,10 @@ export function EngagementModels() {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-white">
-                    {site.stats[3].value} {site.stats[3].label.toLowerCase()}
+                    {primaryStat.value} {primaryStat.label.toLowerCase()}
                   </p>
                   <p className="text-xs text-ink-400">
-                    {site.stats[0].value} {site.stats[0].label.toLowerCase()}
+                    {secondaryStat.value} {secondaryStat.label.toLowerCase()}
                   </p>
                 </div>
               </div>

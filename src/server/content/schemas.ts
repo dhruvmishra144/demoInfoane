@@ -139,9 +139,30 @@ export const engagementModelSchema = z.object({
   popular: z.boolean().default(false),
 });
 
+/* -------------------------------------------------------------- process ---- */
+
+/** The 4-step delivery-stages list — same shape as `pillar`, different placement. */
+export const processSchema = z.object({
+  step: nonEmpty("Step number", 4),
+  title: nonEmpty("Title", 80),
+  body: nonEmpty("Body", 600),
+});
+
+/* ------------------------------------------------------------ tech stack ---- */
+
+export const techStackSchema = z.object({
+  group: nonEmpty("Group name", 60),
+  items: z.array(nonEmpty("Item", 60)).min(1).max(20),
+});
+
 /* ------------------------------------------------------------------ page ---- */
 
-/** Free-form page copy: heroes, intros and section blurbs keyed by slot. */
+/**
+ * Free-form page copy: heroes, intros and section blurbs keyed by slot, plus
+ * the extra shapes About/Careers/Technology/Contact need. One shared schema
+ * rather than a collection per page type, so a single generic editor screen
+ * keeps working — pages that don't use a given section just leave it empty.
+ */
 export const pageSchema = z.object({
   metaTitle,
   metaDescription,
@@ -151,6 +172,69 @@ export const pageSchema = z.object({
     .array(z.object({ title: nonEmpty("Title", 160), body: nonEmpty("Body", 1500) }))
     .max(12)
     .default([]),
+  /** About: the numbered principles list. */
+  principles: z
+    .array(z.object({ title: nonEmpty("Title", 120), body: nonEmpty("Body", 600) }))
+    .max(10)
+    .default([]),
+  /** About: leadership bios — real people only, never invented placeholders. */
+  leadership: z
+    .array(
+      z.object({
+        name: nonEmpty("Name", 120),
+        role: nonEmpty("Role", 120),
+        bio: nonEmpty("Bio", 400),
+        linkedin: nonEmpty("LinkedIn URL", 200),
+      }),
+    )
+    .max(12)
+    .default([]),
+  /** About: the company timeline. */
+  milestones: z
+    .array(z.object({ year: nonEmpty("Year", 10), event: nonEmpty("Event", 200) }))
+    .max(20)
+    .default([]),
+  /** Careers: benefits grid. */
+  benefits: z
+    .array(z.object({ title: nonEmpty("Title", 80), body: nonEmpty("Body", 300) }))
+    .max(10)
+    .default([]),
+  /** Careers: numbered hiring-process steps. */
+  hiringProcess: z
+    .array(
+      z.object({
+        step: nonEmpty("Step number", 4),
+        title: nonEmpty("Title", 80),
+        body: nonEmpty("Body", 400),
+      }),
+    )
+    .max(10)
+    .default([]),
+  /** Careers: open roles. */
+  openings: z
+    .array(
+      z.object({
+        title: nonEmpty("Title", 120),
+        location: nonEmpty("Location", 80),
+        type: nonEmpty("Type", 40),
+        summary: nonEmpty("Summary", 300),
+      }),
+    )
+    .max(20)
+    .default([]),
+  /** Technology: grouped stack, richer than the standalone `techStack` collection. */
+  techGroups: z
+    .array(
+      z.object({
+        group: nonEmpty("Group name", 60),
+        body: nonEmpty("Body", 300),
+        items: z.array(nonEmpty("Item", 60)).min(1).max(20),
+      }),
+    )
+    .max(10)
+    .default([]),
+  /** Contact: the short "what to expect" bullet list. */
+  expectations: z.array(nonEmpty("Expectation", 200)).max(10).default([]),
 });
 
 /* -------------------------------------------------------------- settings ---- */
@@ -202,6 +286,8 @@ export const collectionSchemas = {
   engagementModel: engagementModelSchema,
   page: pageSchema,
   settings: settingsSchema,
+  process: processSchema,
+  techStack: techStackSchema,
 } satisfies Record<Collection, z.ZodTypeAny>;
 
 export type CollectionData = {
@@ -214,6 +300,8 @@ export type CollectionData = {
   engagementModel: z.infer<typeof engagementModelSchema>;
   page: z.infer<typeof pageSchema>;
   settings: z.infer<typeof settingsSchema>;
+  process: z.infer<typeof processSchema>;
+  techStack: z.infer<typeof techStackSchema>;
 };
 
 /** Human-readable labels for the admin UI. */
@@ -227,4 +315,6 @@ export const collectionLabels: Record<Collection, { singular: string; plural: st
   engagementModel: { singular: "Engagement model", plural: "Engagement models" },
   page: { singular: "Page", plural: "Pages" },
   settings: { singular: "Site settings", plural: "Site settings" },
+  process: { singular: "Process step", plural: "Process steps" },
+  techStack: { singular: "Tech stack group", plural: "Tech stack groups" },
 };

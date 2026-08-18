@@ -1,8 +1,10 @@
 import { Reveal } from "../ui/Reveal";
-import { pillars } from "@/content/home";
+import type { CollectionData } from "@/server/content/schemas";
+
+type Pillar = CollectionData["pillar"] & { slug: string };
 
 /** Three numbered cards, staggered in on scroll. */
-export function Pillars() {
+export function Pillars({ pillars }: { pillars: Pillar[] }) {
   return (
     <section aria-labelledby="pillars-heading" className="bg-white py-16 lg:py-20">
       <div className="container-x">

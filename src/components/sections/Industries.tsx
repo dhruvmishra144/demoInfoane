@@ -2,11 +2,12 @@ import Link from "next/link";
 import { Section } from "../ui/Section";
 import { Reveal } from "../ui/Reveal";
 import { icons } from "../ui/Icons";
-import { industries } from "@/content/home";
 import { routes } from "@/lib/routes";
-import { industriesPage } from "@/content/pages";
+import type { CollectionData } from "@/server/content/schemas";
 
-export function Industries() {
+type Industry = CollectionData["industry"] & { slug: string };
+
+export function Industries({ industries }: { industries: Industry[] }) {
   return (
     <Section
       id="industries"
@@ -17,12 +18,10 @@ export function Industries() {
     >
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {industries.map((industry, index) => {
-          // Deep-link to the matching section on the industries page.
-          const anchor = industriesPage.detail[index]?.slugId;
           return (
-            <Reveal as="li" key={industry.name} delay={(index % 3) * 80}>
+            <Reveal as="li" key={industry.slug} delay={(index % 3) * 80}>
               <Link
-                href={anchor ? `${routes.industries}#${anchor}` : routes.industries}
+                href={`${routes.industries}#${industry.slug}`}
                 className="group flex h-full items-start gap-4 rounded-3xl border border-ink-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-950/8"
               >
                 <span

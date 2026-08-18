@@ -1,8 +1,8 @@
 import { unstable_cache } from "next/cache";
 import { and, asc, eq } from "drizzle-orm";
-import { getDbAsync, schema } from "@/server/db";
+import { getDb, getDbAsync, schema } from "@/server/db";
 import { collectionSchemas, type CollectionData } from "./schemas";
-import type { Collection } from "@/server/db/schema";
+import type { Collection, ContentStatus } from "@/server/db/schema";
 
 /**
  * Public read path.
@@ -140,4 +140,59 @@ export async function getSettings(): Promise<CollectionData["settings"] | null> 
     { tags: [collectionTag("settings")] },
   );
   return load();
+}
+
+/* ------------------------------------------------------------- admin path -- */
+
+/**
+ * The working draft of one item, for the editor form and preview — reads
+ * `draftRevisionId` instead of `publishedRevisionId`, and is deliberately
+ * **not** wrapped in `unstable_cache`: an editor must always see their latest
+ * save, never a stale cached copy.
+ */
+export async function getDraftItem<C extends Collection>(
+  collection: C,
+  slug: string,
+): Promise<(CollectionData[C] & { slug: string; status: ContentStatus }) | null> {
+  const db = getDb();
+
+  const rows = await db
+    .select({ status: schema.contentItems.status, data: schema.contentRevisions.data })
+    .from(schema.contentItems)
+    .innerJoin(
+      schema.contentRevisions,
+      eq(schema.contentItems.draftRevisionId, schema.contentRevisions.id),
+    )
+    .where(and(eq(schema.contentItems.collection, collection), eq(schema.contentItems.slug, slug)))
+    .limit(1);
+
+  const row = rows[0];
+  if (!row) return null;
+
+  const parsed = collectionSchemas[collection].safeParse(JSON.parse(row.data));
+  if (!parsed.success) return null;
+
+  return { ...(parsed.data as CollectionData[C]), slug, status: row.status };
+}
+
+/**
+ * Every item in a collection regardless of status, for the admin list view.
+ * The public `getCollection()` only ever returns published rows — this is
+ * its unfiltered counterpart, and (like the rest of the admin panel) is not
+ * cached, since it must reflect the latest edit immediately.
+ */
+export async function getAllItemsForAdmin(collection: Collection) {
+  const db = getDb();
+
+  return db
+    .select({
+      id: schema.contentItems.id,
+      slug: schema.contentItems.slug,
+      status: schema.contentItems.status,
+      sortOrder: schema.contentItems.sortOrder,
+      updatedAt: schema.contentItems.updatedAt,
+    })
+    .from(schema.contentItems)
+    .where(eq(schema.contentItems.collection, collection))
+    .orderBy(asc(schema.contentItems.sortOrder), asc(schema.contentItems.slug));
 }

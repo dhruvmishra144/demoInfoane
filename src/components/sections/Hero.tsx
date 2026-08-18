@@ -1,8 +1,8 @@
 import { Button } from "../ui/Button";
 import { Reveal } from "../ui/Reveal";
 import { icons } from "../ui/Icons";
-import { site } from "@/config/site";
 import { routes } from "@/lib/routes";
+import type { CollectionData } from "@/server/content/schemas";
 
 /**
  * Hero.
@@ -14,7 +14,7 @@ import { routes } from "@/lib/routes";
  * screenshot: no image request, nothing to become the Largest Contentful Paint
  * element, and no asset to re-export when the brand changes.
  */
-export function Hero() {
+export function Hero({ settings }: { settings: CollectionData["settings"] }) {
   return (
     <section className="relative isolate overflow-hidden bg-ink-50 pb-16 pt-12 lg:pb-24 lg:pt-16">
       <div className="mesh-light absolute inset-0 -z-10" aria-hidden="true" />
@@ -25,7 +25,7 @@ export function Hero() {
             <Reveal>
               <p className="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-white px-3.5 py-1.5 text-xs font-semibold text-brand-700 shadow-sm">
                 <icons.shield className="h-3.5 w-3.5" />
-                {site.credentials[0]} · {site.credentials[1]}
+                {settings.credentials[0]} · {settings.credentials[1]}
               </p>
             </Reveal>
 
@@ -57,7 +57,7 @@ export function Hero() {
 
             <Reveal delay={300}>
               <p className="mt-6 text-sm text-ink-400">
-                A free {site.promises.consultationLength} call with an engineer
+                A free {settings.promises.consultationLength} call with an engineer
                 who has shipped this before. No sales script.
               </p>
             </Reveal>
@@ -73,7 +73,7 @@ export function Hero() {
                     Your first engagement
                   </p>
                   <span className="rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-700">
-                    {site.promises.discoveryLength}
+                    {settings.promises.discoveryLength}
                   </span>
                 </div>
                 <ul className="mt-5 space-y-3.5">
