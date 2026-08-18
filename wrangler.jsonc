@@ -1,81 +1,81 @@
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "demoinfoane",
-  "main": ".open-next/worker.js",
-  // nodejs_compat is mandatory for the OpenNext adapter; the date must be
-  // 2024-09-23 or later for it to take effect.
-  "compatibility_date": "2026-08-18",
-  "compatibility_flags": ["nodejs_compat"],
-  "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
-  },
-  "observability": {
-    "enabled": true
-  },
-
-  "d1_databases": [
-    {
-      // Site content, users, sessions and the audit log.
-      "binding": "DB",
-      "database_name": "infotech-content",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
-      "migrations_dir": "drizzle/migrations"
-    },
-    {
-      // Next.js tag cache — powers revalidateTag()/revalidatePath() so that
-      // publishing in the admin panel refreshes only the affected pages.
-      // Kept in its own database: the adapter manages these tables itself and
-      // they should not sit next to application tables.
-      "binding": "NEXT_TAG_CACHE_D1",
-      "database_name": "infotech-next-cache",
-      "database_id": "REPLACE_WITH_CACHE_D1_DATABASE_ID"
-    }
-  ],
-
-  "kv_namespaces": [
-    {
-      // Incremental cache: the rendered HTML/RSC payloads for ISR pages.
-      // KV ships enabled on every account, unlike R2 — no product to enable.
-      // Create with `npx wrangler kv namespace create NEXT_INC_CACHE_KV`.
-      "binding": "NEXT_INC_CACHE_KV",
-      "id": "REPLACE_WITH_KV_NAMESPACE_ID"
-    }
-  ],
-
-  // Editor uploads (logos, team photos, case study imagery) live in ImageKit
-  // instead of R2 — no bucket to provision, and it comes with on-the-fly
-  // image transforms/CDN delivery for free.
-  //
-  // IMAGEKIT_PRIVATE_KEY is a secret, not a var: set it with
-  // `npx wrangler secret put IMAGEKIT_PRIVATE_KEY`, never commit it here.
-  "vars": {
-    "IMAGEKIT_PUBLIC_KEY": "REPLACE_WITH_IMAGEKIT_PUBLIC_KEY",
-    "IMAGEKIT_URL_ENDPOINT": "REPLACE_WITH_IMAGEKIT_URL_ENDPOINT"
-  },
-
-  // Required by the incremental cache so the Worker can call back into itself
-  // when regenerating a page.
-  "services": [
-    {
-      "binding": "WORKER_SELF_REFERENCE",
-      "service": "demoinfoane"
-    }
-  ],
-
-  // Durable Object queue for time-based revalidation.
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "NEXT_CACHE_DO_QUEUE",
-        "class_name": "DOQueueHandler"
-      }
-    ]
-  },
-  "migrations": [
-    {
-      "tag": "v1",
-      "new_sqlite_classes": ["DOQueueHandler"]
-    }
-  ]
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "demoinfoane",
+	"main": ".open-next/worker.js",
+	// nodejs_compat is mandatory for the OpenNext adapter; the date must be
+	// 2024-09-23 or later for it to take effect.
+	"compatibility_date": "2026-08-18",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"observability": {
+		"enabled": true
+	},
+	"d1_databases": [
+		{
+			// Site content, users, sessions and the audit log.
+			"binding": "DB",
+			"database_name": "infotech-content",
+			"database_id": "REPLACE_WITH_D1_DATABASE_ID",
+			"migrations_dir": "drizzle/migrations"
+		},
+		{
+			// Next.js tag cache — powers revalidateTag()/revalidatePath() so that
+			// publishing in the admin panel refreshes only the affected pages.
+			// Kept in its own database: the adapter manages these tables itself and
+			// they should not sit next to application tables.
+			"binding": "NEXT_TAG_CACHE_D1",
+			"database_name": "infotech-next-cache",
+			"database_id": "REPLACE_WITH_CACHE_D1_DATABASE_ID"
+		}
+	],
+	"kv_namespaces": [
+		{
+			// Incremental cache: the rendered HTML/RSC payloads for ISR pages.
+			// KV ships enabled on every account, unlike R2 — no product to enable.
+			// Create with `npx wrangler kv namespace create NEXT_INC_CACHE_KV`.
+			"binding": "NEXT_INC_CACHE_KV",
+			"id": "c2241b9e44d544aa9aaf96e6cc149c76",
+			"remote": true
+		}
+	],
+	// Editor uploads (logos, team photos, case study imagery) live in ImageKit
+	// instead of R2 — no bucket to provision, and it comes with on-the-fly
+	// image transforms/CDN delivery for free.
+	//
+	// IMAGEKIT_PRIVATE_KEY is a secret, not a var: set it with
+	// `npx wrangler secret put IMAGEKIT_PRIVATE_KEY`, never commit it here.
+	"vars": {
+		"IMAGEKIT_PUBLIC_KEY": "REPLACE_WITH_IMAGEKIT_PUBLIC_KEY",
+		"IMAGEKIT_URL_ENDPOINT": "REPLACE_WITH_IMAGEKIT_URL_ENDPOINT"
+	},
+	// Required by the incremental cache so the Worker can call back into itself
+	// when regenerating a page.
+	"services": [
+		{
+			"binding": "WORKER_SELF_REFERENCE",
+			"service": "demoinfoane"
+		}
+	],
+	// Durable Object queue for time-based revalidation.
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "NEXT_CACHE_DO_QUEUE",
+				"class_name": "DOQueueHandler"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": [
+				"DOQueueHandler"
+			]
+		}
+	]
 }
