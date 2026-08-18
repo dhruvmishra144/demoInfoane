@@ -19,3 +19,4 @@ drizzle/.seed-gen.mjs
 
 # IDE / Tool configs
 .claude/
+drizzle/.create-admin.sql

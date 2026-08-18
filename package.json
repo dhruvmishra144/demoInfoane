@@ -14,6 +14,7 @@
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "db:generate": "drizzle-kit generate",
     "db:seed:build": "tsx scripts/generate-seed.ts",
+    "admin:create": "tsx scripts/create-admin.ts",
     "db:migrate": "wrangler d1 migrations apply infotech-content --local",
     "db:migrate:remote": "wrangler d1 migrations apply infotech-content --remote",
     "db:seed": "wrangler d1 execute infotech-content --local --file=drizzle/seed.sql",

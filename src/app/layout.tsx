@@ -1,9 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
-import { JsonLd } from "@/components/JsonLd";
-import { siteSchema } from "@/lib/schema";
 import { site } from "@/config/site";
 
 /**
@@ -83,22 +79,14 @@ export default function RootLayout({
   return (
     // `lang` is required for screen readers to pick the right voice and for
     // search engines to target the right locale.
+    // `lang` is required for screen readers to pick the right voice and for
+    // search engines to target the right locale.
     <html lang="en">
-      <body className="min-h-screen antialiased">
-        {/* Organization + WebSite, emitted once so every page carries them.
-            Per-page nodes (WebPage, BreadcrumbList, Service, FAQPage) reference
-            these by @id from within each page. */}
-        <JsonLd data={siteSchema()} />
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
-        >
-          Skip to main content
-        </a>
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <SiteFooter />
-      </body>
+      {/* Deliberately bare: the public site's header, footer and JSON-LD live in
+          the (site) group's layout, and the admin panel has its own chrome in
+          (admin). A single root layout carrying the marketing header would either
+          leak it into /admin or need runtime branching. */}
+      <body className="min-h-screen antialiased">{children}</body>
     </html>
   );
 }
