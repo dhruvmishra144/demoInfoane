@@ -20,7 +20,7 @@
 			// Site content, users, sessions and the audit log.
 			"binding": "DB",
 			"database_name": "infotech-content",
-			"database_id": "REPLACE_WITH_D1_DATABASE_ID",
+			"database_id": "7a900fbc-1a8c-46a8-9d12-9a67f0708b89",
 			"migrations_dir": "drizzle/migrations"
 		},
 		{
@@ -30,7 +30,7 @@
 			// they should not sit next to application tables.
 			"binding": "NEXT_TAG_CACHE_D1",
 			"database_name": "infotech-next-cache",
-			"database_id": "REPLACE_WITH_CACHE_D1_DATABASE_ID"
+			"database_id": "6570e650-bdf1-4458-9384-b3a62e81ea22"
 		}
 	],
 	"kv_namespaces": [
