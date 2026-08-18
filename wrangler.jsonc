@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "infotech-website",
+  "name": "demoinfoane",
   "main": ".open-next/worker.js",
   // nodejs_compat is mandatory for the OpenNext adapter; the date must be
   // 2024-09-23 or later for it to take effect.
@@ -33,26 +33,33 @@
     }
   ],
 
-  "r2_buckets": [
+  "kv_namespaces": [
     {
       // Incremental cache: the rendered HTML/RSC payloads for ISR pages.
-      "binding": "NEXT_INC_CACHE_R2_BUCKET",
-      "bucket_name": "infotech-next-cache"
-    },
-    {
-      // Editor uploads (logos, team photos, case study imagery). Files go here,
-      // never into D1 — D1 has a 1 MB row limit and mishandles BLOBs on export.
-      "binding": "MEDIA",
-      "bucket_name": "infotech-media"
+      // KV ships enabled on every account, unlike R2 — no product to enable.
+      // Create with `npx wrangler kv namespace create NEXT_INC_CACHE_KV`.
+      "binding": "NEXT_INC_CACHE_KV",
+      "id": "REPLACE_WITH_KV_NAMESPACE_ID"
     }
   ],
+
+  // Editor uploads (logos, team photos, case study imagery) live in ImageKit
+  // instead of R2 — no bucket to provision, and it comes with on-the-fly
+  // image transforms/CDN delivery for free.
+  //
+  // IMAGEKIT_PRIVATE_KEY is a secret, not a var: set it with
+  // `npx wrangler secret put IMAGEKIT_PRIVATE_KEY`, never commit it here.
+  "vars": {
+    "IMAGEKIT_PUBLIC_KEY": "REPLACE_WITH_IMAGEKIT_PUBLIC_KEY",
+    "IMAGEKIT_URL_ENDPOINT": "REPLACE_WITH_IMAGEKIT_URL_ENDPOINT"
+  },
 
   // Required by the incremental cache so the Worker can call back into itself
   // when regenerating a page.
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
-      "service": "infotech-website"
+      "service": "demoinfoane"
     }
   ],
 

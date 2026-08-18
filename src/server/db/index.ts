@@ -35,11 +35,60 @@ export async function getDbAsync(): Promise<Db> {
   return drizzle(env.DB, { schema });
 }
 
-/** The R2 bucket holding editor uploads. */
-export function getMediaBucket(): R2Bucket {
+/** Config for the ImageKit account holding editor uploads. */
+export function getImageKitConfig(): {
+  publicKey: string;
+  privateKey: string;
+  urlEndpoint: string;
+} {
   const { env } = getCloudflareContext();
-  if (!env.MEDIA) {
-    throw new Error("R2 binding `MEDIA` is missing. Check wrangler.jsonc.");
+  const { IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY, IMAGEKIT_URL_ENDPOINT } = env;
+  if (!IMAGEKIT_PUBLIC_KEY || !IMAGEKIT_PRIVATE_KEY || !IMAGEKIT_URL_ENDPOINT) {
+    throw new Error(
+      "ImageKit env vars are missing. Check wrangler.jsonc `vars` and set the " +
+        "IMAGEKIT_PRIVATE_KEY secret with `npx wrangler secret put IMAGEKIT_PRIVATE_KEY`.",
+    );
   }
-  return env.MEDIA;
+  return {
+    publicKey: IMAGEKIT_PUBLIC_KEY,
+    privateKey: IMAGEKIT_PRIVATE_KEY,
+    urlEndpoint: IMAGEKIT_URL_ENDPOINT,
+  };
+}
+
+/**
+ * Uploads a file to ImageKit via its REST API.
+ *
+ * Using the raw HTTP API rather than the `imagekit` npm SDK: that SDK expects
+ * Node's `http`/`form-data` internals, which don't exist in the Workers
+ * runtime even with `nodejs_compat`. `fetch` + `FormData` is what Workers
+ * actually supports, and it's all the upload endpoint needs.
+ */
+export async function uploadMedia(
+  file: Blob,
+  fileName: string,
+): Promise<{ fileId: string; url: string }> {
+  const { privateKey } = getImageKitConfig();
+
+  const form = new FormData();
+  form.set("file", file, fileName);
+  form.set("fileName", fileName);
+  form.set("useUniqueFileName", "true");
+
+  const response = await fetch("https://upload.imagekit.io/api/v1/files/upload", {
+    method: "POST",
+    headers: {
+      // ImageKit auth is HTTP Basic with the private key as the username and
+      // an empty password.
+      Authorization: `Basic ${btoa(`${privateKey}:`)}`,
+    },
+    body: form,
+  });
+
+  if (!response.ok) {
+    throw new Error(`ImageKit upload failed: ${response.status} ${await response.text()}`);
+  }
+
+  const result = (await response.json()) as { fileId: string; url: string };
+  return { fileId: result.fileId, url: result.url };
 }

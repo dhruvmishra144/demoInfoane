@@ -75,9 +75,16 @@ function askHidden(question: string): Promise<string> {
     stdin.resume();
     stdin.setEncoding("utf8");
 
+    // Control characters as escapes, not literals, so they survive copy/paste
+    // and are legible in review.
+    const ENTER = ["\r", "\n"];
+    const CTRL_C = "\u0003";
+    const CTRL_D = "\u0004";
+    const BACKSPACE = ["\u007f", "\b"];
+
     let value = "";
     const onData = (char: string) => {
-      if (char === "\n" || char === "\r" || char === "") {
+      if (ENTER.includes(char) || char === CTRL_D) {
         stdin.setRawMode?.(false);
         stdin.pause();
         stdin.removeListener("data", onData);
@@ -85,12 +92,12 @@ function askHidden(question: string): Promise<string> {
         resolve(value);
         return;
       }
-      if (char === "") {
-        // Ctrl-C
+      if (char === CTRL_C) {
+        stdin.setRawMode?.(false);
         process.stdout.write("\n");
         process.exit(1);
       }
-      if (char === "") {
+      if (BACKSPACE.includes(char)) {
         value = value.slice(0, -1);
         return;
       }

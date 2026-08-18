@@ -196,12 +196,12 @@ export const contentRevisions = sqliteTable(
 
 /* ----------------------------------------------------------------- media ---- */
 
-/** Metadata for files in the R2 media bucket. The bytes live in R2. */
+/** Metadata for files uploaded to ImageKit. The bytes live in ImageKit, not here. */
 export const mediaAssets = sqliteTable(
   "media_assets",
   {
     id: text("id").primaryKey(),
-    /** Object key within the MEDIA bucket. */
+    /** ImageKit file ID — used to build the delivery URL and to delete the file. */
     key: text("key").notNull(),
     filename: text("filename").notNull(),
     contentType: text("content_type").notNull(),

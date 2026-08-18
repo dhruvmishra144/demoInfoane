@@ -55,9 +55,15 @@ npm run dev
 
 Then open http://localhost:3000.
 
-> Do not run `npm run build` while `npm run dev` is running — they share the
-> `.next` directory and the build overwrites the dev server's artifacts, which
-> makes every route 500 until you delete `.next` and restart.
+> **Never mix `npm run build` and `npm run dev` against the same `.next`.** They
+> share the directory, and either order corrupts it: a build during dev overwrites
+> the dev server's chunks, and starting dev on top of a production build leaves it
+> serving a manifest whose files do not exist. Symptom is every route 500ing with
+> `ENOENT … .next/server/app/(site)/page.js`. Fix:
+>
+> ```bash
+> rm -r .next && npm run dev
+> ```
 
 ### Environment
 

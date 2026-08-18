@@ -84,15 +84,38 @@ Building auth ourselves means owning it. What is already decided:
 - Verified end-to-end: a Next.js route read all 6 services in order, their nested
   FAQs, 6 industries, 7 FAQs and site settings from D1 in local dev
 
-### Phase 2 — authentication and admin shell
+### Phase 2 — authentication and admin shell ✅ done
 
-- `scripts/create-admin.ts` to create the first account (never a seeded password)
-- Password hashing and verification, session create/validate/revoke
-- Login page, rate limiting, sign-out, session expiry
-- `/admin` route group: noindex, excluded from the sitemap, disallowed in
-  robots.txt, protected in middleware *and* re-checked in every action
-- Admin layout: navigation, current user, role-aware menu
-- Audit log writes on sign-in and sign-out
+- Route groups: public pages moved to `(site)` with their own layout, admin in
+  `(admin)`. The root layout is now bare `<html>/<body>`, so no marketing header
+  or site-wide JSON-LD is shipped to the admin panel
+- `scripts/create-admin.ts` — hidden password prompt (or `ADMIN_PASSWORD` env),
+  hash computed locally with the same PBKDF2 parameters as the Worker, only the
+  hash sent to D1, temp SQL file deleted afterwards, upsert on email so re-running
+  resets a password
+- PBKDF2-SHA-256 hashing (300k iterations, stored per user for transparent
+  upgrades), constant-time comparison, timing-equalised failure path for unknown
+  addresses, length-based password policy with a common-password screen
+- Sessions in D1 keyed by the SHA-256 of the cookie token, sliding 30-day expiry
+  written at most daily, revoked on deactivation, `destroyAllSessionsForUser` for
+  password changes
+- Login throttling per email *and* per IP over a 15-minute window, counted in D1
+  because Workers isolates are short-lived and per-location
+- Login/logout server actions; identical error wording on every failure path to
+  avoid account enumeration; `next` parameter validated against a relative-admin
+  pattern to close the open-redirect
+- Middleware redirect + `X-Robots-Tag: noindex, nofollow`, with the real
+  authorisation in `requireUser()`/`requireRole()` on the server
+- Admin shell with role-filtered navigation, sign-out as a POST, and a
+  must-change-password banner
+- Audit log writing on sign-in, failed sign-in and sign-out
+
+**Verified end to end**: anonymous `/admin` → redirect carrying `?next=`; wrong
+password → generic error; correct password → dashboard, session cookie not
+readable from JavaScript; session survived a dev-server restart (it lives in D1);
+dashboard read the real 31 seeded items; sign-out → redirect, session row deleted,
+logout audited; `noindex` header present on `/admin` and `/admin/login`;
+email-scoped failure counter cleared on successful sign-in.
 
 ### Phase 3 — content management and workflow
 
@@ -149,8 +172,12 @@ npm run db:migrate:remote
 ## Local development
 
 ```bash
-npm run db:migrate && npm run db:seed && npm run dev
+npm run db:migrate && npm run db:seed && npm run admin:create && npm run dev
 ```
+
+`admin:create` prompts for an email, name and password (hidden) and creates an
+admin in the local D1. Add `-- --remote` to target production once the database
+ids are filled in. Sign in at `/admin/login`.
 
 Regenerate the seed after editing `src/content/*` with `npm run db:seed:build`.
 Regenerate binding types after editing `wrangler.jsonc` with `npm run cf-typegen`
