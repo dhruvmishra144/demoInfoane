@@ -23,7 +23,10 @@ import { writeFileSync, unlinkSync } from "node:fs";
 import { createInterface } from "node:readline";
 import { validatePasswordStrength } from "../src/server/auth/password";
 
-const PBKDF2_ITERATIONS = 300_000;
+// Must match src/server/auth/password.ts — see that file for why 100,000 is
+// the actual ceiling (workerd's WebCrypto rejects PBKDF2 above it outright),
+// not just this project's chosen value.
+const PBKDF2_ITERATIONS = 100_000;
 const DB_NAME = "infotech-content";
 const TEMP_FILE = "drizzle/.create-admin.sql";
 

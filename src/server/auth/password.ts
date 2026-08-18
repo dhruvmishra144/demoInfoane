@@ -14,15 +14,13 @@
  * OWASP's current guidance for PBKDF2-HMAC-SHA-256 is 600,000 iterations. This is
  * deliberately lower.
  *
- * The constraint is Workers CPU time: hashing is real CPU work, and the Workers
- * free plan allows ~10ms per invocation, which even 100k iterations exceeds. At
- * 300k this needs the Workers Paid plan (default 30s CPU limit) — comfortable, but
- * worth verifying against your plan once deployed.
- *
- * If you move auth somewhere with more CPU headroom, raise this: it is one
- * constant, and existing users re-hash on their next successful sign-in.
+ * The constraint isn't CPU budget, it's a hard ceiling: workerd's WebCrypto
+ * `deriveBits`/`deriveKey` rejects any PBKDF2 call above 100,000 iterations
+ * unconditionally (`NotSupportedError`, regardless of plan). 100,000 is the max
+ * this runtime can do at all, so there is no "raise this later" — moving to more
+ * iterations means moving off PBKDF2 (e.g. an argon2 WASM build) or off Workers.
  */
-export const PBKDF2_ITERATIONS = 300_000;
+export const PBKDF2_ITERATIONS = 100_000;
 
 const KEY_LENGTH_BITS = 256;
 const SALT_BYTES = 16;
