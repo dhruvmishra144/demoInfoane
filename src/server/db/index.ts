@@ -56,6 +56,15 @@ export function getImageKitConfig(): {
   };
 }
 
+export type UploadedMedia = {
+  fileId: string;
+  url: string;
+  name: string;
+  size: number;
+  width: number | null;
+  height: number | null;
+};
+
 /**
  * Uploads a file to ImageKit via its REST API.
  *
@@ -63,11 +72,12 @@ export function getImageKitConfig(): {
  * Node's `http`/`form-data` internals, which don't exist in the Workers
  * runtime even with `nodejs_compat`. `fetch` + `FormData` is what Workers
  * actually supports, and it's all the upload endpoint needs.
+ *
+ * ImageKit's own `fileType` field is a coarse "image"/"non-image" category,
+ * not a MIME type, so callers pass the browser `File`'s real `type` in as
+ * `fileName` is captured separately — see `uploadMediaAction` for the caller.
  */
-export async function uploadMedia(
-  file: Blob,
-  fileName: string,
-): Promise<{ fileId: string; url: string }> {
+export async function uploadMedia(file: Blob, fileName: string): Promise<UploadedMedia> {
   const { privateKey } = getImageKitConfig();
 
   const form = new FormData();
@@ -89,6 +99,39 @@ export async function uploadMedia(
     throw new Error(`ImageKit upload failed: ${response.status} ${await response.text()}`);
   }
 
-  const result = (await response.json()) as { fileId: string; url: string };
-  return { fileId: result.fileId, url: result.url };
+  const result = (await response.json()) as {
+    fileId: string;
+    url: string;
+    name: string;
+    size: number;
+    height?: number;
+    width?: number;
+  };
+
+  return {
+    fileId: result.fileId,
+    url: result.url,
+    name: result.name,
+    size: result.size,
+    width: result.width ?? null,
+    height: result.height ?? null,
+  };
+}
+
+/** Deletes a file from ImageKit. Called alongside removing its `media_assets` row. */
+export async function deleteMedia(fileId: string): Promise<void> {
+  const { privateKey } = getImageKitConfig();
+
+  const response = await fetch(`https://api.imagekit.io/v1/files/${fileId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Basic ${btoa(`${privateKey}:`)}`,
+    },
+  });
+
+  // 404 means it's already gone — treat that as success rather than failing
+  // a cleanup action the operator can't do anything about.
+  if (!response.ok && response.status !== 404) {
+    throw new Error(`ImageKit delete failed: ${response.status} ${await response.text()}`);
+  }
 }

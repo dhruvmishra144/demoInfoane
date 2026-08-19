@@ -1,0 +1,1 @@
+ALTER TABLE `media_assets` ADD `url` text NOT NULL;

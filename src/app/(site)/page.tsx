@@ -49,29 +49,24 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [
-    settings,
-    services,
-    pillars,
-    processSteps,
-    techStack,
-    engagementModels,
-    industries,
-    caseStudies,
-    testimonials,
-    faqs,
-  ] = await Promise.all([
-    getSettingsOrFallback(settingsFallback),
-    getCollectionOrFallback("service", serviceFallback),
-    getCollectionOrFallback("pillar", pillarFallback),
-    getCollectionOrFallback("process", processFallback),
-    getCollectionOrFallback("techStack", techStackFallback),
-    getCollectionOrFallback("engagementModel", engagementModelFallback),
-    getCollectionOrFallback("industry", industryFallback),
-    getCollectionOrFallback("caseStudy", caseStudyFallback),
-    getCollectionOrFallback("testimonial", testimonialFallback),
-    getCollectionOrFallback("faq", faqFallback),
-  ]);
+  // Sequential, not Promise.all: D1's remote connection during static
+  // generation only tolerates one session at a time — ten concurrent reads
+  // against the same database threw SQLITE_BUSY on the real Cloudflare build.
+  // This only costs build time, not request latency (these reads are cached
+  // per-collection and served from the incremental cache afterward).
+  const settings = await getSettingsOrFallback(settingsFallback);
+  const services = await getCollectionOrFallback("service", serviceFallback);
+  const pillars = await getCollectionOrFallback("pillar", pillarFallback);
+  const processSteps = await getCollectionOrFallback("process", processFallback);
+  const techStack = await getCollectionOrFallback("techStack", techStackFallback);
+  const engagementModels = await getCollectionOrFallback(
+    "engagementModel",
+    engagementModelFallback,
+  );
+  const industries = await getCollectionOrFallback("industry", industryFallback);
+  const caseStudies = await getCollectionOrFallback("caseStudy", caseStudyFallback);
+  const testimonials = await getCollectionOrFallback("testimonial", testimonialFallback);
+  const faqs = await getCollectionOrFallback("faq", faqFallback);
 
   const homeFaqs = faqs.filter((faq) => faq.placement === "home");
   const [primaryStat, secondaryStat] = [settings.stats[3], settings.stats[0]];

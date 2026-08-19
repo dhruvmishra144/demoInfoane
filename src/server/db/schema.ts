@@ -203,8 +203,10 @@ export const mediaAssets = sqliteTable(
   "media_assets",
   {
     id: text("id").primaryKey(),
-    /** ImageKit file ID — used to build the delivery URL and to delete the file. */
+    /** ImageKit file ID — used to delete the file. */
     key: text("key").notNull(),
+    /** ImageKit's delivery URL, captured at upload time rather than rebuilt later. */
+    url: text("url").notNull(),
     filename: text("filename").notNull(),
     contentType: text("content_type").notNull(),
     sizeBytes: integer("size_bytes").notNull(),
