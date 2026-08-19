@@ -21,7 +21,15 @@
 			"binding": "DB",
 			"database_name": "infoane-content",
 			"database_id": "7a900fbc-1a8c-46a8-9d12-9a67f0708b89",
-			"migrations_dir": "drizzle/migrations"
+			"migrations_dir": "drizzle/migrations",
+			// Required, not cosmetic: pages read content during `next build`
+			// (generateStaticParams, sitemap.ts, every prerendered page). Without
+			// this, the build emulates D1 locally against an empty database in the
+			// build container, which fails with `no such table: content_items` even
+			// when the real database is migrated. It also means the prerendered
+			// HTML would carry static fallback copy instead of the published
+			// content — the opposite of what this architecture is for.
+			"remote": true
 		},
 		{
 			// Next.js tag cache — powers revalidateTag()/revalidatePath() so that

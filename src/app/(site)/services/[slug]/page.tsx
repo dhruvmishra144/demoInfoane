@@ -10,13 +10,22 @@ import { icons } from "@/components/ui/Icons";
 import { pageSchema } from "@/lib/schema";
 import { routes, serviceHref } from "@/lib/routes";
 import { getServiceBySlug } from "@/content/services";
-import { getItem } from "@/server/content/read";
-import { getSettingsOrFallback, getCollectionOrFallback } from "@/server/content/with-fallback";
+import {
+  getItemOrNull,
+  getSettingsOrFallback,
+  getCollectionOrFallback,
+} from "@/server/content/with-fallback";
 import { serviceFallback, settingsFallback } from "@/server/content/static-fallback";
 
-/** D1 first, falling back to the static list for a slug D1 doesn't have yet. */
+/**
+ * D1 first, falling back to the static list for a slug D1 doesn't have yet.
+ *
+ * `getItemOrNull` rather than `getItem` so a failed query — an unreachable or
+ * unmigrated D1 — also falls through to the static list instead of throwing
+ * during `next build`.
+ */
 async function getService(slug: string) {
-  return (await getItem("service", slug)) ?? getServiceBySlug(slug) ?? null;
+  return (await getItemOrNull("service", slug)) ?? getServiceBySlug(slug) ?? null;
 }
 
 /**
