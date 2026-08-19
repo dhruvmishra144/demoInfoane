@@ -131,11 +131,14 @@
     radial-gradient(38rem 38rem at 50% 115%, rgba(13, 97, 161, 0.5), transparent 60%);
 }
 
-/* Very light page-level wash used behind white cards. */
+/* Very light page-level wash used behind white cards. Centers sit well below
+   the top edge so the tint fades to nothing before it reaches the section
+   boundary — centering it at/above the edge made the clip line visible
+   against the flat background behind the header. */
 @utility mesh-light {
   background-image:
-    radial-gradient(50rem 26rem at 10% -5%, rgba(30, 151, 229, 0.1), transparent 60%),
-    radial-gradient(40rem 22rem at 90% 0%, rgba(79, 178, 245, 0.08), transparent 55%);
+    radial-gradient(50rem 26rem at 10% 35%, rgba(30, 151, 229, 0.1), transparent 60%),
+    radial-gradient(40rem 22rem at 90% 30%, rgba(79, 178, 245, 0.08), transparent 55%);
 }
 
 /* Fine grid, decorative, used inside dark panels. */

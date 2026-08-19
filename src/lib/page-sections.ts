@@ -55,6 +55,30 @@ export const pageLabels: Record<PageSlug, { label: string; route: string }> = {
   "not-found": { label: "404 page", route: "/not-found-preview" },
 };
 
+/**
+ * The optional field groups each page actually uses.
+ *
+ * The `page` schema is one shared shape covering every page, so without this the
+ * editor shows Careers' openings on the privacy policy and About's leadership on
+ * the homepage. Listing them per page is what keeps the form honest.
+ */
+export const pageFieldGroups: Record<
+  PageSlug,
+  ("hero" | "ctaBand" | "blocks" | "about" | "careers" | "technology" | "contact")[]
+> = {
+  home: ["hero"],
+  about: ["about", "ctaBand"],
+  services: ["ctaBand"],
+  industries: ["ctaBand"],
+  technology: ["technology", "ctaBand"],
+  "case-studies": ["ctaBand"],
+  careers: ["careers", "ctaBand"],
+  contact: ["contact"],
+  "privacy-policy": ["blocks"],
+  terms: ["blocks"],
+  "not-found": [],
+};
+
 export type SectionCopy = {
   eyebrow: string;
   title: string;

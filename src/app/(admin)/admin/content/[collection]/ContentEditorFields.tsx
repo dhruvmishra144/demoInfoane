@@ -1,4 +1,10 @@
 import type { Collection } from "@/server/db/schema";
+import {
+  isPageSlug,
+  pageFieldGroups,
+  pageLabelDefaults,
+  pageSectionDefaults,
+} from "@/lib/page-sections";
 import { Field } from "@/components/admin/Field";
 import { Input } from "@/components/admin/Input";
 import { Textarea } from "@/components/admin/Textarea";
@@ -33,10 +39,12 @@ const ICON_OPTIONS = ["code", "cloud", "refresh", "data", "spark", "team", "shie
 
 export function ContentEditorFields({
   collection,
+  slug,
   data,
   errors,
 }: {
   collection: Collection;
+  slug: string | null;
   data: Data | null;
   errors: Errors;
 }) {
@@ -303,7 +311,25 @@ export function ContentEditorFields({
         </>
       );
 
-    case "page":
+    case "page": {
+      const pageSlug = slug && isPageSlug(slug) ? slug : null;
+      // A page created by an editor has no registry entry, so it gets the
+      // generic fields only — there are no known sections to offer.
+      const groups = pageSlug ? pageFieldGroups[pageSlug] : ["blocks" as const];
+      const sectionDefs = pageSlug ? pageSectionDefaults[pageSlug] : [];
+      const labelDefs = pageSlug ? pageLabelDefaults[pageSlug] ?? [] : [];
+      const storedSections = objArr<Record<string, unknown>>(data, "sections");
+      const storedLabels = (data?.labels as Record<string, string> | undefined) ?? {};
+      const hero = (data?.hero as Record<string, unknown> | undefined) ?? null;
+      const ctaBand = (data?.ctaBand as Record<string, unknown> | undefined) ?? null;
+
+      const labelGroups: { group: string; entries: typeof labelDefs }[] = [];
+      for (const entry of labelDefs) {
+        const existing = labelGroups.find((g) => g.group === entry.group);
+        if (existing) existing.entries.push(entry);
+        else labelGroups.push({ group: entry.group, entries: [entry] });
+      }
+
       return (
         <>
           <Field label="Meta title" htmlFor="metaTitle" error={errors.metaTitle}>
@@ -328,151 +354,374 @@ export function ContentEditorFields({
             multiline
             max={5}
           />
-          <RepeatableGroupList
-            name="blocks"
-            label="Sections"
-            initialValues={objArr<{ title: string; body: string }>(data, "blocks")}
-            emptyRow={{ title: "", body: "" }}
-            max={12}
-            renderRow={(fieldName, row) => (
-              <>
-                <Input name={fieldName("title")} defaultValue={row.title} placeholder="Section title" />
-                <Textarea name={fieldName("body")} defaultValue={row.body} placeholder="Body" />
-              </>
-            )}
-          />
 
-          {/* The sections below are only used by About/Careers/Technology/Contact —
-              leave them empty on pages that don't need them. */}
-          <RepeatableGroupList
-            name="principles"
-            label="Principles (About)"
-            initialValues={objArr<{ title: string; body: string }>(data, "principles")}
-            emptyRow={{ title: "", body: "" }}
-            max={10}
-            renderRow={(fieldName, row) => (
-              <>
-                <Input name={fieldName("title")} defaultValue={row.title} placeholder="Title" />
-                <Textarea name={fieldName("body")} defaultValue={row.body} placeholder="Body" />
-              </>
-            )}
-          />
-          <RepeatableGroupList
-            name="leadership"
-            label="Leadership (About)"
-            initialValues={objArr<{ name: string; role: string; bio: string; linkedin: string }>(
-              data,
-              "leadership",
-            )}
-            emptyRow={{ name: "", role: "", bio: "", linkedin: "" }}
-            max={12}
-            renderRow={(fieldName, row) => (
-              <>
-                <div className="grid grid-cols-2 gap-3">
-                  <Input name={fieldName("name")} defaultValue={row.name} placeholder="Name" />
-                  <Input name={fieldName("role")} defaultValue={row.role} placeholder="Role" />
+          {groups.includes("hero") && (
+            <fieldset className="rounded-2xl border border-ink-200 p-5">
+              <legend className="px-2 text-sm font-semibold text-ink-900">Hero</legend>
+              <div className="space-y-4">
+                <Field label="Headline" htmlFor="hero.headline">
+                  <Input id="hero.headline" name="hero.headline" defaultValue={str(hero, "headline")} />
+                </Field>
+                <Field
+                  label="Highlighted phrase"
+                  htmlFor="hero.highlight"
+                  hint="A phrase from the headline above. It renders in the brand gradient; leave blank for no gradient."
+                >
+                  <Input
+                    id="hero.highlight"
+                    name="hero.highlight"
+                    defaultValue={str(hero, "highlight")}
+                  />
+                </Field>
+                <Field label="Sub-heading" htmlFor="hero.subhead">
+                  <Textarea id="hero.subhead" name="hero.subhead" defaultValue={str(hero, "subhead")} />
+                </Field>
+                <div className="grid grid-cols-2 gap-4">
+                  <Field label="Primary button" htmlFor="hero.primaryCta">
+                    <Input
+                      id="hero.primaryCta"
+                      name="hero.primaryCta"
+                      defaultValue={str(hero, "primaryCta")}
+                    />
+                  </Field>
+                  <Field label="Secondary button" htmlFor="hero.secondaryCta">
+                    <Input
+                      id="hero.secondaryCta"
+                      name="hero.secondaryCta"
+                      defaultValue={str(hero, "secondaryCta")}
+                    />
+                  </Field>
                 </div>
-                <Textarea name={fieldName("bio")} defaultValue={row.bio} placeholder="Bio" />
-                <Input
-                  name={fieldName("linkedin")}
-                  defaultValue={row.linkedin}
-                  placeholder="LinkedIn URL"
+                <Field label="Note under the buttons" htmlFor="hero.note">
+                  <Input id="hero.note" name="hero.note" defaultValue={str(hero, "note")} />
+                </Field>
+                <Field label="Card title" htmlFor="hero.cardTitle">
+                  <Input
+                    id="hero.cardTitle"
+                    name="hero.cardTitle"
+                    defaultValue={str(hero, "cardTitle")}
+                  />
+                </Field>
+                <RepeatableStringList
+                  name="hero.cardItems"
+                  label="Card checklist"
+                  initialValues={Array.isArray(hero?.cardItems) ? (hero.cardItems as string[]) : []}
+                  max={6}
                 />
-              </>
-            )}
-          />
-          <RepeatableGroupList
-            name="milestones"
-            label="Milestones (About)"
-            initialValues={objArr<{ year: string; event: string }>(data, "milestones")}
-            emptyRow={{ year: "", event: "" }}
-            max={20}
-            renderRow={(fieldName, row) => (
-              <div className="grid grid-cols-[1fr_3fr] gap-3">
-                <Input name={fieldName("year")} defaultValue={row.year} placeholder="Year" />
-                <Input name={fieldName("event")} defaultValue={row.event} placeholder="Event" />
               </div>
-            )}
-          />
-          <RepeatableGroupList
-            name="benefits"
-            label="Benefits (Careers)"
-            initialValues={objArr<{ title: string; body: string }>(data, "benefits")}
-            emptyRow={{ title: "", body: "" }}
-            max={10}
-            renderRow={(fieldName, row) => (
-              <>
-                <Input name={fieldName("title")} defaultValue={row.title} placeholder="Title" />
-                <Textarea name={fieldName("body")} defaultValue={row.body} placeholder="Body" />
-              </>
-            )}
-          />
-          <RepeatableGroupList
-            name="hiringProcess"
-            label="Hiring process (Careers)"
-            initialValues={objArr<{ step: string; title: string; body: string }>(data, "hiringProcess")}
-            emptyRow={{ step: "", title: "", body: "" }}
-            max={10}
-            renderRow={(fieldName, row) => (
-              <>
-                <div className="grid grid-cols-[1fr_3fr] gap-3">
-                  <Input name={fieldName("step")} defaultValue={row.step} placeholder="Step" />
-                  <Input name={fieldName("title")} defaultValue={row.title} placeholder="Title" />
-                </div>
-                <Textarea name={fieldName("body")} defaultValue={row.body} placeholder="Body" />
-              </>
-            )}
-          />
-          <RepeatableGroupList
-            name="openings"
-            label="Openings (Careers)"
-            initialValues={objArr<{ title: string; location: string; type: string; summary: string }>(
-              data,
-              "openings",
-            )}
-            emptyRow={{ title: "", location: "", type: "", summary: "" }}
-            max={20}
-            renderRow={(fieldName, row) => (
-              <>
-                <div className="grid grid-cols-3 gap-3">
-                  <Input name={fieldName("title")} defaultValue={row.title} placeholder="Title" />
-                  <Input name={fieldName("location")} defaultValue={row.location} placeholder="Location" />
-                  <Input name={fieldName("type")} defaultValue={row.type} placeholder="Type" />
-                </div>
-                <Textarea name={fieldName("summary")} defaultValue={row.summary} placeholder="Summary" />
-              </>
-            )}
-          />
-          <RepeatableGroupList
-            name="techGroups"
-            label="Tech groups (Technology)"
-            initialValues={objArr<Record<string, unknown>>(data, "techGroups").map((group) => ({
-              group: String(group.group ?? ""),
-              body: String(group.body ?? ""),
-              items: Array.isArray(group.items) ? (group.items as string[]).join(", ") : "",
-            }))}
-            emptyRow={{ group: "", body: "", items: "" }}
-            max={10}
-            renderRow={(fieldName, row) => (
-              <>
-                <Input name={fieldName("group")} defaultValue={row.group} placeholder="Group name" />
-                <Textarea name={fieldName("body")} defaultValue={row.body} placeholder="Body" />
-                <Input
-                  name={fieldName("items")}
-                  defaultValue={row.items}
-                  placeholder="Comma-separated items"
-                />
-              </>
-            )}
-          />
-          <RepeatableStringList
-            name="expectations"
-            label="Expectations (Contact)"
-            initialValues={arr(data, "expectations")}
-            max={10}
-          />
+            </fieldset>
+          )}
+
+          {sectionDefs.length > 0 && (
+            <fieldset className="rounded-2xl border border-ink-200 p-5">
+              <legend className="px-2 text-sm font-semibold text-ink-900">
+                Section headings
+              </legend>
+              <p className="mb-4 text-xs text-ink-500">
+                Leave a field blank to fall back to the wording the site shipped with.
+                You can use {"{consultationLength}"}, {"{discoveryLength}"} and{" "}
+                {"{responseTime}"}; they are filled in from Site settings.
+              </p>
+              <div className="space-y-5">
+                {sectionDefs.map((section, index) => {
+                  const stored = storedSections.find((row) => row.key === section.key);
+                  const field = (name: string) => `sections[${index}][${name}]`;
+                  const bullets = Array.isArray(stored?.bullets)
+                    ? (stored.bullets as string[]).join("\n")
+                    : (section.bullets ?? []).join("\n");
+
+                  return (
+                    <div
+                      key={section.key}
+                      className="rounded-xl border border-ink-100 bg-ink-50/40 p-4"
+                    >
+                      <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-ink-500">
+                        {section.label}
+                      </p>
+                      <input type="hidden" name={field("key")} value={section.key} />
+                      <div className="space-y-3">
+                        <Input
+                          name={field("eyebrow")}
+                          defaultValue={String(stored?.eyebrow ?? section.eyebrow ?? "")}
+                          placeholder="Eyebrow"
+                        />
+                        <Input
+                          name={field("title")}
+                          defaultValue={String(stored?.title ?? section.title ?? "")}
+                          placeholder="Heading"
+                        />
+                        <Textarea
+                          name={field("lead")}
+                          defaultValue={String(stored?.lead ?? section.lead ?? "")}
+                          placeholder="Intro paragraph"
+                          rows={2}
+                        />
+                        <Input
+                          name={field("ctaLabel")}
+                          defaultValue={String(stored?.ctaLabel ?? section.ctaLabel ?? "")}
+                          placeholder="Button label"
+                        />
+                        <Textarea
+                          name={field("bullets")}
+                          defaultValue={bullets}
+                          placeholder="Supporting points — one per line"
+                          rows={3}
+                        />
+                        <Textarea
+                          name={field("footnote")}
+                          defaultValue={String(stored?.footnote ?? section.footnote ?? "")}
+                          placeholder="Small print below the section"
+                          rows={2}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </fieldset>
+          )}
+
+          {labelGroups.length > 0 && (
+            <fieldset className="rounded-2xl border border-ink-200 p-5">
+              <legend className="px-2 text-sm font-semibold text-ink-900">
+                Labels and badges
+              </legend>
+              <div className="space-y-5">
+                {labelGroups.map((group) => (
+                  <div key={group.group}>
+                    <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-ink-500">
+                      {group.group}
+                    </p>
+                    <div className="space-y-3">
+                      {group.entries.map((entry) => (
+                        <Field key={entry.key} label={entry.label} htmlFor={`labels[${entry.key}]`}>
+                          <Input
+                            id={`labels[${entry.key}]`}
+                            name={`labels[${entry.key}]`}
+                            defaultValue={storedLabels[entry.key] ?? entry.value}
+                          />
+                        </Field>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </fieldset>
+          )}
+
+          {groups.includes("ctaBand") && (
+            <fieldset className="rounded-2xl border border-ink-200 p-5">
+              <legend className="px-2 text-sm font-semibold text-ink-900">
+                Closing call to action
+              </legend>
+              <div className="space-y-4">
+                <Field label="Heading" htmlFor="ctaBand.heading">
+                  <Input
+                    id="ctaBand.heading"
+                    name="ctaBand.heading"
+                    defaultValue={str(ctaBand, "heading")}
+                  />
+                </Field>
+                <Field label="Body" htmlFor="ctaBand.body">
+                  <Textarea
+                    id="ctaBand.body"
+                    name="ctaBand.body"
+                    defaultValue={str(ctaBand, "body")}
+                  />
+                </Field>
+              </div>
+            </fieldset>
+          )}
+
+          {groups.includes("blocks") && (
+            <RepeatableGroupList
+              name="blocks"
+              label="Content blocks"
+              initialValues={objArr<{ title: string; body: string }>(data, "blocks")}
+              emptyRow={{ title: "", body: "" }}
+              max={12}
+              renderRow={(fieldName, row) => (
+                <>
+                  <Input name={fieldName("title")} defaultValue={row.title} placeholder="Section title" />
+                  <Textarea name={fieldName("body")} defaultValue={row.body} placeholder="Body" />
+                </>
+              )}
+            />
+          )}
+
+          {groups.includes("about") && (
+            <>
+              <RepeatableGroupList
+                name="principles"
+                label="Principles"
+                initialValues={objArr<{ title: string; body: string }>(data, "principles")}
+                emptyRow={{ title: "", body: "" }}
+                max={10}
+                renderRow={(fieldName, row) => (
+                  <>
+                    <Input name={fieldName("title")} defaultValue={row.title} placeholder="Title" />
+                    <Textarea name={fieldName("body")} defaultValue={row.body} placeholder="Body" />
+                  </>
+                )}
+              />
+              <RepeatableGroupList
+                name="leadership"
+                label="Leadership"
+                initialValues={objArr<{ name: string; role: string; bio: string; linkedin: string }>(
+                  data,
+                  "leadership",
+                )}
+                emptyRow={{ name: "", role: "", bio: "", linkedin: "" }}
+                max={12}
+                renderRow={(fieldName, row) => (
+                  <>
+                    <div className="grid grid-cols-2 gap-3">
+                      <Input name={fieldName("name")} defaultValue={row.name} placeholder="Name" />
+                      <Input name={fieldName("role")} defaultValue={row.role} placeholder="Role" />
+                    </div>
+                    <Textarea name={fieldName("bio")} defaultValue={row.bio} placeholder="Bio" />
+                    <Input
+                      name={fieldName("linkedin")}
+                      defaultValue={row.linkedin}
+                      placeholder="LinkedIn URL"
+                    />
+                  </>
+                )}
+              />
+              <RepeatableGroupList
+                name="milestones"
+                label="Milestones"
+                initialValues={objArr<{ year: string; event: string }>(data, "milestones")}
+                emptyRow={{ year: "", event: "" }}
+                max={20}
+                renderRow={(fieldName, row) => (
+                  <div className="grid grid-cols-[1fr_3fr] gap-3">
+                    <Input name={fieldName("year")} defaultValue={row.year} placeholder="Year" />
+                    <Input name={fieldName("event")} defaultValue={row.event} placeholder="Event" />
+                  </div>
+                )}
+              />
+            </>
+          )}
+
+          {groups.includes("careers") && (
+            <>
+              <RepeatableGroupList
+                name="benefits"
+                label="Benefits"
+                initialValues={objArr<{ title: string; body: string }>(data, "benefits")}
+                emptyRow={{ title: "", body: "" }}
+                max={10}
+                renderRow={(fieldName, row) => (
+                  <>
+                    <Input name={fieldName("title")} defaultValue={row.title} placeholder="Title" />
+                    <Textarea name={fieldName("body")} defaultValue={row.body} placeholder="Body" />
+                  </>
+                )}
+              />
+              <RepeatableGroupList
+                name="hiringProcess"
+                label="Hiring process"
+                initialValues={objArr<{ step: string; title: string; body: string }>(
+                  data,
+                  "hiringProcess",
+                )}
+                emptyRow={{ step: "", title: "", body: "" }}
+                max={10}
+                renderRow={(fieldName, row) => (
+                  <>
+                    <div className="grid grid-cols-[1fr_3fr] gap-3">
+                      <Input name={fieldName("step")} defaultValue={row.step} placeholder="Step" />
+                      <Input name={fieldName("title")} defaultValue={row.title} placeholder="Title" />
+                    </div>
+                    <Textarea name={fieldName("body")} defaultValue={row.body} placeholder="Body" />
+                  </>
+                )}
+              />
+              <RepeatableGroupList
+                name="openings"
+                label="Openings"
+                initialValues={objArr<{
+                  title: string;
+                  location: string;
+                  type: string;
+                  summary: string;
+                }>(data, "openings")}
+                emptyRow={{ title: "", location: "", type: "", summary: "" }}
+                max={20}
+                renderRow={(fieldName, row) => (
+                  <>
+                    <div className="grid grid-cols-3 gap-3">
+                      <Input name={fieldName("title")} defaultValue={row.title} placeholder="Title" />
+                      <Input
+                        name={fieldName("location")}
+                        defaultValue={row.location}
+                        placeholder="Location"
+                      />
+                      <Input name={fieldName("type")} defaultValue={row.type} placeholder="Type" />
+                    </div>
+                    <Textarea
+                      name={fieldName("summary")}
+                      defaultValue={row.summary}
+                      placeholder="Summary"
+                    />
+                  </>
+                )}
+              />
+            </>
+          )}
+
+          {groups.includes("technology") && (
+            <>
+              <RepeatableGroupList
+                name="principles"
+                label="Selection criteria"
+                initialValues={objArr<{ title: string; body: string }>(data, "principles")}
+                emptyRow={{ title: "", body: "" }}
+                max={10}
+                renderRow={(fieldName, row) => (
+                  <>
+                    <Input name={fieldName("title")} defaultValue={row.title} placeholder="Title" />
+                    <Textarea name={fieldName("body")} defaultValue={row.body} placeholder="Body" />
+                  </>
+                )}
+              />
+              <RepeatableGroupList
+                name="techGroups"
+                label="Tech groups"
+                initialValues={objArr<Record<string, unknown>>(data, "techGroups").map((group) => ({
+                  group: String(group.group ?? ""),
+                  body: String(group.body ?? ""),
+                  items: Array.isArray(group.items) ? (group.items as string[]).join(", ") : "",
+                }))}
+                emptyRow={{ group: "", body: "", items: "" }}
+                max={10}
+                renderRow={(fieldName, row) => (
+                  <>
+                    <Input name={fieldName("group")} defaultValue={row.group} placeholder="Group name" />
+                    <Textarea name={fieldName("body")} defaultValue={row.body} placeholder="Body" />
+                    <Input
+                      name={fieldName("items")}
+                      defaultValue={row.items}
+                      placeholder="Comma-separated items"
+                    />
+                  </>
+                )}
+              />
+            </>
+          )}
+
+          {groups.includes("contact") && (
+            <RepeatableStringList
+              name="expectations"
+              label="What to expect"
+              initialValues={arr(data, "expectations")}
+              max={10}
+            />
+          )}
         </>
       );
+    }
 
     case "navMenu":
       return (

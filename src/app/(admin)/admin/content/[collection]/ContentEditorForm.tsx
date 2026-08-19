@@ -68,7 +68,12 @@ export function ContentEditorForm({
           </Field>
         )}
 
-        <ContentEditorFields collection={collection} data={initialData} errors={state?.fieldErrors ?? {}} />
+        <ContentEditorFields
+          collection={collection}
+          slug={slug}
+          data={initialData}
+          errors={state?.fieldErrors ?? {}}
+        />
 
         {state?.error && (
           <p role="alert" className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
