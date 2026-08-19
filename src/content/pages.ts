@@ -12,10 +12,10 @@
 export const about = {
   metaTitle: "About Us",
   metaDescription:
-    "Infotech is an IT consulting and software development company. Meet the team, how we work, and the principles we hold to on every engagement.",
+    "Infoane is an IT consulting and software development company. Meet the team, how we work, and the principles we hold to on every engagement.",
   heading: "An engineering firm, not a body shop",
   intro: [
-    "Infotech was founded in [YYYY] to do consulting work the way its founders wanted to be treated as clients: senior people on the engagement, an honest opinion when the brief is wrong, and a system the client can run without us.",
+    "Infoane was founded in [YYYY] to do consulting work the way its founders wanted to be treated as clients: senior people on the engagement, an honest opinion when the brief is wrong, and a system the client can run without us.",
     "Today we are [XX] engineers, QA specialists and DevOps practitioners working with [industries you serve] across [regions you serve]. We are large enough to staff a full delivery team and small enough that the people who scope your project are the people who build it.",
   ],
   principles: [
@@ -204,7 +204,7 @@ export const caseStudiesPage = {
 export const careersPage = {
   metaTitle: "Careers",
   metaDescription:
-    "Work at Infotech. Open engineering, QA and DevOps roles, how our hiring process works, and what to expect from working here.",
+    "Work at Infoane. Open engineering, QA and DevOps roles, how our hiring process works, and what to expect from working here.",
   heading: "Build systems that stay built",
   intro: [
     "We hire people who want to own outcomes rather than tickets. That means talking to clients, disagreeing with a brief when it is wrong, and writing the documentation you would want to inherit.",
@@ -254,7 +254,7 @@ export const careersPage = {
 export const contactPage = {
   metaTitle: "Contact Us",
   metaDescription:
-    "Talk to an engineer, not an account manager. Email or call Infotech to book a free consultation about your software, cloud or data project.",
+    "Talk to an engineer, not an account manager. Email or call Infoane to book a free consultation about your software, cloud or data project.",
   heading: "Tell us what is slowing your systems down",
   intro: [
     "Book a free consultation and you will speak to an engineer who has shipped work like yours. You will leave with a concrete opinion on your options, whether or not you hire us.",

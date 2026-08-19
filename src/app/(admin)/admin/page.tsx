@@ -8,9 +8,9 @@ import type { Collection } from "@/server/db/schema";
 /**
  * `absolute` because a layout's title template applies to child segments, not to
  * its own page — without this, /admin would pick up the root layout's
- * "%s | Infotech" template while every other admin page uses "%s | Infotech Admin".
+ * "%s | Infoane" template while every other admin page uses "%s | Infoane Admin".
  */
-export const metadata = { title: { absolute: "Dashboard | Infotech Admin" } };
+export const metadata = { title: { absolute: "Dashboard | Infoane Admin" } };
 
 /**
  * Dashboard: what is live, what is waiting for review, and what changed recently.

@@ -17,7 +17,7 @@ import { logoutAction } from "@/server/auth/actions";
  * middleware matcher.
  */
 export const metadata: Metadata = {
-  title: { default: "Admin", template: "%s | Infotech Admin" },
+  title: { default: "Admin", template: "%s | Infoane Admin" },
   robots: { index: false, follow: false, nocache: true },
 };
 
@@ -71,7 +71,7 @@ export default async function AdminLayout({
                 className="h-7 w-7 rounded-lg bg-gradient-to-br from-brand-400 to-brand-800"
                 aria-hidden="true"
               />
-              <span className="text-sm font-bold text-ink-900">Infotech Admin</span>
+              <span className="text-sm font-bold text-ink-900">Infoane Admin</span>
             </Link>
 
             <nav aria-label="Admin">

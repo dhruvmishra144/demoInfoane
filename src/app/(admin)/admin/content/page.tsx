@@ -3,7 +3,7 @@ import { requireUser } from "@/server/auth/guards";
 import { collectionLabels } from "@/server/content/schemas";
 import { COLLECTIONS } from "@/server/db/schema";
 
-export const metadata = { title: { absolute: "Content | Infotech Admin" } };
+export const metadata = { title: { absolute: "Content | Infoane Admin" } };
 
 export default async function ContentCollectionsPage() {
   await requireUser("/admin/content");

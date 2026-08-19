@@ -21,7 +21,7 @@ export function Logo({
     <Link
       href="/"
       className="group inline-flex items-center gap-2.5"
-      aria-label="Infotech — home"
+      aria-label="Infoane — home"
     >
       <svg
         viewBox="0 0 36 36"
@@ -54,7 +54,7 @@ export function Logo({
             theme === "dark" ? "text-white" : "text-ink-900"
           }`}
         >
-          Infotech
+          Infoane
         </span>
         {withTagline && (
           <span

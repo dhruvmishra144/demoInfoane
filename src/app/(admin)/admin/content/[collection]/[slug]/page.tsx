@@ -16,7 +16,7 @@ type Params = { collection: string; slug: string };
 export async function generateMetadata({ params }: { params: Promise<Params> }) {
   const { collection, slug } = await params;
   if (!isCollection(collection)) return {};
-  return { title: { absolute: `${slug} — ${collectionLabels[collection].singular} | Infotech Admin` } };
+  return { title: { absolute: `${slug} — ${collectionLabels[collection].singular} | Infoane Admin` } };
 }
 
 export default async function EditContentItemPage({ params }: { params: Promise<Params> }) {

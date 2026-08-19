@@ -3,7 +3,7 @@ import { getAllMedia } from "@/server/media/read";
 import { MediaUploadForm } from "./MediaUploadForm";
 import { MediaGridItem } from "./MediaGridItem";
 
-export const metadata = { title: { absolute: "Media | Infotech Admin" } };
+export const metadata = { title: { absolute: "Media | Infoane Admin" } };
 
 export default async function MediaLibraryPage() {
   await requireUser("/admin/media");

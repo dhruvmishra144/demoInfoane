@@ -19,7 +19,7 @@ export async function generateMetadata({
 }) {
   const { collection } = await params;
   if (!isCollection(collection)) return {};
-  return { title: { absolute: `${collectionLabels[collection].plural} | Infotech Admin` } };
+  return { title: { absolute: `${collectionLabels[collection].plural} | Infoane Admin` } };
 }
 
 export default async function CollectionListPage({

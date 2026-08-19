@@ -2,7 +2,7 @@ import { requireRole } from "@/server/auth/guards";
 import { recentAudit } from "@/server/auth/audit";
 import { Table, TableHead, Th, TableBody, Td } from "@/components/admin/Table";
 
-export const metadata = { title: { absolute: "Activity | Infotech Admin" } };
+export const metadata = { title: { absolute: "Activity | Infoane Admin" } };
 
 function formatAction(action: string): string {
   return action.replace(".", " → ").replace(/_/g, " ");

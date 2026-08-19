@@ -16,7 +16,7 @@ import type { User } from "@/server/db/schema";
  * (i.e. without the database lookup a JWT was supposed to avoid).
  */
 
-const COOKIE_NAME = "infotech_session";
+const COOKIE_NAME = "infoane_session";
 const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 /** Sliding window: only touch the DB when the session is over a day old. */
 const REFRESH_AFTER_MS = 24 * 60 * 60 * 1000;

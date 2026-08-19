@@ -15,7 +15,7 @@ export async function generateMetadata({
 }) {
   const { collection } = await params;
   if (!isCollection(collection)) return {};
-  return { title: { absolute: `New ${collectionLabels[collection].singular} | Infotech Admin` } };
+  return { title: { absolute: `New ${collectionLabels[collection].singular} | Infoane Admin` } };
 }
 
 export default async function NewContentItemPage({

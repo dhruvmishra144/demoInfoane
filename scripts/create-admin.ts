@@ -27,7 +27,9 @@ import { validatePasswordStrength } from "../src/server/auth/password";
 // the actual ceiling (workerd's WebCrypto rejects PBKDF2 above it outright),
 // not just this project's chosen value.
 const PBKDF2_ITERATIONS = 100_000;
-const DB_NAME = "infotech-content";
+// Passed as the binding name, not the database_name label, so this keeps
+// working regardless of what the D1 database is cosmetically named.
+const DB_BINDING = "DB";
 const TEMP_FILE = "drizzle/.create-admin.sql";
 
 const remote = process.argv.includes("--remote");
@@ -180,7 +182,7 @@ DELETE FROM sessions WHERE user_id IN (SELECT id FROM users WHERE email = ${sqlS
         "wrangler",
         "d1",
         "execute",
-        DB_NAME,
+        DB_BINDING,
         remote ? "--remote" : "--local",
         `--file=${TEMP_FILE}`,
       ],

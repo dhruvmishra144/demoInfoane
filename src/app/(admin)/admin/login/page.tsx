@@ -26,13 +26,13 @@ export default async function LoginPage({
             className="h-9 w-9 rounded-xl bg-gradient-to-br from-brand-400 to-brand-800"
             aria-hidden="true"
           />
-          <span className="text-lg font-bold text-ink-900">Infotech Admin</span>
+          <span className="text-lg font-bold text-ink-900">Infoane Admin</span>
         </div>
 
         <div className="mt-8 rounded-3xl border border-ink-200 bg-white p-8 shadow-lg shadow-brand-950/5">
           <h1 className="text-xl font-semibold text-ink-900">Sign in</h1>
           <p className="mt-1.5 text-sm text-ink-500">
-            Manage the content of the Infotech website.
+            Manage the content of the Infoane website.
           </p>
 
           <div className="mt-7">

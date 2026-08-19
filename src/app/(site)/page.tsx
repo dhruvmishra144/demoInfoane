@@ -39,7 +39,7 @@ import {
  * characters — so the words that earn the click go first.
  */
 export const metadata: Metadata = {
-  // `absolute` bypasses the layout's "%s | Infotech" template, which would
+  // `absolute` bypasses the layout's "%s | Infoane" template, which would
   // otherwise append the brand name a second time.
   title: {
     absolute: `IT Consulting & Custom Software Development Company | ${site.name}`,

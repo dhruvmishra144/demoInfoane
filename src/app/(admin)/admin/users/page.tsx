@@ -4,7 +4,7 @@ import { Table, TableHead, Th, TableBody } from "@/components/admin/Table";
 import { CreateUserForm } from "./CreateUserForm";
 import { UserRow } from "./UserRow";
 
-export const metadata = { title: { absolute: "Users | Infotech Admin" } };
+export const metadata = { title: { absolute: "Users | Infoane Admin" } };
 
 export default async function UsersPage() {
   const currentUser = await requireRole("admin");

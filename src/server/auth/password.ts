@@ -143,8 +143,8 @@ const COMMON_PASSWORDS = new Set([
   "letmein1",
   "welcome1",
   "admin123",
-  "infotech",
-  "infotech123",
+  "infoane",
+  "infoane123",
 ]);
 
 export function validatePasswordStrength(password: string): string | null {

@@ -11,10 +11,10 @@
 
 export const site = {
   /** Brand name as it should read in titles and headings. */
-  name: "Infotech",
+  name: "Infoane",
 
   /** Registered legal entity — used in the JSON-LD Organization node only. */
-  legalName: "[LEGAL_ENTITY_NAME, e.g. Infotech Solutions Pvt. Ltd.]",
+  legalName: "[LEGAL_ENTITY_NAME, e.g. Infoane Solutions Pvt. Ltd.]",
 
   /**
    * Canonical origin, no trailing slash. Everything (canonical tags, sitemap,
@@ -35,7 +35,7 @@ export const site = {
    * this one is 154.
    */
   description:
-    "Infotech is an IT consulting and custom software development company helping enterprises modernize legacy systems, move to the cloud, and ship software faster.",
+    "Infoane is an IT consulting and custom software development company helping enterprises modernize legacy systems, move to the cloud, and ship software faster.",
 
   /** Year founded — feeds the Organization schema and the footer. */
   foundingYear: "[YYYY]",

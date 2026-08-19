@@ -25,7 +25,7 @@ export function Showcase() {
                   ))}
                 </div>
                 <div className="mx-auto flex w-full max-w-xs items-center justify-center rounded-full bg-white px-3 py-1 text-[11px] text-ink-400 ring-1 ring-ink-200">
-                  delivery.infotech.internal
+                  delivery.infoane.internal
                 </div>
               </div>
 

@@ -245,7 +245,7 @@ export type Faq = { question: string; answer: string };
  */
 export const faqs: Faq[] = [
   {
-    question: "What services does Infotech provide?",
+    question: "What services does Infoane provide?",
     answer:
       "We are an IT consulting and software development company. We build custom web, mobile and back-office applications, migrate workloads to AWS, Azure and Google Cloud, modernize legacy systems, build data platforms and analytics, implement AI and automation, and provide dedicated engineering teams that work alongside your in-house staff.",
   },

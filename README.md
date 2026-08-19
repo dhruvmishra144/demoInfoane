@@ -1,6 +1,6 @@
-# Infotech — website
+# Infoane — website
 
-Marketing site for Infotech, an IT consulting and custom software development
+Marketing site for Infoane, an IT consulting and custom software development
 company. Built with Next.js 15 (App Router), React 19, TypeScript and Tailwind
 CSS v4. Fifteen pages, all statically prerendered.
 

@@ -191,8 +191,8 @@ These need your Cloudflare account (or an ImageKit account), so I cannot run
 them:
 
 ```bash
-npx wrangler d1 create infotech-content
-npx wrangler d1 create infotech-next-cache
+npx wrangler d1 create infoane-content
+npx wrangler d1 create infoane-next-cache
 npx wrangler kv namespace create NEXT_INC_CACHE_KV
 ```
 
