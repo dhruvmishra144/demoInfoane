@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { absolute, routes, serviceHref } from "@/lib/routes";
-import { servicePages } from "@/content/services";
+import { getCollectionOrFallback } from "@/server/content/with-fallback";
+import { serviceFallback } from "@/server/content/static-fallback";
 
 /**
  * Served at /sitemap.xml.
@@ -14,8 +15,9 @@ import { servicePages } from "@/content/services";
  *  2. Noindexed pages are excluded. Asking a crawler to index a page you have
  *     told it not to index is a contradictory signal.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+  const servicePages = await getCollectionOrFallback("service", serviceFallback);
 
   return [
     {

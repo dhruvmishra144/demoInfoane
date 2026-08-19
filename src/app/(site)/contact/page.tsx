@@ -7,15 +7,39 @@ import { EnquiryForm } from "@/components/EnquiryForm";
 import { icons } from "@/components/ui/Icons";
 import { pageSchema } from "@/lib/schema";
 import { routes, serviceHref } from "@/lib/routes";
-import { contactPage } from "@/content/pages";
-import { servicePages } from "@/content/services";
-import { site } from "@/config/site";
+import { contactPage as contactPageFallback } from "@/content/pages";
+import {
+  getItemOrFallback,
+  getCollectionOrFallback,
+  getSettingsOrFallback,
+} from "@/server/content/with-fallback";
+import { serviceFallback, settingsFallback } from "@/server/content/static-fallback";
 
-export const metadata: Metadata = {
-  title: contactPage.metaTitle,
-  description: contactPage.metaDescription,
-  alternates: { canonical: routes.contact },
+const pageFallback = {
+  metaTitle: contactPageFallback.metaTitle,
+  metaDescription: contactPageFallback.metaDescription,
+  heading: contactPageFallback.heading,
+  intro: contactPageFallback.intro,
+  blocks: [],
+  principles: [],
+  leadership: [],
+  milestones: [],
+  benefits: [],
+  hiringProcess: [],
+  openings: [],
+  techGroups: [],
+  expectations: contactPageFallback.expectations,
+  slug: "contact",
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const contactPage = await getItemOrFallback("page", "contact", pageFallback);
+  return {
+    title: contactPage.metaTitle,
+    description: contactPage.metaDescription,
+    alternates: { canonical: routes.contact },
+  };
+}
 
 /**
  * The form here has no backend by design: it composes a prefilled email in the
@@ -24,7 +48,12 @@ export const metadata: Metadata = {
  * page (email, phone per office) works today too. See CONTENT-TODO.md for wiring
  * it to a CRM.
  */
-export default function ContactPage() {
+export default async function ContactPage() {
+  const contactPage = await getItemOrFallback("page", "contact", pageFallback);
+  const servicePages = await getCollectionOrFallback("service", serviceFallback);
+  const settings = await getSettingsOrFallback(settingsFallback);
+  const site = settings;
+
   return (
     <>
       <JsonLd

@@ -1,7 +1,7 @@
 import { Button } from "./ui/Button";
 import { Reveal } from "./ui/Reveal";
-import { site } from "@/config/site";
 import { routes } from "@/lib/routes";
+import type { CollectionData } from "@/server/content/schemas";
 
 /**
  * Closing conversion band for inner pages, contained rather than full-bleed.
@@ -11,10 +11,13 @@ import { routes } from "@/lib/routes";
 export function CtaBand({
   heading = "Tell us what is slowing your systems down",
   body,
+  settings,
 }: {
   heading?: string;
   body?: string;
+  settings: Pick<CollectionData["settings"], "contact" | "promises">;
 }) {
+  const { contact, promises } = settings;
   return (
     <section aria-labelledby="cta-band-heading" className="bg-ink-50 py-16 lg:py-20">
       <div className="container-x">
@@ -39,18 +42,18 @@ export function CtaBand({
               </h2>
               <p className="mt-5 leading-relaxed text-ink-300 lg:text-lg">
                 {body ??
-                  `Book a free ${site.promises.consultationLength} consultation. You will talk to an engineer, not an account manager, and you will leave with a concrete opinion on your options — whether or not you hire us.`}
+                  `Book a free ${promises.consultationLength} consultation. You will talk to an engineer, not an account manager, and you will leave with a concrete opinion on your options — whether or not you hire us.`}
               </p>
               <div className="mt-9 flex flex-wrap gap-3">
                 <Button href={routes.contact} variant="light">
                   Contact us
                 </Button>
                 <Button
-                  href={`tel:${site.contact.phone}`}
+                  href={`tel:${contact.phone}`}
                   variant="onDark"
                   withChip={false}
                 >
-                  Call {site.contact.phoneDisplay}
+                  Call {contact.phoneDisplay}
                 </Button>
               </div>
             </div>

@@ -9,26 +9,33 @@ import { Button } from "@/components/ui/Button";
 import { icons } from "@/components/ui/Icons";
 import { pageSchema } from "@/lib/schema";
 import { routes, serviceHref } from "@/lib/routes";
-import { getServiceBySlug, servicePages } from "@/content/services";
+import { getServiceBySlug } from "@/content/services";
+import { getItem } from "@/server/content/read";
+import { getSettingsOrFallback, getCollectionOrFallback } from "@/server/content/with-fallback";
+import { serviceFallback, settingsFallback } from "@/server/content/static-fallback";
 
-/**
- * One statically generated page per service.
- *
- * `generateStaticParams` prerenders all six at build time, and
- * `dynamicParams = false` makes any other slug a 404 rather than an on-demand
- * render — so the set of live URLs exactly matches the sitemap.
- */
-export function generateStaticParams() {
-  return servicePages.map((service) => ({ slug: service.slug }));
+/** D1 first, falling back to the static list for a slug D1 doesn't have yet. */
+async function getService(slug: string) {
+  return (await getItem("service", slug)) ?? getServiceBySlug(slug) ?? null;
 }
 
-export const dynamicParams = false;
+/**
+ * One page per service, generated at build time from whatever's published in
+ * D1 (falling back to the static list). `dynamicParams` stays at its default
+ * (true) rather than the old `false` — a service added through the admin
+ * panel after the last deploy still needs to be reachable without a
+ * redeploy, rendered on demand and cached from then on.
+ */
+export async function generateStaticParams() {
+  const services = await getCollectionOrFallback("service", serviceFallback);
+  return services.map((service) => ({ slug: service.slug }));
+}
 
 type Params = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = await getService(slug);
   if (!service) return {};
 
   const path = serviceHref(service.slug);
@@ -48,13 +55,19 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function ServicePage({ params }: Params) {
   const { slug } = await params;
-  const service = getServiceBySlug(slug);
+  const service = await getService(slug);
   if (!service) notFound();
 
+  const settings = await getSettingsOrFallback(settingsFallback);
   const path = serviceHref(service.slug);
-  const related = service.related
-    .map((relatedSlug) => getServiceBySlug(relatedSlug))
-    .filter((item): item is NonNullable<typeof item> => Boolean(item));
+
+  // Sequential, not Promise.all — see next.config.ts's note on D1's
+  // build-time connection only tolerating one session at a time.
+  const related: NonNullable<Awaited<ReturnType<typeof getService>>>[] = [];
+  for (const relatedSlug of service.related) {
+    const match = await getService(relatedSlug);
+    if (match) related.push(match);
+  }
 
   return (
     <>
@@ -236,7 +249,10 @@ export default async function ServicePage({ params }: Params) {
         </ul>
       </Section>
 
-      <CtaBand heading={`Talk to us about ${service.title.toLowerCase()}`} />
+      <CtaBand
+        heading={`Talk to us about ${service.title.toLowerCase()}`}
+        settings={settings}
+      />
     </>
   );
 }

@@ -7,18 +7,52 @@ import { Section } from "@/components/ui/Section";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { pageSchema } from "@/lib/schema";
 import { routes, serviceHref } from "@/lib/routes";
-import { caseStudiesPage } from "@/content/pages";
-import { caseStudies } from "@/content/home";
-import { servicePages } from "@/content/services";
-import { testimonialFallback } from "@/server/content/static-fallback";
+import { caseStudiesPage as caseStudiesPageFallback } from "@/content/pages";
+import {
+  getItemOrFallback,
+  getCollectionOrFallback,
+  getSettingsOrFallback,
+} from "@/server/content/with-fallback";
+import {
+  caseStudyFallback,
+  serviceFallback,
+  testimonialFallback,
+  settingsFallback,
+} from "@/server/content/static-fallback";
 
-export const metadata: Metadata = {
-  title: caseStudiesPage.metaTitle,
-  description: caseStudiesPage.metaDescription,
-  alternates: { canonical: routes.caseStudies },
+const pageFallback = {
+  metaTitle: caseStudiesPageFallback.metaTitle,
+  metaDescription: caseStudiesPageFallback.metaDescription,
+  heading: caseStudiesPageFallback.heading,
+  intro: caseStudiesPageFallback.intro,
+  blocks: [],
+  principles: [],
+  leadership: [],
+  milestones: [],
+  benefits: [],
+  hiringProcess: [],
+  openings: [],
+  techGroups: [],
+  expectations: [],
+  slug: "case-studies",
 };
 
-export default function CaseStudiesPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const caseStudiesPage = await getItemOrFallback("page", "case-studies", pageFallback);
+  return {
+    title: caseStudiesPage.metaTitle,
+    description: caseStudiesPage.metaDescription,
+    alternates: { canonical: routes.caseStudies },
+  };
+}
+
+export default async function CaseStudiesPage() {
+  const caseStudiesPage = await getItemOrFallback("page", "case-studies", pageFallback);
+  const caseStudies = await getCollectionOrFallback("caseStudy", caseStudyFallback);
+  const servicePages = await getCollectionOrFallback("service", serviceFallback);
+  const testimonials = await getCollectionOrFallback("testimonial", testimonialFallback);
+  const settings = await getSettingsOrFallback(settingsFallback);
+
   return (
     <>
       <JsonLd
@@ -45,9 +79,9 @@ export default function CaseStudiesPage() {
         lead="No hero narratives. What was broken, what we did about it, and the number that changed."
       >
         <div className="space-y-6">
-          {caseStudies.map((study, index) => (
+          {caseStudies.map((study) => (
             <article
-              key={index}
+              key={study.slug}
               className="grid gap-8 rounded-3xl border border-ink-200 bg-white p-8 lg:grid-cols-[2fr_1fr] lg:p-10"
             >
               <div>
@@ -92,7 +126,7 @@ export default function CaseStudiesPage() {
         </p>
       </Section>
 
-      <Testimonials testimonials={testimonialFallback} />
+      <Testimonials testimonials={testimonials} />
 
       <Section
         id="services-behind"
@@ -122,6 +156,7 @@ export default function CaseStudiesPage() {
       <CtaBand
         heading="Want to talk to one of these clients?"
         body="We will put you in touch with a reference whose problem resembled yours. Ask them what happened when something went wrong — that is the answer worth having."
+        settings={settings}
       />
     </>
   );

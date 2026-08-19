@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { icons } from "@/components/ui/Icons";
 import { routes, serviceHref } from "@/lib/routes";
-import { servicePages } from "@/content/services";
+import { getCollectionOrFallback } from "@/server/content/with-fallback";
+import { serviceFallback } from "@/server/content/static-fallback";
 
 /**
  * Custom 404.
@@ -17,7 +18,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-export default function NotFound() {
+export default async function NotFound() {
+  const servicePages = await getCollectionOrFallback("service", serviceFallback);
+
   return (
     <>
       <section className="relative isolate overflow-hidden bg-ink-950">

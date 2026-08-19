@@ -1,7 +1,9 @@
 import { Section } from "../ui/Section";
-import { process } from "@/content/home";
+import type { CollectionData } from "@/server/content/schemas";
 
-export function Process() {
+type ProcessStep = CollectionData["process"] & { slug: string };
+
+export function Process({ steps }: { steps: ProcessStep[] }) {
   return (
     <Section
       id="process"
@@ -11,7 +13,7 @@ export function Process() {
       lead="Most failed projects fail in the first month, on assumptions nobody wrote down. This is the sequence we use to make sure that does not happen."
     >
       <ol className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {process.map((item) => (
+        {steps.map((item) => (
           <li
             key={item.step}
             className="relative rounded-3xl border border-ink-200 bg-white p-7"

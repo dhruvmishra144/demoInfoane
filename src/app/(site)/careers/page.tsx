@@ -7,14 +7,35 @@ import { Button } from "@/components/ui/Button";
 import { icons } from "@/components/ui/Icons";
 import { pageSchema } from "@/lib/schema";
 import { routes } from "@/lib/routes";
-import { careersPage } from "@/content/pages";
-import { site } from "@/config/site";
+import { careersPage as careersPageFallback } from "@/content/pages";
+import { getItemOrFallback, getSettingsOrFallback } from "@/server/content/with-fallback";
+import { settingsFallback } from "@/server/content/static-fallback";
 
-export const metadata: Metadata = {
-  title: careersPage.metaTitle,
-  description: careersPage.metaDescription,
-  alternates: { canonical: routes.careers },
+const pageFallback = {
+  metaTitle: careersPageFallback.metaTitle,
+  metaDescription: careersPageFallback.metaDescription,
+  heading: careersPageFallback.heading,
+  intro: careersPageFallback.intro,
+  blocks: [],
+  principles: [],
+  leadership: [],
+  milestones: [],
+  benefits: careersPageFallback.benefits,
+  hiringProcess: careersPageFallback.hiringProcess,
+  openings: careersPageFallback.openings,
+  techGroups: [],
+  expectations: [],
+  slug: "careers",
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const careersPage = await getItemOrFallback("page", "careers", pageFallback);
+  return {
+    title: careersPage.metaTitle,
+    description: careersPage.metaDescription,
+    alternates: { canonical: routes.careers },
+  };
+}
 
 /**
  * Note: no JobPosting structured data yet, on purpose. JobPosting markup with
@@ -22,7 +43,10 @@ export const metadata: Metadata = {
  * Google removes listings it cannot verify. Add it per role once the openings
  * are real — see CONTENT-TODO.md.
  */
-export default function CareersPage() {
+export default async function CareersPage() {
+  const careersPage = await getItemOrFallback("page", "careers", pageFallback);
+  const settings = await getSettingsOrFallback(settingsFallback);
+
   return (
     <>
       <JsonLd
@@ -40,7 +64,7 @@ export default function CareersPage() {
         intro={careersPage.intro}
         breadcrumbs={[]}
       >
-        <Button href={`mailto:${site.contact.email}`}>
+        <Button href={`mailto:${settings.contact.email}`}>
           Send us your CV
         </Button>
       </PageHero>
@@ -72,7 +96,7 @@ export default function CareersPage() {
                   </ul>
                 </div>
                 <Button
-                  href={`mailto:${site.contact.email}?subject=${encodeURIComponent(
+                  href={`mailto:${settings.contact.email}?subject=${encodeURIComponent(
                     `Application: ${opening.title}`,
                   )}`}
                   variant="light"
@@ -135,6 +159,7 @@ export default function CareersPage() {
       <CtaBand
         heading="Not seeing your role?"
         body="Tell us what you want to work on and what you have shipped. We read every application, and we reply either way."
+        settings={settings}
       />
     </>
   );

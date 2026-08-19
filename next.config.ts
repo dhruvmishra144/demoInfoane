@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  experimental: {
+    // Static generation now queries D1 for content. The remote D1 connection
+    // used during `next build` only tolerates one session at a time — more
+    // than one worker process hitting it concurrently throws SQLITE_BUSY.
+    // Forcing single-worker generation trades build speed for reliability.
+    cpus: 1,
+  },
   async headers() {
     return [
       {

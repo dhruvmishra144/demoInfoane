@@ -1,13 +1,14 @@
 import { Logo } from "./Logo";
 import { SiteNav } from "./SiteNav";
-import { servicePages } from "@/content/services";
-import { industriesPage } from "@/content/pages";
 import {
   primaryNav,
   routes,
   serviceHref,
   type NavItem,
 } from "@/lib/routes";
+
+type ServiceLink = { slug: string; title: string; navDescription: string };
+type IndustryLink = { slug: string; name: string; focus: string[] };
 
 /**
  * Floating pill header.
@@ -20,12 +21,18 @@ import {
  * from the content files) and hands it to the client component that owns the
  * interaction.
  */
-export function SiteHeader() {
+export function SiteHeader({
+  services,
+  industries,
+}: {
+  services: ServiceLink[];
+  industries: IndustryLink[];
+}) {
   const items: NavItem[] = primaryNav.map((item) => {
     if (item.label === "Services") {
       // Six services split across two columns, in content order.
-      const half = Math.ceil(servicePages.length / 2);
-      const toLink = (service: (typeof servicePages)[number]) => ({
+      const half = Math.ceil(services.length / 2);
+      const toLink = (service: ServiceLink) => ({
         label: service.title,
         href: serviceHref(service.slug),
         description: service.navDescription,
@@ -33,24 +40,24 @@ export function SiteHeader() {
       return {
         ...item,
         columns: [
-          { heading: "Build & modernise", links: servicePages.slice(0, half).map(toLink) },
-          { heading: "Data, AI & teams", links: servicePages.slice(half).map(toLink) },
+          { heading: "Build & modernise", links: services.slice(0, half).map(toLink) },
+          { heading: "Data, AI & teams", links: services.slice(half).map(toLink) },
         ],
       };
     }
 
     if (item.label === "Industries") {
-      const half = Math.ceil(industriesPage.detail.length / 2);
-      const toLink = (industry: (typeof industriesPage.detail)[number]) => ({
+      const half = Math.ceil(industries.length / 2);
+      const toLink = (industry: IndustryLink) => ({
         label: industry.name,
-        href: `${routes.industries}#${industry.slugId}`,
+        href: `${routes.industries}#${industry.slug}`,
         description: industry.focus[0],
       });
       return {
         ...item,
         columns: [
-          { heading: "Regulated sectors", links: industriesPage.detail.slice(0, half).map(toLink) },
-          { heading: "Operations & product", links: industriesPage.detail.slice(half).map(toLink) },
+          { heading: "Regulated sectors", links: industries.slice(0, half).map(toLink) },
+          { heading: "Operations & product", links: industries.slice(half).map(toLink) },
         ],
       };
     }

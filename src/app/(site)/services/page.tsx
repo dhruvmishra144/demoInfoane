@@ -8,7 +8,15 @@ import { icons } from "@/components/ui/Icons";
 import { Process } from "@/components/sections/Process";
 import { pageSchema } from "@/lib/schema";
 import { routes, serviceHref } from "@/lib/routes";
-import { servicePages } from "@/content/services";
+import {
+  getCollectionOrFallback,
+  getSettingsOrFallback,
+} from "@/server/content/with-fallback";
+import {
+  serviceFallback,
+  processFallback,
+  settingsFallback,
+} from "@/server/content/static-fallback";
 
 export const metadata: Metadata = {
   title: "IT Services & Software Development Services",
@@ -17,7 +25,11 @@ export const metadata: Metadata = {
   alternates: { canonical: routes.services },
 };
 
-export default function ServicesIndexPage() {
+export default async function ServicesIndexPage() {
+  const servicePages = await getCollectionOrFallback("service", serviceFallback);
+  const processSteps = await getCollectionOrFallback("process", processFallback);
+  const settings = await getSettingsOrFallback(settingsFallback);
+
   return (
     <>
       <JsonLd
@@ -90,11 +102,12 @@ export default function ServicesIndexPage() {
         </ul>
       </Section>
 
-      <Process />
+      <Process steps={processSteps} />
 
       <CtaBand
         heading="Not sure which service you need?"
         body="Describe the problem rather than the solution. We will tell you which of these applies — or that configuration solves it and you should keep your budget."
+        settings={settings}
       />
     </>
   );

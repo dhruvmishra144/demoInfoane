@@ -1,6 +1,12 @@
 import { site } from "@/config/site";
-import { servicePages, type ServicePage } from "@/content/services";
 import { absolute, serviceUrl } from "@/lib/routes";
+import type { CollectionData } from "@/server/content/schemas";
+
+type Settings = CollectionData["settings"];
+type ServiceSummary = { title: string; summary: string; slug: string };
+/** Minimal shape used for the per-service JSON-LD node — matches both the
+ * static `ServicePage` type and the D1-sourced `CollectionData["service"]`. */
+type ServiceForSchema = { title: string; metaDescription: string; deliverables: string[] };
 
 /**
  * JSON-LD structured data.
@@ -24,28 +30,28 @@ const logoId = `${site.url}/#logo`;
 
 /* --------------------------------------------------------- site-wide ---- */
 
-function organization() {
+function organization(settings: Settings, services: ServiceSummary[]) {
   return {
     "@type": ["Organization", "ProfessionalService"],
     "@id": orgId,
-    name: site.name,
-    legalName: site.legalName,
+    name: settings.name,
+    legalName: settings.legalName,
     url: site.url,
-    description: site.description,
-    slogan: site.tagline,
-    foundingDate: site.foundingYear,
-    email: site.contact.email,
-    telephone: site.contact.phone,
+    description: settings.description,
+    slogan: settings.tagline,
+    foundingDate: settings.foundingYear,
+    email: settings.contact.email,
+    telephone: settings.contact.phone,
     logo: {
       "@type": "ImageObject",
       "@id": logoId,
       url: `${site.url}/logo.svg`,
       contentUrl: `${site.url}/logo.svg`,
-      caption: site.name,
+      caption: settings.name,
     },
     image: { "@id": logoId },
-    sameAs: Object.values(site.social),
-    address: site.offices.map((office) => ({
+    sameAs: Object.values(settings.social),
+    address: settings.offices.map((office) => ({
       "@type": "PostalAddress",
       streetAddress: office.street,
       addressLocality: office.city,
@@ -55,18 +61,18 @@ function organization() {
     })),
     // One ContactPoint per office, so the right number is associated with the
     // right location rather than all of them collapsing into one.
-    contactPoint: site.offices.map((office) => ({
+    contactPoint: settings.offices.map((office) => ({
       "@type": "ContactPoint",
       contactType: office.isHeadquarters ? "sales" : "customer support",
       telephone: office.phone,
-      email: site.contact.email,
+      email: settings.contact.email,
       areaServed: office.country,
       availableLanguage: "English",
     })),
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: `${site.name} services`,
-      itemListElement: servicePages.map((service) => ({
+      name: `${settings.name} services`,
+      itemListElement: services.map((service) => ({
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
@@ -80,23 +86,23 @@ function organization() {
   };
 }
 
-function website() {
+function website(settings: Settings) {
   return {
     "@type": "WebSite",
     "@id": siteId,
     url: site.url,
-    name: site.name,
-    description: site.description,
+    name: settings.name,
+    description: settings.description,
     publisher: { "@id": orgId },
     inLanguage: "en",
   };
 }
 
 /** Rendered once, in the root layout. */
-export function siteSchema() {
+export function siteSchema(settings: Settings, services: ServiceSummary[]) {
   return {
     "@context": "https://schema.org",
-    "@graph": [organization(), website()],
+    "@graph": [organization(settings, services), website(settings)],
   };
 }
 
@@ -132,7 +138,7 @@ export function pageSchema({
   breadcrumbs?: Crumb[];
   faqs?: { question: string; answer: string }[];
   /** Present on service pages: emits a Service node for the offering. */
-  service?: ServicePage;
+  service?: ServiceForSchema;
 }) {
   const url = absolute(path);
   const nodes: object[] = [

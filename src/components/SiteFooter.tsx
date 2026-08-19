@@ -2,9 +2,10 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { icons, socialIcons, type SocialNetwork } from "./ui/Icons";
 import { Reveal } from "./ui/Reveal";
-import { site } from "@/config/site";
-import { servicePages } from "@/content/services";
 import { footerQuickLinks, routes, serviceHref } from "@/lib/routes";
+import type { CollectionData } from "@/server/content/schemas";
+
+type ServiceLink = { slug: string; title: string };
 
 /**
  * Footer: newsletter row, four link/contact columns, an oversized email address,
@@ -15,8 +16,15 @@ import { footerQuickLinks, routes, serviceHref } from "@/lib/routes";
  * Google matches against your Business Profile and directory listings. Keep them
  * byte-identical everywhere they appear online, punctuation included.
  */
-export function SiteFooter() {
+export function SiteFooter({
+  settings,
+  services,
+}: {
+  settings: CollectionData["settings"];
+  services: ServiceLink[];
+}) {
   const year = new Date().getFullYear();
+  const site = settings;
 
   return (
     <footer className="bg-ink-50">
@@ -124,7 +132,7 @@ export function SiteFooter() {
                 Services
               </h2>
               <ul className="mt-5 space-y-3 text-sm">
-                {servicePages.map((service) => (
+                {services.map((service) => (
                   <li key={service.slug}>
                     <Link
                       href={serviceHref(service.slug)}

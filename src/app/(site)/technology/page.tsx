@@ -6,16 +6,45 @@ import { CtaBand } from "@/components/CtaBand";
 import { Section } from "@/components/ui/Section";
 import { pageSchema } from "@/lib/schema";
 import { routes, serviceHref } from "@/lib/routes";
-import { technologyPage } from "@/content/pages";
-import { servicePages } from "@/content/services";
+import { technologyPage as technologyPageFallback } from "@/content/pages";
+import {
+  getItemOrFallback,
+  getCollectionOrFallback,
+  getSettingsOrFallback,
+} from "@/server/content/with-fallback";
+import { serviceFallback, settingsFallback } from "@/server/content/static-fallback";
 
-export const metadata: Metadata = {
-  title: technologyPage.metaTitle,
-  description: technologyPage.metaDescription,
-  alternates: { canonical: routes.technology },
+const pageFallback = {
+  metaTitle: technologyPageFallback.metaTitle,
+  metaDescription: technologyPageFallback.metaDescription,
+  heading: technologyPageFallback.heading,
+  intro: technologyPageFallback.intro,
+  blocks: [],
+  principles: technologyPageFallback.principles,
+  leadership: [],
+  milestones: [],
+  benefits: [],
+  hiringProcess: [],
+  openings: [],
+  techGroups: technologyPageFallback.groups,
+  expectations: [],
+  slug: "technology",
 };
 
-export default function TechnologyPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const technologyPage = await getItemOrFallback("page", "technology", pageFallback);
+  return {
+    title: technologyPage.metaTitle,
+    description: technologyPage.metaDescription,
+    alternates: { canonical: routes.technology },
+  };
+}
+
+export default async function TechnologyPage() {
+  const technologyPage = await getItemOrFallback("page", "technology", pageFallback);
+  const servicePages = await getCollectionOrFallback("service", serviceFallback);
+  const settings = await getSettingsOrFallback(settingsFallback);
+
   return (
     <>
       <JsonLd
@@ -41,7 +70,7 @@ export default function TechnologyPage() {
         lead="Grouped by layer, with a note on when each one earns its place."
       >
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {technologyPage.groups.map((group) => (
+          {technologyPage.techGroups.map((group) => (
             <article
               key={group.group}
               className="flex h-full flex-col rounded-3xl border border-ink-200 bg-white p-7"
@@ -118,6 +147,7 @@ export default function TechnologyPage() {
       <CtaBand
         heading="Working in a stack we have not listed?"
         body="Ask. The list reflects what our clients run, not the limit of what we will work on — and we would rather tell you we are not the right fit than learn your platform on your budget."
+        settings={settings}
       />
     </>
   );

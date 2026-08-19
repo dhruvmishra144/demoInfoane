@@ -7,16 +7,40 @@ import { Section } from "@/components/ui/Section";
 import { icons } from "@/components/ui/Icons";
 import { pageSchema } from "@/lib/schema";
 import { routes } from "@/lib/routes";
-import { about } from "@/content/pages";
-import { site } from "@/config/site";
+import { about as aboutFallback } from "@/content/pages";
+import { getItemOrFallback, getSettingsOrFallback } from "@/server/content/with-fallback";
+import { settingsFallback } from "@/server/content/static-fallback";
 
-export const metadata: Metadata = {
-  title: about.metaTitle,
-  description: about.metaDescription,
-  alternates: { canonical: routes.about },
+const pageFallback = {
+  metaTitle: aboutFallback.metaTitle,
+  metaDescription: aboutFallback.metaDescription,
+  heading: aboutFallback.heading,
+  intro: aboutFallback.intro,
+  blocks: [],
+  principles: aboutFallback.principles,
+  leadership: aboutFallback.leadership,
+  milestones: aboutFallback.milestones,
+  benefits: [],
+  hiringProcess: [],
+  openings: [],
+  techGroups: [],
+  expectations: [],
+  slug: "about",
 };
 
-export default function AboutPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const about = await getItemOrFallback("page", "about", pageFallback);
+  return {
+    title: about.metaTitle,
+    description: about.metaDescription,
+    alternates: { canonical: routes.about },
+  };
+}
+
+export default async function AboutPage() {
+  const about = await getItemOrFallback("page", "about", pageFallback);
+  const settings = await getSettingsOrFallback(settingsFallback);
+
   return (
     <>
       <JsonLd
@@ -39,7 +63,7 @@ export default function AboutPage() {
       <section aria-label="Company facts" className="border-b border-ink-100 bg-white">
         <div className="container-x py-12">
           <dl className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-            {site.stats.map((stat) => (
+            {settings.stats.map((stat) => (
               <div key={stat.label}>
                 <dt className="sr-only">{stat.label}</dt>
                 <dd>
@@ -153,7 +177,7 @@ export default function AboutPage() {
         lead="Delivery teams work with an overlap to your business hours — the location matters less than the overlap, and we staff for the overlap."
       >
         <ul className="grid gap-6 md:grid-cols-3">
-          {site.offices.map((office) => (
+          {settings.offices.map((office) => (
             <li
               key={office.label}
               className="rounded-3xl bg-white/5 p-7 ring-1 ring-inset ring-white/10"
@@ -195,7 +219,7 @@ export default function AboutPage() {
         </p>
       </Section>
 
-      <CtaBand />
+      <CtaBand settings={settings} />
     </>
   );
 }

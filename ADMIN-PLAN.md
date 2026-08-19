@@ -136,19 +136,41 @@ email-scoped failure counter cleared on successful sign-in.
 Not built: reject/preview via Next's draft mode (rejection currently just
 resets status to draft with a note, no dynamic noindex preview route yet).
 
-### Phase 4 — migrate the public pages onto D1 — partially done
+### Phase 4 — migrate the public pages onto D1 ✅ done
 
-- **Done**: the homepage and every section it renders (Hero, Services,
-  Pillars, Process/Capabilities, TechStack, EngagementModels, Industries,
-  CaseStudies, Testimonials, FAQ, TrustBar, FinalCta/EnquiryForm) — all read
-  through `getCollectionOrFallback`/`getSettingsOrFallback`
-  (`src/server/content/with-fallback.ts`), falling back to
-  `src/server/content/static-fallback.ts` (built from the same `src/content/*`
-  files) if D1 is empty. Verified in the browser against local D1.
-- **Not yet done**: About, Careers, Technology, Contact, Industries,
-  Case Studies and Services pages, plus `SiteHeader`/`SiteFooter`/`CtaBand`,
-  still import `src/content/*`/`site.ts` directly. Same pattern as the
-  homepage, just not applied there yet.
+Every public page and shared component (`SiteHeader`, `SiteFooter`, `CtaBand`,
+`EnquiryForm`, every section on the homepage, and the About/Careers/
+Technology/Contact/Industries/Case Studies/Services pages) now reads through
+`getCollectionOrFallback`/`getItemOrFallback`/`getSettingsOrFallback`
+(`src/server/content/with-fallback.ts`), falling back to
+`src/server/content/static-fallback.ts` (built from the same `src/content/*`
+files) if D1 has nothing published yet. `not-found.tsx` and `sitemap.ts` read
+the `service` collection the same way, so a service added or removed in the
+admin panel is reflected in both. Verified end-to-end against local D1 with
+no console errors on any route.
+
+Two deliberate exceptions, left on static data:
+- `/privacy-policy` and `/terms` — these are explicitly noindexed legal
+  placeholders awaiting real legal review (see the comment in each file), not
+  editorial content; not worth CMS-wiring before real text exists.
+- `lib/schema.ts`'s JSON-LD still reads `site.url` (for stable `@id` values)
+  and `site.offices` for one minor field (`areaServed` on the per-service
+  `Service` node) — everything else in the Organization/WebSite schema comes
+  from D1 settings.
+
+Also changed while migrating `/services/[slug]`: `dynamicParams` was `false`
+(any slug not in `generateStaticParams` 404'd), which would have blocked a
+newly-created service from being reachable without a redeploy. It now uses
+Next's default (`true`), so a new service renders on demand and is cached
+from then on — the same on-demand ISR pattern the incremental cache already
+supports.
+
+**Build-time D1 concurrency**: the real Cloudflare build hit
+`SQLITE_BUSY` when the homepage queried 10 collections via `Promise.all` —
+D1's remote connection during static generation only tolerates one session
+at a time. Fixed by making all per-page D1 reads sequential and adding
+`experimental.cpus: 1` to `next.config.ts` to stop Next from generating
+multiple pages in parallel worker processes during build.
 
 ### Phase 5 — media and polish ✅ done (ImageKit instead of R2)
 
