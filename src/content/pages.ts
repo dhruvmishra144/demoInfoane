@@ -265,3 +265,137 @@ export const contactPage = {
     "No obligation, and no sales sequence afterwards",
   ],
 };
+
+/* ----------------------------------------------------------------- Home ---- */
+
+export const homePage = {
+  metaTitle: "IT Consulting & Custom Software Development Company",
+  metaDescription:
+    "Infoane is an IT consulting and custom software development company helping enterprises modernize legacy systems, move to the cloud, and ship software faster.",
+  heading: "IT consulting and custom software for modern enterprises",
+  intro: [
+    "We modernise the systems your business runs on, move them to the cloud, and build the software your competitors cannot buy off-the-shelf. Senior engineers, honest scoping, and a working demo every two weeks.",
+  ],
+};
+
+/* ------------------------------------------------------------- Services ---- */
+
+export const servicesPage = {
+  metaTitle: "IT Services & Software Development Services",
+  metaDescription:
+    "Our services: custom software development, cloud migration and DevOps, legacy modernization, data engineering, AI automation and dedicated development teams.",
+  heading: "What we do",
+  intro: [
+    "Six practices covering the full lifecycle of a system — from the first architecture decision to running it at scale in production.",
+    "Most clients start with one and expand. If you are not sure which applies, describe the problem and we will tell you, including when the answer is that you do not need us.",
+  ],
+};
+
+/* ---------------------------------------------------------------- Legal ---- */
+
+/**
+ * The bracketed bodies are a checklist of what each document has to cover, not
+ * drafted text — both pages stay noindexed until a qualified professional has
+ * reviewed real copy. Editors can now replace them without a deploy.
+ */
+export const privacyPage = {
+  metaTitle: "Privacy Policy",
+  metaDescription:
+    "How Infoane collects, uses and protects personal information submitted through this website.",
+  heading: "Privacy Policy",
+  intro: [
+    "This page is a placeholder structure and is excluded from search engines until the final text is in place.",
+  ],
+  blocks: [
+    {
+      title: "Who we are",
+      body: "[Legal entity name, registered address, and the contact details of the person or team responsible for data protection enquiries. Name your Data Protection Officer if you are required to have one.]",
+    },
+    {
+      title: "What information we collect",
+      body: "[List each category: information submitted through forms or email, information collected automatically such as IP address and browser type, and anything collected via cookies or analytics. Be specific — vague categories are the most common weakness in a policy.]",
+    },
+    {
+      title: "Why we collect it and our lawful basis",
+      body: "[For each purpose — answering enquiries, delivering services, recruitment, marketing — state the purpose and the lawful basis you rely on (consent, contract, legitimate interests, legal obligation).]",
+    },
+    {
+      title: "Cookies and analytics",
+      body: "[Which cookies you set, which are strictly necessary, and which require consent. Name your analytics provider and link its policy. If you deploy anything beyond strictly necessary cookies, you need a consent banner before it loads — the site does not have one yet.]",
+    },
+    {
+      title: "Who we share information with",
+      body: "[Named categories of processors: hosting, email, CRM, analytics. State whether data is transferred outside its country of origin and what safeguards apply.]",
+    },
+    {
+      title: "How long we keep it",
+      body: "[Retention period per category, and what triggers deletion.]",
+    },
+    {
+      title: "Your rights",
+      body: "[Access, correction, deletion, portability, objection, and withdrawal of consent — plus how to exercise them, how quickly you will respond, and which regulator a visitor can complain to.]",
+    },
+    {
+      title: "Security",
+      body: "[The measures you actually take: encryption in transit and at rest, access control, staff training, breach notification process. Do not describe controls you do not have.]",
+    },
+    {
+      title: "Changes to this policy",
+      body: "[How you notify people about changes, and the date this version took effect.]",
+    },
+  ],
+};
+
+export const termsPage = {
+  metaTitle: "Terms of Service",
+  metaDescription:
+    "Terms governing use of the Infoane website, including permitted use, intellectual property and limitation of liability.",
+  heading: "Terms of Service",
+  intro: [
+    "This page is a placeholder structure and is excluded from search engines until the final text is in place.",
+  ],
+  blocks: [
+    {
+      title: "Acceptance of terms",
+      body: "[State that using the site constitutes acceptance, and how you notify visitors of changes.]",
+    },
+    {
+      title: "Use of this website",
+      body: "[Permitted and prohibited use: no scraping beyond what robots.txt allows, no attempts to disrupt the service, no misuse of contact channels.]",
+    },
+    {
+      title: "Intellectual property",
+      body: "[Who owns the site content, trade marks and logos, and what visitors may quote or reproduce. Note separately that client project IP transfers to the client under your services agreement.]",
+    },
+    {
+      title: "Content accuracy",
+      body: "[Site content is informational; nothing on it is an offer or a professional recommendation for a specific situation.]",
+    },
+    {
+      title: "Third-party links",
+      body: "[You are not responsible for the content or practices of sites you link to.]",
+    },
+    {
+      title: "Limitation of liability",
+      body: "[The limitation you and your counsel decide on, within what the applicable jurisdiction permits.]",
+    },
+    {
+      title: "Governing law",
+      body: "[Which jurisdiction's law applies and where disputes are heard.]",
+    },
+    {
+      title: "Contact",
+      body: "[Where to send questions about these terms.]",
+    },
+  ],
+};
+
+/* ------------------------------------------------------------------ 404 ---- */
+
+export const notFoundPage = {
+  metaTitle: "Page not found",
+  metaDescription:
+    "The page you are looking for does not exist or has moved. Browse our services or get in touch instead.",
+  heading: "We cannot find that page",
+  intro: ["The link may be out of date, or the page may have moved. Here is the way back."],
+};

@@ -3,18 +3,25 @@ import { Section } from "../ui/Section";
 import { Reveal } from "../ui/Reveal";
 import { icons } from "../ui/Icons";
 import { routes } from "@/lib/routes";
+import type { SectionCopy } from "@/lib/page-sections";
 import type { CollectionData } from "@/server/content/schemas";
 
 type Industry = CollectionData["industry"] & { slug: string };
 
-export function Industries({ industries }: { industries: Industry[] }) {
+export function Industries({
+  industries,
+  copy,
+}: {
+  industries: Industry[];
+  copy: SectionCopy;
+}) {
   return (
     <Section
       id="industries"
       align="center"
-      eyebrow="Industries"
-      title="Domain knowledge, not just engineering"
-      lead="Regulated industries do not need developers who learn the domain on your budget. These are the sectors we have shipped in repeatedly."
+      eyebrow={copy.eyebrow}
+      title={copy.title}
+      lead={copy.lead}
     >
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {industries.map((industry, index) => {

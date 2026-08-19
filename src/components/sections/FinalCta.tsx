@@ -1,6 +1,7 @@
 import { Reveal } from "../ui/Reveal";
 import { EnquiryForm } from "../EnquiryForm";
 import { icons } from "../ui/Icons";
+import type { SectionCopy } from "@/lib/page-sections";
 import type { CollectionData } from "@/server/content/schemas";
 
 /**
@@ -10,7 +11,15 @@ import type { CollectionData } from "@/server/content/schemas";
  * Contact details on the left work today with no backend; the form on the right
  * composes a prefilled email (see EnquiryForm).
  */
-export function FinalCta({ settings }: { settings: CollectionData["settings"] }) {
+export function FinalCta({
+  settings,
+  copy,
+  labels,
+}: {
+  settings: CollectionData["settings"];
+  copy: SectionCopy;
+  labels: Record<string, string>;
+}) {
   return (
     <section
       id="contact"
@@ -34,19 +43,16 @@ export function FinalCta({ settings }: { settings: CollectionData["settings"] })
               <div className="flex flex-col justify-between">
                 <div>
                   <p className="mb-4 inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-brand-200 ring-1 ring-inset ring-white/15">
-                    Start your journey
+                    {copy.eyebrow}
                   </p>
                   <h2
                     id="final-cta-heading"
                     className="text-3xl font-semibold text-white sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]"
                   >
-                    Let&apos;s start building something great together
+                    {copy.title}
                   </h2>
                   <p className="mt-5 max-w-md leading-relaxed text-ink-300">
-                    Book a free {settings.promises.consultationLength} consultation.
-                    You will talk to an engineer, not an account manager, and you
-                    will leave with a concrete opinion on your options — whether or
-                    not you hire us.
+                    {copy.lead}
                   </p>
                 </div>
 
@@ -69,11 +75,11 @@ export function FinalCta({ settings }: { settings: CollectionData["settings"] })
                   <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-4 text-sm text-ink-400">
                     <li className="inline-flex items-center gap-2">
                       <icons.check className="h-4 w-4 text-brand-400" />
-                      Replies within {settings.promises.responseTime}
+                      {labels["contact.replyNote"]}
                     </li>
                     <li className="inline-flex items-center gap-2">
                       <icons.check className="h-4 w-4 text-brand-400" />
-                      NDA on request
+                      {labels["contact.ndaNote"]}
                     </li>
                   </ul>
                 </div>

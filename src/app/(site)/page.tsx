@@ -15,9 +15,15 @@ import { Testimonials } from "@/components/sections/Testimonials";
 import { Faq } from "@/components/sections/Faq";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { pageSchema } from "@/lib/schema";
-import { site } from "@/config/site";
+import {
+  resolveHero,
+  resolveLabels,
+  sectionCopy,
+  splitHeadline,
+} from "@/lib/page-sections";
 import {
   getCollectionOrFallback,
+  getItemOrFallback,
   getSettingsOrFallback,
 } from "@/server/content/with-fallback";
 import {
@@ -30,6 +36,7 @@ import {
   processFallback,
   techStackFallback,
   engagementModelFallback,
+  pageFallback,
   settingsFallback,
 } from "@/server/content/static-fallback";
 
@@ -38,15 +45,17 @@ import {
  * searches for a company they have not heard of, and Google truncates around 60
  * characters — so the words that earn the click go first.
  */
-export const metadata: Metadata = {
-  // `absolute` bypasses the layout's "%s | Infoane" template, which would
-  // otherwise append the brand name a second time.
-  title: {
-    absolute: `IT Consulting & Custom Software Development Company | ${site.name}`,
-  },
-  description: site.description,
-  alternates: { canonical: "/" },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const home = await getItemOrFallback("page", "home", pageFallback.home);
+  const settings = await getSettingsOrFallback(settingsFallback);
+  return {
+    // `absolute` bypasses the layout's "%s | Infoane" template, which would
+    // otherwise append the brand name a second time.
+    title: { absolute: `${home.metaTitle} | ${settings.name}` },
+    description: home.metaDescription,
+    alternates: { canonical: "/" },
+  };
+}
 
 export default async function HomePage() {
   // Sequential, not Promise.all: D1's remote connection during static
@@ -55,6 +64,7 @@ export default async function HomePage() {
   // This only costs build time, not request latency (these reads are cached
   // per-collection and served from the incremental cache afterward).
   const settings = await getSettingsOrFallback(settingsFallback);
+  const home = await getItemOrFallback("page", "home", pageFallback.home);
   const services = await getCollectionOrFallback("service", serviceFallback);
   const pillars = await getCollectionOrFallback("pillar", pillarFallback);
   const processSteps = await getCollectionOrFallback("process", processFallback);
@@ -71,34 +81,45 @@ export default async function HomePage() {
   const homeFaqs = faqs.filter((faq) => faq.placement === "home");
   const [primaryStat, secondaryStat] = [settings.stats[3], settings.stats[0]];
 
+  const copy = (key: string) => sectionCopy(home.sections, "home", key, settings);
+  const labels = resolveLabels(home.labels, "home", settings);
+  const hero = resolveHero(home.hero, settings);
+
   return (
     <>
       <JsonLd
         data={pageSchema({
           path: "/",
-          name: `${site.name} — ${site.tagline}`,
-          description: site.description,
+          name: `${settings.name} — ${settings.tagline}`,
+          description: home.metaDescription,
           faqs: homeFaqs,
         })}
       />
-      <Hero settings={settings} />
-      <PlatformStrip platformStrip={settings.platformStrip} />
+      <Hero
+        settings={settings}
+        hero={hero}
+        headline={splitHeadline(hero.headline, hero.highlight)}
+        labels={labels}
+      />
+      <PlatformStrip platformStrip={settings.platformStrip} copy={copy("platforms")} />
       <Showcase />
-      <Pillars pillars={pillars} />
-      <Services services={services} />
-      <Capabilities steps={processSteps} />
-      <TechStack techStack={techStack} />
+      <Pillars pillars={pillars} copy={copy("pillars")} />
+      <Services services={services} copy={copy("services")} labels={labels} />
+      <Capabilities steps={processSteps} copy={copy("process")} labels={labels} />
+      <TechStack techStack={techStack} copy={copy("technologies")} labels={labels} />
       <EngagementModels
         engagementModels={engagementModels}
         primaryStat={primaryStat}
         secondaryStat={secondaryStat}
+        copy={copy("engagement")}
+        labels={labels}
       />
       <TrustBar stats={settings.stats} />
-      <Industries industries={industries} />
-      <CaseStudies caseStudies={caseStudies} />
-      <Testimonials testimonials={testimonials} />
-      <Faq faqs={homeFaqs} />
-      <FinalCta settings={settings} />
+      <Industries industries={industries} copy={copy("industries")} />
+      <CaseStudies caseStudies={caseStudies} copy={copy("work")} labels={labels} />
+      <Testimonials testimonials={testimonials} copy={copy("testimonials")} labels={labels} />
+      <Faq faqs={homeFaqs} copy={copy("faq")} />
+      <FinalCta settings={settings} copy={copy("contact")} labels={labels} />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
 import { routes } from "@/lib/routes";
+import type { SectionCopy } from "@/lib/page-sections";
 import type { CollectionData } from "@/server/content/schemas";
 
 type FaqItem = CollectionData["faq"] & { slug: string };
@@ -15,7 +16,7 @@ type FaqItem = CollectionData["faq"] & { slug: string };
  * in AI answers. The open/close height animation is the CSS grid-rows trick, so
  * nothing measures the DOM at runtime.
  */
-export function Faq({ faqs }: { faqs: FaqItem[] }) {
+export function Faq({ faqs, copy }: { faqs: FaqItem[]; copy: SectionCopy }) {
   return (
     <section
       id="faq"
@@ -27,7 +28,7 @@ export function Faq({ faqs }: { faqs: FaqItem[] }) {
           <div className="lg:sticky lg:top-32 lg:self-start">
             <Reveal>
               <p className="mb-4 inline-flex rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-brand-700 ring-1 ring-inset ring-brand-100">
-                FAQ
+                {copy.eyebrow}
               </p>
             </Reveal>
             <Reveal delay={60}>
@@ -35,19 +36,16 @@ export function Faq({ faqs }: { faqs: FaqItem[] }) {
                 id="faq-heading"
                 className="text-3xl font-semibold sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]"
               >
-                Your questions, answered
+                {copy.title}
               </h2>
             </Reveal>
             <Reveal delay={120}>
-              <p className="mt-4 leading-relaxed text-ink-500">
-                If yours is not here, ask it on the call — we would rather answer
-                it before you sign than after.
-              </p>
+              <p className="mt-4 leading-relaxed text-ink-500">{copy.lead}</p>
             </Reveal>
             <Reveal delay={180}>
               <div className="mt-8">
                 <Button href={routes.contact} variant="light">
-                  Contact us
+                  {copy.ctaLabel}
                 </Button>
               </div>
             </Reveal>

@@ -120,6 +120,7 @@ export const COLLECTIONS = [
   "settings",
   "process",
   "techStack",
+  "navMenu",
 ] as const;
 export type Collection = (typeof COLLECTIONS)[number];
 

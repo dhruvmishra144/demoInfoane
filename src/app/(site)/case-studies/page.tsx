@@ -7,38 +7,17 @@ import { Section } from "@/components/ui/Section";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { pageSchema } from "@/lib/schema";
 import { routes, serviceHref } from "@/lib/routes";
-import { caseStudiesPage as caseStudiesPageFallback } from "@/content/pages";
+import { resolveLabels, sectionCopy } from "@/lib/page-sections";
 import {
   getItemOrFallback,
   getCollectionOrFallback,
   getSettingsOrFallback,
 } from "@/server/content/with-fallback";
-import {
-  caseStudyFallback,
-  serviceFallback,
-  testimonialFallback,
-  settingsFallback,
-} from "@/server/content/static-fallback";
+import { caseStudyFallback, pageFallback, serviceFallback, settingsFallback, testimonialFallback } from "@/server/content/static-fallback";
 
-const pageFallback = {
-  metaTitle: caseStudiesPageFallback.metaTitle,
-  metaDescription: caseStudiesPageFallback.metaDescription,
-  heading: caseStudiesPageFallback.heading,
-  intro: caseStudiesPageFallback.intro,
-  blocks: [],
-  principles: [],
-  leadership: [],
-  milestones: [],
-  benefits: [],
-  hiringProcess: [],
-  openings: [],
-  techGroups: [],
-  expectations: [],
-  slug: "case-studies",
-};
 
 export async function generateMetadata(): Promise<Metadata> {
-  const caseStudiesPage = await getItemOrFallback("page", "case-studies", pageFallback);
+  const caseStudiesPage = await getItemOrFallback("page", "case-studies", pageFallback["case-studies"]);
   return {
     title: caseStudiesPage.metaTitle,
     description: caseStudiesPage.metaDescription,
@@ -47,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CaseStudiesPage() {
-  const caseStudiesPage = await getItemOrFallback("page", "case-studies", pageFallback);
+  const caseStudiesPage = await getItemOrFallback("page", "case-studies", pageFallback["case-studies"]);
   const caseStudies = await getCollectionOrFallback("caseStudy", caseStudyFallback);
   const servicePages = await getCollectionOrFallback("service", serviceFallback);
   const testimonials = await getCollectionOrFallback("testimonial", testimonialFallback);
@@ -118,15 +97,13 @@ export default async function CaseStudiesPage() {
           ))}
         </div>
 
-        {/* Reminder for whoever fills this in — delete once real studies land. */}
-        <p className="mt-8 text-sm text-ink-400">
-          Each of these will become its own page once the write-ups are approved;
-          detail pages rank for the problem a prospect is searching for, which a
-          summary card cannot.
-        </p>
       </Section>
 
-      <Testimonials testimonials={testimonials} />
+      <Testimonials
+        testimonials={testimonials}
+        copy={sectionCopy(caseStudiesPage.sections, "case-studies", "testimonials", settings)}
+        labels={resolveLabels(caseStudiesPage.labels, "case-studies", settings)}
+      />
 
       <Section
         id="services-behind"

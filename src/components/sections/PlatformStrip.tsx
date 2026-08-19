@@ -1,5 +1,6 @@
 import { Marquee } from "../ui/Marquee";
 import { Reveal } from "../ui/Reveal";
+import type { SectionCopy } from "@/lib/page-sections";
 
 /**
  * Scrolling platform strip below the hero.
@@ -8,7 +9,13 @@ import { Reveal } from "../ui/Reveal";
  * would — swap it for real client marks once you have permission to display them,
  * since those are a much stronger trust signal.
  */
-export function PlatformStrip({ platformStrip }: { platformStrip: string[] }) {
+export function PlatformStrip({
+  platformStrip,
+  copy,
+}: {
+  platformStrip: string[];
+  copy: SectionCopy;
+}) {
   return (
     <section aria-labelledby="platforms-heading" className="bg-white py-12 lg:py-16">
       <div className="container-x">
@@ -17,7 +24,7 @@ export function PlatformStrip({ platformStrip }: { platformStrip: string[] }) {
             id="platforms-heading"
             className="text-center text-xs font-semibold uppercase tracking-[0.16em] text-ink-400"
           >
-            Platforms and clouds we build on
+            {copy.title}
           </h2>
         </Reveal>
 

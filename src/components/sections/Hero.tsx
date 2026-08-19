@@ -4,6 +4,15 @@ import { icons } from "../ui/Icons";
 import { routes } from "@/lib/routes";
 import type { CollectionData } from "@/server/content/schemas";
 
+type HeroCopy = {
+  subhead: string;
+  primaryCta: string;
+  secondaryCta: string;
+  note: string;
+  cardTitle: string;
+  cardItems: string[];
+};
+
 /**
  * Hero.
  *
@@ -14,7 +23,18 @@ import type { CollectionData } from "@/server/content/schemas";
  * screenshot: no image request, nothing to become the Largest Contentful Paint
  * element, and no asset to re-export when the brand changes.
  */
-export function Hero({ settings }: { settings: CollectionData["settings"] }) {
+export function Hero({
+  settings,
+  hero,
+  headline,
+  labels,
+}: {
+  settings: CollectionData["settings"];
+  hero: HeroCopy;
+  /** Pre-split so the gradient phrase survives an editor rewording the H1. */
+  headline: { before: string; highlight: string; after: string };
+  labels: Record<string, string>;
+}) {
   return (
     <section className="relative isolate overflow-hidden bg-ink-50 pb-16 pt-12 lg:pb-24 lg:pt-16">
       <div className="mesh-light absolute inset-0 -z-10" aria-hidden="true" />
@@ -31,35 +51,31 @@ export function Hero({ settings }: { settings: CollectionData["settings"] }) {
 
             <Reveal delay={80}>
               <h1 className="mt-6 text-[2.5rem] font-semibold leading-[1.05] tracking-[-0.03em] text-ink-900 sm:text-5xl lg:text-6xl">
-                IT consulting and{" "}
-                <span className="text-gradient">custom software</span> for
-                modern enterprises
+                {headline.before}
+                {headline.highlight && (
+                  <span className="text-gradient">{headline.highlight}</span>
+                )}
+                {headline.after}
               </h1>
             </Reveal>
 
             <Reveal delay={160}>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-500 lg:text-lg">
-                We modernise the systems your business runs on, move them to the
-                cloud, and build the software your competitors cannot buy
-                off-the-shelf. Senior engineers, honest scoping, and a working
-                demo every two weeks.
+                {hero.subhead}
               </p>
             </Reveal>
 
             <Reveal delay={240}>
               <div className="mt-9 flex flex-wrap items-center gap-3">
-                <Button href={routes.contact}>Get started</Button>
+                <Button href={routes.contact}>{hero.primaryCta}</Button>
                 <Button href={routes.services} variant="light" withChip={false}>
-                  Explore services
+                  {hero.secondaryCta}
                 </Button>
               </div>
             </Reveal>
 
             <Reveal delay={300}>
-              <p className="mt-6 text-sm text-ink-400">
-                A free {settings.promises.consultationLength} call with an engineer
-                who has shipped this before. No sales script.
-              </p>
+              <p className="mt-6 text-sm text-ink-400">{hero.note}</p>
             </Reveal>
           </div>
 
@@ -69,20 +85,13 @@ export function Hero({ settings }: { settings: CollectionData["settings"] }) {
               {/* Card 1 — engagement checklist */}
               <div className="float-slow rounded-4xl border border-ink-200 bg-white p-6 shadow-2xl shadow-brand-950/10">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold text-ink-900">
-                    Your first engagement
-                  </p>
+                  <p className="text-sm font-semibold text-ink-900">{hero.cardTitle}</p>
                   <span className="rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-700">
                     {settings.promises.discoveryLength}
                   </span>
                 </div>
                 <ul className="mt-5 space-y-3.5">
-                  {[
-                    "Stakeholder interviews and system audit",
-                    "Target architecture, with trade-offs",
-                    "Written scope, timeline and costed plan",
-                    "Yours to keep — even if you stop there",
-                  ].map((item) => (
+                  {hero.cardItems.map((item) => (
                     <li key={item} className="flex items-start gap-3 text-sm text-ink-600">
                       <span
                         className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white"
@@ -102,9 +111,11 @@ export function Hero({ settings }: { settings: CollectionData["settings"] }) {
               <div className="float-slower relative z-10 ml-auto mt-5 w-[82%] rounded-3xl border border-ink-200 bg-white p-5 shadow-2xl shadow-brand-950/10">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ink-400">
-                    Sprint cadence
+                    {labels["hero.cadenceLabel"]}
                   </p>
-                  <span className="text-xs font-semibold text-brand-700">2 weeks</span>
+                  <span className="text-xs font-semibold text-brand-700">
+                    {labels["hero.cadenceValue"]}
+                  </span>
                 </div>
 
                 {/* Decorative bar chart. */}
@@ -119,18 +130,18 @@ export function Hero({ settings }: { settings: CollectionData["settings"] }) {
                 </div>
 
                 <div className="mt-4 flex items-center justify-between border-t border-ink-100 pt-3.5">
-                  <p className="text-xs text-ink-500">Working demo each sprint</p>
-                  <p className="text-sm font-bold text-ink-900">100%</p>
+                  <p className="text-xs text-ink-500">{labels["hero.demoLabel"]}</p>
+                  <p className="text-sm font-bold text-ink-900">{labels["hero.demoValue"]}</p>
                 </div>
               </div>
 
               {/* Card 3 — small badge, tucked into the space left of card 2 */}
               <div className="absolute bottom-3 left-0 z-20 hidden rounded-2xl border border-ink-200 bg-white px-4 py-3 shadow-xl shadow-brand-950/10 lg:block">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-400">
-                  IP & source code
+                  {labels["hero.ipLabel"]}
                 </p>
                 <p className="mt-1 text-sm font-semibold text-ink-900">
-                  Yours on payment
+                  {labels["hero.ipValue"]}
                 </p>
               </div>
             </div>

@@ -1,15 +1,16 @@
 import { Reveal } from "../ui/Reveal";
+import type { SectionCopy } from "@/lib/page-sections";
 import type { CollectionData } from "@/server/content/schemas";
 
 type Pillar = CollectionData["pillar"] & { slug: string };
 
 /** Three numbered cards, staggered in on scroll. */
-export function Pillars({ pillars }: { pillars: Pillar[] }) {
+export function Pillars({ pillars, copy }: { pillars: Pillar[]; copy: SectionCopy }) {
   return (
     <section aria-labelledby="pillars-heading" className="bg-white py-16 lg:py-20">
       <div className="container-x">
         <h2 id="pillars-heading" className="sr-only">
-          How an engagement works
+          {copy.title}
         </h2>
 
         <ul className="grid gap-5 md:grid-cols-3">

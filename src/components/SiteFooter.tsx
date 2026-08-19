@@ -2,10 +2,11 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { icons, socialIcons, type SocialNetwork } from "./ui/Icons";
 import { Reveal } from "./ui/Reveal";
-import { footerQuickLinks, routes, serviceHref } from "@/lib/routes";
+import { serviceHref } from "@/lib/routes";
 import type { CollectionData } from "@/server/content/schemas";
 
 type ServiceLink = { slug: string; title: string };
+type NavMenu = CollectionData["navMenu"];
 
 /**
  * Footer: newsletter row, four link/contact columns, an oversized email address,
@@ -19,12 +20,17 @@ type ServiceLink = { slug: string; title: string };
 export function SiteFooter({
   settings,
   services,
+  pagesMenu,
+  legalMenu,
 }: {
   settings: CollectionData["settings"];
   services: ServiceLink[];
+  pagesMenu: NavMenu;
+  legalMenu: NavMenu;
 }) {
   const year = new Date().getFullYear();
   const site = settings;
+  const chrome = settings.footer;
 
   return (
     <footer className="bg-ink-50">
@@ -33,11 +39,8 @@ export function SiteFooter({
           {/* Newsletter */}
           <div className="flex flex-col gap-6 border-b border-ink-100 p-8 lg:flex-row lg:items-center lg:justify-between lg:p-10">
             <div>
-              <h2 className="text-xl font-semibold">Sign up for our newsletter</h2>
-              <p className="mt-2 text-sm text-ink-500">
-                Occasional notes on modernisation, cloud cost and delivery — no
-                more than once a month.
-              </p>
+              <h2 className="text-xl font-semibold">{chrome.newsletterHeading}</h2>
+              <p className="mt-2 text-sm text-ink-500">{chrome.newsletterBody}</p>
             </div>
 
             {/* Composes an email rather than posting nowhere. Swap the action for
@@ -57,14 +60,14 @@ export function SiteFooter({
                 type="email"
                 required
                 autoComplete="email"
-                placeholder="you@company.com"
+                placeholder={chrome.newsletterPlaceholder}
                 className="min-w-0 flex-1 rounded-full border border-ink-200 bg-white px-5 py-3 text-sm placeholder:text-ink-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-500/30"
               />
               <button
                 type="submit"
                 className="shrink-0 rounded-full bg-brand-950 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-900"
               >
-                Subscribe
+                {chrome.newsletterCtaLabel}
               </button>
             </form>
           </div>
@@ -72,10 +75,9 @@ export function SiteFooter({
           {/* Columns */}
           <div className="grid gap-10 p-8 lg:grid-cols-[1.4fr_1fr_1.1fr_1.5fr] lg:p-10">
             <div>
-              <Logo withTagline />
+              <Logo withTagline name={site.name} />
               <p className="mt-5 max-w-xs text-sm leading-relaxed text-ink-500">
-                {site.tagline} for enterprises that need software delivered
-                predictably.
+                {site.tagline} {chrome.blurb}
               </p>
 
               <ul className="mt-6 flex gap-2.5">
@@ -111,10 +113,10 @@ export function SiteFooter({
 
             <nav aria-labelledby="footer-quick">
               <h2 id="footer-quick" className="text-sm font-semibold text-ink-900">
-                Pages
+                {chrome.pagesHeading}
               </h2>
               <ul className="mt-5 space-y-3 text-sm">
-                {footerQuickLinks.map((item) => (
+                {pagesMenu.items.map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
@@ -129,7 +131,7 @@ export function SiteFooter({
 
             <nav aria-labelledby="footer-services">
               <h2 id="footer-services" className="text-sm font-semibold text-ink-900">
-                Services
+                {chrome.servicesHeading}
               </h2>
               <ul className="mt-5 space-y-3 text-sm">
                 {services.map((service) => (
@@ -146,7 +148,7 @@ export function SiteFooter({
             </nav>
 
             <div>
-              <h2 className="text-sm font-semibold text-ink-900">Offices</h2>
+              <h2 className="text-sm font-semibold text-ink-900">{chrome.officesHeading}</h2>
               <ul className="mt-5 space-y-5 text-sm">
                 {site.offices.map((office) => (
                   <li key={office.label}>
@@ -190,24 +192,16 @@ export function SiteFooter({
           {/* Bottom bar */}
           <div className="flex flex-col gap-4 border-t border-ink-100 px-8 py-6 text-xs text-ink-500 sm:flex-row sm:items-center sm:justify-between lg:px-10">
             <p>
-              © {year} {site.legalName}. All rights reserved.
+              © {year} {site.legalName}. {chrome.copyrightSuffix}
             </p>
             <ul className="flex flex-wrap gap-6">
-              <li>
-                <Link href={routes.privacy} className="transition-colors hover:text-brand-700">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href={routes.terms} className="transition-colors hover:text-brand-700">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="/sitemap.xml" className="transition-colors hover:text-brand-700">
-                  Sitemap
-                </Link>
-              </li>
+              {legalMenu.items.map((item) => (
+                <li key={`${item.label}-${item.href}`}>
+                  <Link href={item.href} className="transition-colors hover:text-brand-700">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

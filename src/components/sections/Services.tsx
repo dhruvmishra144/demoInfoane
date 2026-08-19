@@ -4,18 +4,27 @@ import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
 import { icons } from "../ui/Icons";
 import { routes, serviceHref } from "@/lib/routes";
+import type { SectionCopy } from "@/lib/page-sections";
 import type { CollectionData } from "@/server/content/schemas";
 
 type Service = CollectionData["service"] & { slug: string };
 
-export function Services({ services }: { services: Service[] }) {
+export function Services({
+  services,
+  copy,
+  labels,
+}: {
+  services: Service[];
+  copy: SectionCopy;
+  labels: Record<string, string>;
+}) {
   return (
     <Section
       id="services"
       align="center"
-      eyebrow="What we do"
-      title="Software and cloud services, end to end"
-      lead="Six practices covering the whole lifecycle — from the first architecture decision to running the system at scale. Most clients start with one and expand."
+      eyebrow={copy.eyebrow}
+      title={copy.title}
+      lead={copy.lead}
     >
       <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service, index) => {
@@ -56,7 +65,7 @@ export function Services({ services }: { services: Service[] }) {
                   >
                     {/* Descriptive anchor text, not "Learn more" — the link text
                         is a ranking signal for the page it points at. */}
-                    Explore {service.title.toLowerCase()}
+                    {labels["services.itemCta"]} {service.title.toLowerCase()}
                     <icons.arrow className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </Link>
                 </div>
@@ -68,7 +77,7 @@ export function Services({ services }: { services: Service[] }) {
 
       <Reveal delay={200} className="mt-10 flex justify-center">
         <Button href={routes.services} variant="light">
-          All services
+          {copy.ctaLabel}
         </Button>
       </Reveal>
     </Section>

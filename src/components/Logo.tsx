@@ -13,15 +13,19 @@ import Link from "next/link";
 export function Logo({
   theme = "light",
   withTagline = false,
+  name = "Infoane",
+  tagline = "Develop · Support · 24×7",
 }: {
   theme?: "light" | "dark";
   withTagline?: boolean;
+  name?: string;
+  tagline?: string;
 }) {
   return (
     <Link
       href="/"
       className="group inline-flex items-center gap-2.5"
-      aria-label="Infoane — home"
+      aria-label={`${name} — home`}
     >
       <svg
         viewBox="0 0 36 36"
@@ -54,15 +58,15 @@ export function Logo({
             theme === "dark" ? "text-white" : "text-ink-900"
           }`}
         >
-          Infoane
+          {name}
         </span>
-        {withTagline && (
+        {withTagline && tagline && (
           <span
             className={`mt-1 text-[9px] font-semibold uppercase tracking-[0.18em] ${
               theme === "dark" ? "text-brand-200" : "text-brand-600"
             }`}
           >
-            Develop · Support · 24×7
+            {tagline}
           </span>
         )}
       </span>

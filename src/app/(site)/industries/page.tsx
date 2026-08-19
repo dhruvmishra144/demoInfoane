@@ -6,33 +6,16 @@ import { Section } from "@/components/ui/Section";
 import { icons } from "@/components/ui/Icons";
 import { pageSchema } from "@/lib/schema";
 import { routes } from "@/lib/routes";
-import { industriesPage as industriesPageFallback } from "@/content/pages";
 import {
   getItemOrFallback,
   getCollectionOrFallback,
   getSettingsOrFallback,
 } from "@/server/content/with-fallback";
-import { industryFallback, settingsFallback } from "@/server/content/static-fallback";
+import { industryFallback, pageFallback, settingsFallback } from "@/server/content/static-fallback";
 
-const pageFallback = {
-  metaTitle: industriesPageFallback.metaTitle,
-  metaDescription: industriesPageFallback.metaDescription,
-  heading: industriesPageFallback.heading,
-  intro: industriesPageFallback.intro,
-  blocks: [],
-  principles: [],
-  leadership: [],
-  milestones: [],
-  benefits: [],
-  hiringProcess: [],
-  openings: [],
-  techGroups: [],
-  expectations: [],
-  slug: "industries",
-};
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getItemOrFallback("page", "industries", pageFallback);
+  const page = await getItemOrFallback("page", "industries", pageFallback["industries"]);
   return {
     title: page.metaTitle,
     description: page.metaDescription,
@@ -41,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function IndustriesPage() {
-  const page = await getItemOrFallback("page", "industries", pageFallback);
+  const page = await getItemOrFallback("page", "industries", pageFallback["industries"]);
   const industries = await getCollectionOrFallback("industry", industryFallback);
   const settings = await getSettingsOrFallback(settingsFallback);
 

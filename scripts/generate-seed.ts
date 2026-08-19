@@ -38,7 +38,24 @@ import {
   technologyPage,
   contactPage,
   caseStudiesPage,
+  homePage,
+  servicesPage,
+  privacyPage,
+  termsPage,
+  notFoundPage,
 } from "../src/content/pages";
+import {
+  footerDefaults,
+  headerDefaults,
+  homeHeroDefaults,
+  labelRecordFor,
+  navMenuDefaults,
+  NAV_MENUS,
+  pageCtaBandDefaults,
+  sectionRowsFor,
+  sharedCtaBand,
+  type PageSlug,
+} from "../src/lib/page-sections";
 import { site } from "../src/config/site";
 import { collectionSchemas } from "../src/server/content/schemas";
 import type { Collection } from "../src/server/db/schema";
@@ -211,89 +228,102 @@ engagementModels.forEach((model, index) => {
 
 /* ------------------------------------------------------------------ pages ---- */
 
-rows.push({
-  collection: "page",
-  slug: "about",
-  sortOrder: 0,
-  data: {
-    metaTitle: about.metaTitle,
-    metaDescription: about.metaDescription,
-    heading: about.heading,
-    intro: [...about.intro],
-    principles: about.principles.map((p) => ({ ...p })),
-    leadership: about.leadership.map((person) => ({ ...person })),
-    milestones: about.milestones.map((m) => ({ ...m })),
+/**
+ * Every page gets a row, including the five that had no CMS presence before
+ * (home, services, privacy-policy, terms, not-found) — until they existed here,
+ * those pages could not be edited at all.
+ *
+ * Section headings and the CTA band come from the registry in
+ * `src/lib/page-sections.ts`, seeded with the copy that was previously hardcoded
+ * in the components, so migrating them into the CMS is not also a rewrite.
+ */
+const pageSources: Record<
+  PageSlug,
+  {
+    source: { metaTitle: string; metaDescription: string; heading: string; intro: readonly string[] };
+    extra?: Record<string, unknown>;
+  }
+> = {
+  home: {
+    source: homePage,
+    extra: { hero: { ...homeHeroDefaults, cardItems: [...homeHeroDefaults.cardItems] } },
   },
+  about: {
+    source: about,
+    extra: {
+      principles: about.principles.map((p) => ({ ...p })),
+      leadership: about.leadership.map((person) => ({ ...person })),
+      milestones: about.milestones.map((m) => ({ ...m })),
+    },
+  },
+  services: { source: servicesPage },
+  industries: { source: industriesPage },
+  technology: {
+    source: technologyPage,
+    extra: {
+      principles: technologyPage.principles.map((p) => ({ ...p })),
+      techGroups: technologyPage.groups.map((group) => ({
+        group: group.group,
+        body: group.body,
+        items: [...group.items],
+      })),
+    },
+  },
+  "case-studies": { source: caseStudiesPage },
+  careers: {
+    source: careersPage,
+    extra: {
+      benefits: careersPage.benefits.map((b) => ({ ...b })),
+      hiringProcess: careersPage.hiringProcess.map((step) => ({ ...step })),
+      openings: careersPage.openings.map((opening) => ({ ...opening })),
+    },
+  },
+  contact: {
+    source: contactPage,
+    extra: { expectations: [...contactPage.expectations] },
+  },
+  "privacy-policy": {
+    source: privacyPage,
+    extra: { blocks: privacyPage.blocks.map((b) => ({ ...b })) },
+  },
+  terms: {
+    source: termsPage,
+    extra: { blocks: termsPage.blocks.map((b) => ({ ...b })) },
+  },
+  "not-found": { source: notFoundPage },
+};
+
+(Object.keys(pageSources) as PageSlug[]).forEach((slug, index) => {
+  const { source, extra } = pageSources[slug];
+  rows.push({
+    collection: "page",
+    slug,
+    sortOrder: index,
+    data: {
+      metaTitle: source.metaTitle,
+      metaDescription: source.metaDescription,
+      heading: source.heading,
+      intro: [...source.intro],
+      sections: sectionRowsFor(slug),
+      ctaBand: { ...(pageCtaBandDefaults[slug] ?? sharedCtaBand) },
+      labels: labelRecordFor(slug),
+      ...extra,
+    },
+  });
 });
 
-rows.push({
-  collection: "page",
-  slug: "careers",
-  sortOrder: 0,
-  data: {
-    metaTitle: careersPage.metaTitle,
-    metaDescription: careersPage.metaDescription,
-    heading: careersPage.heading,
-    intro: [...careersPage.intro],
-    benefits: careersPage.benefits.map((b) => ({ ...b })),
-    hiringProcess: careersPage.hiringProcess.map((step) => ({ ...step })),
-    openings: careersPage.openings.map((opening) => ({ ...opening })),
-  },
-});
+/* ----------------------------------------------------------- navigation ---- */
 
-rows.push({
-  collection: "page",
-  slug: "technology",
-  sortOrder: 0,
-  data: {
-    metaTitle: technologyPage.metaTitle,
-    metaDescription: technologyPage.metaDescription,
-    heading: technologyPage.heading,
-    intro: [...technologyPage.intro],
-    principles: technologyPage.principles.map((p) => ({ ...p })),
-    techGroups: technologyPage.groups.map((group) => ({
-      group: group.group,
-      body: group.body,
-      items: [...group.items],
-    })),
-  },
-});
-
-rows.push({
-  collection: "page",
-  slug: "contact",
-  sortOrder: 0,
-  data: {
-    metaTitle: contactPage.metaTitle,
-    metaDescription: contactPage.metaDescription,
-    heading: contactPage.heading,
-    intro: [...contactPage.intro],
-    expectations: [...contactPage.expectations],
-  },
-});
-
-rows.push({
-  collection: "page",
-  slug: "case-studies",
-  sortOrder: 0,
-  data: {
-    metaTitle: caseStudiesPage.metaTitle,
-    metaDescription: caseStudiesPage.metaDescription,
-    heading: caseStudiesPage.heading,
-    intro: [...caseStudiesPage.intro],
-  },
-});
-
-rows.push({
-  collection: "page",
-  slug: "industries",
-  sortOrder: 0,
-  data: {
-    metaTitle: industriesPage.metaTitle,
-    metaDescription: industriesPage.metaDescription,
-    heading: industriesPage.heading,
-    intro: [...industriesPage.intro],
-  },
+NAV_MENUS.forEach((slug, index) => {
+  rows.push({
+    collection: "navMenu",
+    slug,
+    sortOrder: index,
+    data: {
+      label: navMenuDefaults[slug].label,
+      items: navMenuDefaults[slug].items.map((item) => ({ ...item })),
+    },
+  });
 });
 
 /* -------------------------------------------------------------- settings ---- */
@@ -334,6 +364,8 @@ rows.push({
     stats: site.stats.map((stat) => ({ value: stat.value, label: stat.label })),
     credentials: [...site.credentials],
     promises: { ...site.promises },
+    header: { ...headerDefaults },
+    footer: { ...footerDefaults },
     platformStrip: [
       "AWS",
       "Microsoft Azure",

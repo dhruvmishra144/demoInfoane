@@ -4,6 +4,7 @@ import { Reveal } from "../ui/Reveal";
 import { Button } from "../ui/Button";
 import { icons } from "../ui/Icons";
 import { routes } from "@/lib/routes";
+import type { SectionCopy } from "@/lib/page-sections";
 import type { CollectionData } from "@/server/content/schemas";
 
 type CaseStudy = CollectionData["caseStudy"] & { slug: string };
@@ -23,15 +24,23 @@ const cardTints = [
   "from-brand-200 to-brand-500",
 ];
 
-export function CaseStudies({ caseStudies }: { caseStudies: CaseStudy[] }) {
+export function CaseStudies({
+  caseStudies,
+  copy,
+  labels,
+}: {
+  caseStudies: CaseStudy[];
+  copy: SectionCopy;
+  labels: Record<string, string>;
+}) {
   return (
     <Section
       id="work"
       tone="muted"
       align="center"
-      eyebrow="Success stories"
-      title="Results our clients can point at"
-      lead="Described the way we would describe them to your board: what was broken, what we built, and the number that changed."
+      eyebrow={copy.eyebrow}
+      title={copy.title}
+      lead={copy.lead}
     >
       <ul className="grid gap-5 md:grid-cols-2">
         {caseStudies.map((study, index) => (
@@ -63,13 +72,17 @@ export function CaseStudies({ caseStudies }: { caseStudies: CaseStudy[] }) {
 
                 <dl className="mt-6 space-y-4 border-t border-ink-100 pt-5 text-sm">
                   <div>
-                    <dt className="font-semibold text-ink-900">Challenge</dt>
+                    <dt className="font-semibold text-ink-900">
+                      {labels["work.challengeLabel"]}
+                    </dt>
                     <dd className="mt-1 leading-relaxed text-ink-500">
                       {study.challenge}
                     </dd>
                   </div>
                   <div>
-                    <dt className="font-semibold text-ink-900">Outcome</dt>
+                    <dt className="font-semibold text-ink-900">
+                      {labels["work.outcomeLabel"]}
+                    </dt>
                     <dd className="mt-1 leading-relaxed text-ink-500">
                       {study.outcome}
                     </dd>
@@ -80,7 +93,7 @@ export function CaseStudies({ caseStudies }: { caseStudies: CaseStudy[] }) {
                   href={routes.caseStudies}
                   className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 transition-colors hover:text-brand-800"
                 >
-                  Read the full case study
+                  {labels["work.itemCta"]}
                   <icons.arrow className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
               </div>
@@ -91,7 +104,7 @@ export function CaseStudies({ caseStudies }: { caseStudies: CaseStudy[] }) {
 
       <Reveal delay={200} className="mt-10 flex justify-center">
         <Button href={routes.caseStudies} variant="light">
-          All case studies
+          {copy.ctaLabel}
         </Button>
       </Reveal>
     </Section>

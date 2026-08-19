@@ -127,11 +127,52 @@ function buildContentData(collection: Collection, formData: FormData): unknown {
         }),
       );
 
+      const sections = readObjectArray(formData, "sections", [
+        "key",
+        "eyebrow",
+        "title",
+        "lead",
+        "ctaLabel",
+        "bullets",
+        "footnote",
+      ] as const).map((section) => ({
+        ...section,
+        // One textarea, one bullet per line — a nested repeatable inside a
+        // repeatable row is worse to use than it is to parse.
+        bullets: section.bullets
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean),
+      }));
+
+      // Submitted as labels[<key>] so the key set stays data, not schema.
+      const labels: Record<string, string> = {};
+      for (const [field, value] of formData.entries()) {
+        const match = /^labels\[(.+)\]$/.exec(field);
+        if (match && typeof value === "string") labels[match[1]] = value.trim();
+      }
+
       return {
         metaTitle: readString(formData, "metaTitle"),
         metaDescription: readString(formData, "metaDescription"),
         heading: readString(formData, "heading"),
         intro: readStringArray(formData, "intro"),
+        sections,
+        labels,
+        ctaBand: {
+          heading: readString(formData, "ctaBand.heading"),
+          body: readString(formData, "ctaBand.body"),
+        },
+        hero: {
+          headline: readString(formData, "hero.headline"),
+          highlight: readString(formData, "hero.highlight"),
+          subhead: readString(formData, "hero.subhead"),
+          primaryCta: readString(formData, "hero.primaryCta"),
+          secondaryCta: readString(formData, "hero.secondaryCta"),
+          note: readString(formData, "hero.note"),
+          cardTitle: readString(formData, "hero.cardTitle"),
+          cardItems: readStringArray(formData, "hero.cardItems"),
+        },
         blocks: readObjectArray(formData, "blocks", ["title", "body"] as const),
         principles: readObjectArray(formData, "principles", ["title", "body"] as const),
         leadership: readObjectArray(formData, "leadership", [
@@ -199,8 +240,42 @@ function buildContentData(collection: Collection, formData: FormData): unknown {
           responseTime: readString(formData, "promises.responseTime"),
         },
         platformStrip: readStringArray(formData, "platformStrip"),
+        header: {
+          ctaLabel: readString(formData, "header.ctaLabel"),
+          promoHeading: readString(formData, "header.promoHeading"),
+          promoBody: readString(formData, "header.promoBody"),
+          promoCtaLabel: readString(formData, "header.promoCtaLabel"),
+          promoCtaHref: readString(formData, "header.promoCtaHref"),
+          serviceGroupPrimary: readString(formData, "header.serviceGroupPrimary"),
+          serviceGroupSecondary: readString(formData, "header.serviceGroupSecondary"),
+          industryGroupPrimary: readString(formData, "header.industryGroupPrimary"),
+          industryGroupSecondary: readString(formData, "header.industryGroupSecondary"),
+        },
+        footer: {
+          blurb: readString(formData, "footer.blurb"),
+          newsletterHeading: readString(formData, "footer.newsletterHeading"),
+          newsletterBody: readString(formData, "footer.newsletterBody"),
+          newsletterPlaceholder: readString(formData, "footer.newsletterPlaceholder"),
+          newsletterCtaLabel: readString(formData, "footer.newsletterCtaLabel"),
+          pagesHeading: readString(formData, "footer.pagesHeading"),
+          servicesHeading: readString(formData, "footer.servicesHeading"),
+          officesHeading: readString(formData, "footer.officesHeading"),
+          copyrightSuffix: readString(formData, "footer.copyrightSuffix"),
+        },
       };
     }
+
+    case "navMenu":
+      return {
+        label: readString(formData, "label"),
+        items: readObjectArray(formData, "items", [
+          "label",
+          "href",
+          "description",
+          "parent",
+          "group",
+        ] as const),
+      };
 
     default: {
       const exhaustive: never = collection;

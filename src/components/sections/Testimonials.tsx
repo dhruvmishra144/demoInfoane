@@ -1,5 +1,6 @@
 import { Section } from "../ui/Section";
 import { Reveal } from "../ui/Reveal";
+import type { SectionCopy } from "@/lib/page-sections";
 import type { CollectionData } from "@/server/content/schemas";
 
 type Testimonial = CollectionData["testimonial"] & { slug: string };
@@ -11,14 +12,22 @@ type Testimonial = CollectionData["testimonial"] & { slug: string };
  * section: Google prohibits self-serving review markup for your own business, and
  * using it risks a manual action against the whole site.
  */
-export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) {
+export function Testimonials({
+  testimonials,
+  copy,
+  labels,
+}: {
+  testimonials: Testimonial[];
+  copy: SectionCopy;
+  labels: Record<string, string>;
+}) {
   return (
     <Section
       id="testimonials"
       align="center"
-      eyebrow="Client feedback"
-      title="What it is like to work with us"
-      lead="Ask any of our references the same question you would ask us: what happened when something went wrong?"
+      eyebrow={copy.eyebrow}
+      title={copy.title}
+      lead={copy.lead}
     >
       <ul className="grid gap-5 lg:grid-cols-3">
         {testimonials.map((testimonial, index) => (
@@ -67,13 +76,11 @@ export function Testimonials({ testimonials }: { testimonials: Testimonial[] }) 
           <div className="relative isolate flex h-full flex-col justify-between overflow-hidden rounded-4xl bg-brand-950 p-7">
             <div className="mesh absolute inset-0 -z-10 opacity-50" aria-hidden="true" />
             <p className="text-lg font-semibold leading-relaxed text-white">
-              We would rather be measured on whether your team can maintain the
-              system after we leave.
+              {labels["testimonials.extraTitle"]}
             </p>
             <div className="mt-8 border-t border-white/10 pt-5">
               <p className="text-sm text-ink-300">
-                Documentation, tests and a recorded walkthrough are part of every
-                engagement — not an upsell at the end.
+                {labels["testimonials.extraBody"]}
               </p>
             </div>
           </div>

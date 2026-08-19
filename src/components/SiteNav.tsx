@@ -18,7 +18,7 @@ import { routes, type NavItem } from "@/lib/routes";
  *  - Escape closes and returns focus to the trigger; a click outside closes.
  *  - The current page carries aria-current="page", not just a colour.
  */
-export function SiteNav({ items }: { items: NavItem[] }) {
+export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: string }) {
   const pathname = usePathname();
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -243,7 +243,7 @@ export function SiteNav({ items }: { items: NavItem[] }) {
           href={routes.contact}
           className="group ml-2 inline-flex items-center gap-2 rounded-full bg-brand-950 py-2 pl-5 pr-2 text-sm font-semibold text-white transition-colors duration-300 hover:bg-brand-900"
         >
-          Contact us
+          {ctaLabel}
           <span
             className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 group-hover:translate-x-0.5"
             aria-hidden="true"
@@ -372,7 +372,7 @@ export function SiteNav({ items }: { items: NavItem[] }) {
             href={routes.contact}
             className="mt-4 block rounded-full bg-brand-950 px-6 py-3.5 text-center text-sm font-semibold text-white"
           >
-            Contact us
+            {ctaLabel}
           </Link>
         </div>
       )}

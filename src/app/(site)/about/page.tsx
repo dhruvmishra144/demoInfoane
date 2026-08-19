@@ -7,29 +7,12 @@ import { Section } from "@/components/ui/Section";
 import { icons } from "@/components/ui/Icons";
 import { pageSchema } from "@/lib/schema";
 import { routes } from "@/lib/routes";
-import { about as aboutFallback } from "@/content/pages";
 import { getItemOrFallback, getSettingsOrFallback } from "@/server/content/with-fallback";
-import { settingsFallback } from "@/server/content/static-fallback";
+import { pageFallback, settingsFallback } from "@/server/content/static-fallback";
 
-const pageFallback = {
-  metaTitle: aboutFallback.metaTitle,
-  metaDescription: aboutFallback.metaDescription,
-  heading: aboutFallback.heading,
-  intro: aboutFallback.intro,
-  blocks: [],
-  principles: aboutFallback.principles,
-  leadership: aboutFallback.leadership,
-  milestones: aboutFallback.milestones,
-  benefits: [],
-  hiringProcess: [],
-  openings: [],
-  techGroups: [],
-  expectations: [],
-  slug: "about",
-};
 
 export async function generateMetadata(): Promise<Metadata> {
-  const about = await getItemOrFallback("page", "about", pageFallback);
+  const about = await getItemOrFallback("page", "about", pageFallback["about"]);
   return {
     title: about.metaTitle,
     description: about.metaDescription,
@@ -38,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function AboutPage() {
-  const about = await getItemOrFallback("page", "about", pageFallback);
+  const about = await getItemOrFallback("page", "about", pageFallback["about"]);
   const settings = await getSettingsOrFallback(settingsFallback);
 
   return (

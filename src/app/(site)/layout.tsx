@@ -9,8 +9,21 @@ import {
 import {
   serviceFallback,
   industryFallback,
+  navMenuFallback,
   settingsFallback,
 } from "@/server/content/static-fallback";
+import type { CollectionData } from "@/server/content/schemas";
+
+/**
+ * A menu, or an empty one if the row was deleted. An editor removing a menu
+ * should leave a gap in the chrome, not a crashed layout on every page.
+ */
+function menu(
+  menus: (CollectionData["navMenu"] & { slug: string })[],
+  slug: string,
+): CollectionData["navMenu"] {
+  return menus.find((row) => row.slug === slug) ?? { label: slug, items: [] };
+}
 
 /**
  * Layout for the public marketing site.
@@ -35,6 +48,7 @@ export default async function SiteLayout({
   const settings = await getSettingsOrFallback(settingsFallback);
   const services = await getCollectionOrFallback("service", serviceFallback);
   const industries = await getCollectionOrFallback("industry", industryFallback);
+  const menus = await getCollectionOrFallback("navMenu", navMenuFallback);
 
   return (
     <>
@@ -48,9 +62,20 @@ export default async function SiteLayout({
       >
         Skip to main content
       </a>
-      <SiteHeader services={services} industries={industries} />
+      <SiteHeader
+        services={services}
+        industries={industries}
+        menu={menu(menus, "header")}
+        header={settings.header}
+        brandName={settings.name}
+      />
       <main id="main">{children}</main>
-      <SiteFooter settings={settings} services={services} />
+      <SiteFooter
+        settings={settings}
+        services={services}
+        pagesMenu={menu(menus, "footer-pages")}
+        legalMenu={menu(menus, "legal")}
+      />
     </>
   );
 }

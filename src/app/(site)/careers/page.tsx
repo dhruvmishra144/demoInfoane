@@ -7,29 +7,12 @@ import { Button } from "@/components/ui/Button";
 import { icons } from "@/components/ui/Icons";
 import { pageSchema } from "@/lib/schema";
 import { routes } from "@/lib/routes";
-import { careersPage as careersPageFallback } from "@/content/pages";
 import { getItemOrFallback, getSettingsOrFallback } from "@/server/content/with-fallback";
-import { settingsFallback } from "@/server/content/static-fallback";
+import { pageFallback, settingsFallback } from "@/server/content/static-fallback";
 
-const pageFallback = {
-  metaTitle: careersPageFallback.metaTitle,
-  metaDescription: careersPageFallback.metaDescription,
-  heading: careersPageFallback.heading,
-  intro: careersPageFallback.intro,
-  blocks: [],
-  principles: [],
-  leadership: [],
-  milestones: [],
-  benefits: careersPageFallback.benefits,
-  hiringProcess: careersPageFallback.hiringProcess,
-  openings: careersPageFallback.openings,
-  techGroups: [],
-  expectations: [],
-  slug: "careers",
-};
 
 export async function generateMetadata(): Promise<Metadata> {
-  const careersPage = await getItemOrFallback("page", "careers", pageFallback);
+  const careersPage = await getItemOrFallback("page", "careers", pageFallback["careers"]);
   return {
     title: careersPage.metaTitle,
     description: careersPage.metaDescription,
@@ -44,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
  * are real — see CONTENT-TODO.md.
  */
 export default async function CareersPage() {
-  const careersPage = await getItemOrFallback("page", "careers", pageFallback);
+  const careersPage = await getItemOrFallback("page", "careers", pageFallback["careers"]);
   const settings = await getSettingsOrFallback(settingsFallback);
 
   return (

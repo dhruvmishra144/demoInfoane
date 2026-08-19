@@ -20,7 +20,32 @@ import {
   process as processSteps,
   techStack as techStackGroups,
 } from "@/content/home";
-import { industriesPage } from "@/content/pages";
+import {
+  about,
+  careersPage,
+  caseStudiesPage,
+  contactPage,
+  homePage,
+  industriesPage,
+  notFoundPage,
+  privacyPage,
+  servicesPage,
+  technologyPage,
+  termsPage,
+} from "@/content/pages";
+import {
+  footerDefaults,
+  headerDefaults,
+  homeHeroDefaults,
+  labelRecordFor,
+  navMenuDefaults,
+  NAV_MENUS,
+  pageCtaBandDefaults,
+  sectionRowsFor,
+  sharedCtaBand,
+  type NavMenuSlug,
+  type PageSlug,
+} from "@/lib/page-sections";
 import { site } from "@/config/site";
 import type { CollectionData } from "./schemas";
 
@@ -132,6 +157,114 @@ export const engagementModelFallback: (CollectionData["engagementModel"] & {
   slug: model.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
 }));
 
+/* ----------------------------------------------------------------- pages ---- */
+
+type PageRow = CollectionData["page"] & { slug: string };
+
+/** Every field the `page` schema defines, so `buildPage` only overrides. */
+const emptyPage: Omit<CollectionData["page"], "metaTitle" | "metaDescription" | "heading" | "intro"> =
+  {
+    sections: [],
+    ctaBand: { heading: "", body: "" },
+    labels: {},
+    hero: {
+      headline: "",
+      highlight: "",
+      subhead: "",
+      primaryCta: "",
+      secondaryCta: "",
+      note: "",
+      cardTitle: "",
+      cardItems: [],
+    },
+    blocks: [],
+    principles: [],
+    leadership: [],
+    milestones: [],
+    benefits: [],
+    hiringProcess: [],
+    openings: [],
+    techGroups: [],
+    expectations: [],
+  };
+
+/**
+ * Builds a page's fallback row, filling section headings and the CTA band from
+ * the registry in `src/lib/page-sections.ts`.
+ *
+ * Centralised because there are eleven of these: when the `page` schema gains a
+ * field, this is the only place that has to learn about it, rather than eleven
+ * literals spread across the route files.
+ */
+function buildPage(
+  slug: PageSlug,
+  source: {
+    metaTitle: string;
+    metaDescription: string;
+    heading: string;
+    intro: readonly string[];
+  },
+  extra: Partial<CollectionData["page"]> = {},
+): PageRow {
+  return {
+    ...emptyPage,
+    metaTitle: source.metaTitle,
+    metaDescription: source.metaDescription,
+    heading: source.heading,
+    intro: [...source.intro],
+    sections: sectionRowsFor(slug),
+    ctaBand: { ...(pageCtaBandDefaults[slug] ?? sharedCtaBand) },
+    labels: labelRecordFor(slug),
+    ...extra,
+    slug,
+  };
+}
+
+export const pageFallback: Record<PageSlug, PageRow> = {
+  home: buildPage("home", homePage, {
+    hero: { ...homeHeroDefaults, cardItems: [...homeHeroDefaults.cardItems] },
+  }),
+  about: buildPage("about", about, {
+    principles: about.principles.map((p) => ({ ...p })),
+    leadership: about.leadership.map((p) => ({ ...p })),
+    milestones: about.milestones.map((m) => ({ ...m })),
+  }),
+  services: buildPage("services", servicesPage),
+  industries: buildPage("industries", industriesPage),
+  technology: buildPage("technology", technologyPage, {
+    principles: technologyPage.principles.map((p) => ({ ...p })),
+    techGroups: technologyPage.groups.map((g) => ({
+      group: g.group,
+      body: g.body,
+      items: [...g.items],
+    })),
+  }),
+  "case-studies": buildPage("case-studies", caseStudiesPage),
+  careers: buildPage("careers", careersPage, {
+    benefits: careersPage.benefits.map((b) => ({ ...b })),
+    hiringProcess: careersPage.hiringProcess.map((s) => ({ ...s })),
+    openings: careersPage.openings.map((o) => ({ ...o })),
+  }),
+  contact: buildPage("contact", contactPage, {
+    expectations: [...contactPage.expectations],
+  }),
+  "privacy-policy": buildPage("privacy-policy", privacyPage, {
+    blocks: privacyPage.blocks.map((b) => ({ ...b })),
+  }),
+  terms: buildPage("terms", termsPage, {
+    blocks: termsPage.blocks.map((b) => ({ ...b })),
+  }),
+  "not-found": buildPage("not-found", notFoundPage),
+};
+
+export const navMenuFallback: (CollectionData["navMenu"] & { slug: string })[] = NAV_MENUS.map(
+  (slug: NavMenuSlug) => ({
+    label: navMenuDefaults[slug].label,
+    items: navMenuDefaults[slug].items.map((item) => ({ ...item })),
+    slug,
+  }),
+);
+
 export const settingsFallback: CollectionData["settings"] = {
   name: site.name,
   legalName: site.legalName,
@@ -160,6 +293,8 @@ export const settingsFallback: CollectionData["settings"] = {
   stats: site.stats.map((stat) => ({ value: stat.value, label: stat.label })),
   credentials: [...site.credentials],
   promises: { ...site.promises },
+  header: { ...headerDefaults },
+  footer: { ...footerDefaults },
   platformStrip: [
     "AWS",
     "Microsoft Azure",

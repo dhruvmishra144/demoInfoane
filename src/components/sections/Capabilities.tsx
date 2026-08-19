@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { icons } from "../ui/Icons";
+import type { SectionCopy } from "@/lib/page-sections";
 import type { CollectionData } from "@/server/content/schemas";
 
 type ProcessStep = CollectionData["process"] & { slug: string };
@@ -22,7 +23,15 @@ const tabVisuals = [
   { label: "Operations", rows: ["Monitoring", "Runbooks", "Handover"] },
 ];
 
-export function Capabilities({ steps }: { steps: ProcessStep[] }) {
+export function Capabilities({
+  steps,
+  copy,
+  labels,
+}: {
+  steps: ProcessStep[];
+  copy: SectionCopy;
+  labels: Record<string, string>;
+}) {
   const [active, setActive] = useState(0);
 
   function onKeyDown(event: React.KeyboardEvent) {
@@ -45,17 +54,16 @@ export function Capabilities({ steps }: { steps: ProcessStep[] }) {
       <div className="container-x">
         <div className="mx-auto max-w-2xl text-center">
           <p className="mb-4 inline-flex rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-brand-700 ring-1 ring-inset ring-brand-100">
-            How we work
+            {copy.eyebrow}
           </p>
           <h2
             id="capabilities-heading"
             className="text-3xl font-semibold sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]"
           >
-            A delivery process you can hold us to
+            {copy.title}
           </h2>
           <p className="mt-4 text-base leading-relaxed text-ink-500 lg:text-lg">
-            Most failed projects fail in the first month, on assumptions nobody
-            wrote down. This is the sequence we use so that does not happen.
+            {copy.lead}
           </p>
         </div>
 
@@ -90,7 +98,9 @@ export function Capabilities({ steps }: { steps: ProcessStep[] }) {
         {/* Panels */}
         <div className="mt-10">
           {steps.map((step, index) => {
-            const visual = tabVisuals[index];
+            // The visuals are positional but the process steps come from the CMS,
+            // so an added step reuses the last visual rather than crashing.
+            const visual = tabVisuals[Math.min(index, tabVisuals.length - 1)];
             return (
               <div
                 key={step.title}
@@ -106,7 +116,7 @@ export function Capabilities({ steps }: { steps: ProcessStep[] }) {
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-semibold text-white">{visual.label}</p>
                     <span className="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-brand-200">
-                      Stage {step.step}
+                      {labels["process.stageWord"]} {step.step}
                     </span>
                   </div>
 
@@ -126,7 +136,11 @@ export function Capabilities({ steps }: { steps: ProcessStep[] }) {
                           {row}
                         </span>
                         <span className="text-[11px] font-semibold text-ink-400">
-                          {rowIndex === 0 ? "Complete" : rowIndex === 1 ? "Active" : "Queued"}
+                          {rowIndex === 0
+                            ? labels["process.statusComplete"]
+                            : rowIndex === 1
+                              ? labels["process.statusActive"]
+                              : labels["process.statusQueued"]}
                         </span>
                       </li>
                     ))}
@@ -136,7 +150,7 @@ export function Capabilities({ steps }: { steps: ProcessStep[] }) {
                 {/* Copy card */}
                 <div className="flex flex-col justify-center rounded-4xl border border-ink-200 bg-white p-7 lg:p-9">
                   <span className="inline-flex w-fit rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-700">
-                    Stage {step.step}
+                    {labels["process.stageWord"]} {step.step}
                   </span>
                   <h3 className="mt-5 text-2xl font-semibold">{step.title}</h3>
                   <p className="mt-4 leading-relaxed text-ink-500">{step.body}</p>

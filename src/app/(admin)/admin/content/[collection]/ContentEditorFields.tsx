@@ -474,10 +474,87 @@ export function ContentEditorFields({
         </>
       );
 
+    case "navMenu":
+      return (
+        <>
+          <Field label="Menu name" htmlFor="label" error={errors.label}>
+            <Input id="label" name="label" defaultValue={str(data, "label")} required />
+          </Field>
+          <RepeatableGroupList
+            name="items"
+            label="Links"
+            initialValues={objArr<{
+              label: string;
+              href: string;
+              description: string;
+              parent: string;
+              group: string;
+            }>(data, "items")}
+            emptyRow={{ label: "", href: "", description: "", parent: "", group: "" }}
+            max={30}
+            renderRow={(fieldName, row) => (
+              <>
+                <div className="grid grid-cols-2 gap-3">
+                  <Input name={fieldName("label")} defaultValue={row.label} placeholder="Label" />
+                  <Input
+                    name={fieldName("href")}
+                    defaultValue={row.href}
+                    placeholder="/about or https://…"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <Input
+                    name={fieldName("parent")}
+                    defaultValue={row.parent}
+                    placeholder="Parent (blank = top-level)"
+                  />
+                  <Input
+                    name={fieldName("group")}
+                    defaultValue={row.group}
+                    placeholder="Column heading"
+                  />
+                </div>
+                <Input
+                  name={fieldName("description")}
+                  defaultValue={row.description}
+                  placeholder="Description (menu panels only)"
+                />
+              </>
+            )}
+          />
+        </>
+      );
+
     case "settings": {
       const contact = (data?.contact as Record<string, unknown> | undefined) ?? null;
       const promises = (data?.promises as Record<string, unknown> | undefined) ?? null;
       const social = (data?.social as Record<string, string> | undefined) ?? {};
+      const header = (data?.header as Record<string, unknown> | undefined) ?? null;
+      const footer = (data?.footer as Record<string, unknown> | undefined) ?? null;
+
+      const headerFields = [
+        ["ctaLabel", "Header button label"],
+        ["promoHeading", "Menu promo — heading"],
+        ["promoBody", "Menu promo — body"],
+        ["promoCtaLabel", "Menu promo — link label"],
+        ["promoCtaHref", "Menu promo — link target"],
+        ["serviceGroupPrimary", "Services menu — first column"],
+        ["serviceGroupSecondary", "Services menu — second column"],
+        ["industryGroupPrimary", "Industries menu — first column"],
+        ["industryGroupSecondary", "Industries menu — second column"],
+      ] as const;
+
+      const footerFields = [
+        ["blurb", "Blurb after the tagline"],
+        ["newsletterHeading", "Newsletter heading"],
+        ["newsletterBody", "Newsletter body"],
+        ["newsletterPlaceholder", "Newsletter input placeholder"],
+        ["newsletterCtaLabel", "Newsletter button"],
+        ["pagesHeading", "Pages column heading"],
+        ["servicesHeading", "Services column heading"],
+        ["officesHeading", "Offices column heading"],
+        ["copyrightSuffix", "Copyright suffix"],
+      ] as const;
 
       return (
         <>
@@ -659,6 +736,36 @@ export function ContentEditorFields({
             initialValues={arr(data, "platformStrip")}
             max={16}
           />
+
+          <fieldset className="rounded-2xl border border-ink-200 p-5">
+            <legend className="px-2 text-sm font-semibold text-ink-900">Header</legend>
+            <div className="space-y-4">
+              {headerFields.map(([key, label]) => (
+                <Field key={key} label={label} htmlFor={`header.${key}`}>
+                  <Input
+                    id={`header.${key}`}
+                    name={`header.${key}`}
+                    defaultValue={str(header, key)}
+                  />
+                </Field>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset className="rounded-2xl border border-ink-200 p-5">
+            <legend className="px-2 text-sm font-semibold text-ink-900">Footer</legend>
+            <div className="space-y-4">
+              {footerFields.map(([key, label]) => (
+                <Field key={key} label={label} htmlFor={`footer.${key}`}>
+                  <Input
+                    id={`footer.${key}`}
+                    name={`footer.${key}`}
+                    defaultValue={str(footer, key)}
+                  />
+                </Field>
+              ))}
+            </div>
+          </fieldset>
         </>
       );
     }

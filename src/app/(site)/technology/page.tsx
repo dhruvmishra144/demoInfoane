@@ -6,33 +6,16 @@ import { CtaBand } from "@/components/CtaBand";
 import { Section } from "@/components/ui/Section";
 import { pageSchema } from "@/lib/schema";
 import { routes, serviceHref } from "@/lib/routes";
-import { technologyPage as technologyPageFallback } from "@/content/pages";
 import {
   getItemOrFallback,
   getCollectionOrFallback,
   getSettingsOrFallback,
 } from "@/server/content/with-fallback";
-import { serviceFallback, settingsFallback } from "@/server/content/static-fallback";
+import { pageFallback, serviceFallback, settingsFallback } from "@/server/content/static-fallback";
 
-const pageFallback = {
-  metaTitle: technologyPageFallback.metaTitle,
-  metaDescription: technologyPageFallback.metaDescription,
-  heading: technologyPageFallback.heading,
-  intro: technologyPageFallback.intro,
-  blocks: [],
-  principles: technologyPageFallback.principles,
-  leadership: [],
-  milestones: [],
-  benefits: [],
-  hiringProcess: [],
-  openings: [],
-  techGroups: technologyPageFallback.groups,
-  expectations: [],
-  slug: "technology",
-};
 
 export async function generateMetadata(): Promise<Metadata> {
-  const technologyPage = await getItemOrFallback("page", "technology", pageFallback);
+  const technologyPage = await getItemOrFallback("page", "technology", pageFallback["technology"]);
   return {
     title: technologyPage.metaTitle,
     description: technologyPage.metaDescription,
@@ -41,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function TechnologyPage() {
-  const technologyPage = await getItemOrFallback("page", "technology", pageFallback);
+  const technologyPage = await getItemOrFallback("page", "technology", pageFallback["technology"]);
   const servicePages = await getCollectionOrFallback("service", serviceFallback);
   const settings = await getSettingsOrFallback(settingsFallback);
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { icons } from "../ui/Icons";
 import { routes } from "@/lib/routes";
+import type { SectionCopy } from "@/lib/page-sections";
 import type { CollectionData } from "@/server/content/schemas";
 
 type EngagementModel = CollectionData["engagementModel"] & { slug: string };
@@ -25,10 +26,14 @@ export function EngagementModels({
   engagementModels,
   primaryStat,
   secondaryStat,
+  copy,
+  labels,
 }: {
   engagementModels: EngagementModel[];
   primaryStat: Stat;
   secondaryStat: Stat;
+  copy: SectionCopy;
+  labels: Record<string, string>;
 }) {
   const [active, setActive] = useState(
     Math.max(0, engagementModels.findIndex((model) => model.popular)),
@@ -54,17 +59,16 @@ export function EngagementModels({
 
           <div className="max-w-2xl">
             <p className="mb-4 inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-brand-200 ring-1 ring-inset ring-white/15">
-              Engagement models
+              {copy.eyebrow}
             </p>
             <h2
               id="engagement-heading"
               className="text-3xl font-semibold text-white sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12]"
             >
-              Three ways to work with us
+              {copy.title}
             </h2>
             <p className="mt-4 leading-relaxed text-ink-300 lg:text-lg">
-              Most clients start with discovery and then pick the shape that fits
-              what discovery found. You are never locked into the first choice.
+              {copy.lead}
             </p>
           </div>
 
@@ -97,7 +101,7 @@ export function EngagementModels({
                     </span>
                     {model.popular && (
                       <span className="rounded-full bg-brand-500 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
-                        Most chosen
+                        {labels["engagement.popularBadge"]}
                       </span>
                     )}
                   </span>
@@ -181,7 +185,7 @@ export function EngagementModels({
                     href={routes.contact}
                     className="group mt-8 inline-flex items-center gap-2.5 rounded-full bg-white py-2 pl-5 pr-2 text-sm font-semibold text-brand-950 transition-colors duration-300 hover:bg-brand-50"
                   >
-                    Schedule a call
+                    {copy.ctaLabel}
                     <span
                       className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-600 text-white transition-transform duration-300 group-hover:translate-x-0.5"
                       aria-hidden="true"
