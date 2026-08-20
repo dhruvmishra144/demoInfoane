@@ -3,8 +3,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { icons } from "@/components/ui/Icons";
 import { routes, serviceHref } from "@/lib/routes";
-import { getCollectionOrFallback } from "@/server/content/with-fallback";
-import { serviceFallback } from "@/server/content/static-fallback";
+import { sectionCopy } from "@/lib/page-sections";
+import {
+  getCollectionOrFallback,
+  getItemOrFallback,
+  getSettingsOrFallback,
+} from "@/server/content/with-fallback";
+import { pageFallback, serviceFallback, settingsFallback } from "@/server/content/static-fallback";
 
 /**
  * Custom 404.
@@ -19,7 +24,13 @@ export const metadata: Metadata = {
 };
 
 export default async function NotFound() {
+  // D1 reads are sequential, not Promise.all'd — see the "Build-time D1
+  // concurrency" note in ADMIN-PLAN.md: concurrent reads during static
+  // generation against the remote database can throw SQLITE_BUSY.
+  const page = await getItemOrFallback("page", "not-found", pageFallback["not-found"]);
+  const settings = await getSettingsOrFallback(settingsFallback);
   const servicePages = await getCollectionOrFallback("service", serviceFallback);
+  const suggestions = sectionCopy(page.sections, "not-found", "suggestions", settings);
 
   return (
     <>
@@ -31,12 +42,9 @@ export default async function NotFound() {
               Error 404
             </p>
             <h1 className="mt-3 text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl">
-              We cannot find that page
+              {page.heading}
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-ink-300">
-              The link may be out of date, or the page may have moved. Here is the
-              way back.
-            </p>
+            <p className="mt-6 text-lg leading-relaxed text-ink-300">{page.intro[0]}</p>
             <div className="mt-9 flex flex-wrap gap-4">
               <Button href={routes.home}>
                 Back to home
@@ -52,7 +60,7 @@ export default async function NotFound() {
       <section aria-labelledby="404-services" className="bg-white">
         <div className="container-x py-16 lg:py-20">
           <h2 id="404-services" className="text-2xl font-bold">
-            Looking for one of these?
+            {suggestions.title}
           </h2>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {servicePages.map((service) => (

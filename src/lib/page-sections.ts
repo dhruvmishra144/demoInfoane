@@ -405,7 +405,7 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
       label: "Policy sections",
       eyebrow: "Draft structure",
       title: "Sections this policy needs to cover",
-      lead: "",
+      lead: "Last updated: [date]. Replace every bracketed section below with reviewed text.",
     },
   ],
 
@@ -415,7 +415,7 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
       label: "Terms sections",
       eyebrow: "Draft structure",
       title: "Sections these terms need to cover",
-      lead: "",
+      lead: "Last updated: [date]. Replace every bracketed section below with reviewed text.",
     },
   ],
 

@@ -11,6 +11,7 @@ import { Textarea } from "@/components/admin/Textarea";
 import { Select } from "@/components/admin/Select";
 import { Checkbox } from "@/components/admin/Checkbox";
 import { RepeatableStringList, RepeatableGroupList } from "@/components/admin/RepeatableList";
+import { Tabs, type TabDef } from "@/components/admin/Tabs";
 
 /**
  * Field renderer per collection, generated from the same Zod schemas
@@ -330,35 +331,53 @@ export function ContentEditorFields({
         else labelGroups.push({ group: entry.group, entries: [entry] });
       }
 
-      return (
-        <>
-          <Field label="Meta title" htmlFor="metaTitle" error={errors.metaTitle}>
-            <Input id="metaTitle" name="metaTitle" defaultValue={str(data, "metaTitle")} required />
-          </Field>
-          <Field label="Meta description" htmlFor="metaDescription" error={errors.metaDescription}>
-            <Textarea
-              id="metaDescription"
-              name="metaDescription"
-              defaultValue={str(data, "metaDescription")}
-              rows={2}
-              required
-            />
-          </Field>
-          <Field label="Heading" htmlFor="heading" error={errors.heading}>
-            <Input id="heading" name="heading" defaultValue={str(data, "heading")} required />
-          </Field>
-          <RepeatableStringList
-            name="intro"
-            label="Intro paragraphs"
-            initialValues={arr(data, "intro")}
-            multiline
-            max={5}
-          />
+      const hasErrorFor = (prefixes: string[]) =>
+        Object.keys(errors).some((key) =>
+          prefixes.some((prefix) => key === prefix || key.startsWith(`${prefix}.`)),
+        );
 
-          {groups.includes("hero") && (
-            <fieldset className="rounded-2xl border border-ink-200 p-5">
-              <legend className="px-2 text-sm font-semibold text-ink-900">Hero</legend>
-              <div className="space-y-4">
+      const tabs: TabDef[] = [
+        {
+          id: "overview",
+          label: "Overview",
+          hasError: hasErrorFor(["metaTitle", "metaDescription", "heading", "intro"]),
+        },
+      ];
+      const panels: Record<string, React.ReactNode> = {
+        overview: (
+          <>
+            <Field label="Meta title" htmlFor="metaTitle" error={errors.metaTitle}>
+              <Input id="metaTitle" name="metaTitle" defaultValue={str(data, "metaTitle")} required />
+            </Field>
+            <Field label="Meta description" htmlFor="metaDescription" error={errors.metaDescription}>
+              <Textarea
+                id="metaDescription"
+                name="metaDescription"
+                defaultValue={str(data, "metaDescription")}
+                rows={2}
+                required
+              />
+            </Field>
+            <Field label="Heading" htmlFor="heading" error={errors.heading}>
+              <Input id="heading" name="heading" defaultValue={str(data, "heading")} required />
+            </Field>
+            <RepeatableStringList
+              name="intro"
+              label="Intro paragraphs"
+              initialValues={arr(data, "intro")}
+              multiline
+              max={5}
+            />
+          </>
+        ),
+      };
+
+      if (groups.includes("hero")) {
+        tabs.push({ id: "hero", label: "Hero", hasError: hasErrorFor(["hero"]) });
+        panels.hero = (
+          <fieldset className="rounded-2xl border border-ink-200 p-5">
+            <legend className="px-2 text-sm font-semibold text-ink-900">Hero</legend>
+            <div className="space-y-4">
                 <Field label="Headline" htmlFor="hero.headline">
                   <Input id="hero.headline" name="hero.headline" defaultValue={str(hero, "headline")} />
                 </Field>
@@ -409,10 +428,13 @@ export function ContentEditorFields({
                   max={6}
                 />
               </div>
-            </fieldset>
-          )}
+          </fieldset>
+        );
+      }
 
-          {sectionDefs.length > 0 && (
+      if (sectionDefs.length > 0) {
+        tabs.push({ id: "sections", label: "Sections", hasError: hasErrorFor(["sections"]) });
+        panels.sections = (
             <fieldset className="rounded-2xl border border-ink-200 p-5">
               <legend className="px-2 text-sm font-semibold text-ink-900">
                 Section headings
@@ -479,9 +501,12 @@ export function ContentEditorFields({
                 })}
               </div>
             </fieldset>
-          )}
+        );
+      }
 
-          {labelGroups.length > 0 && (
+      if (labelGroups.length > 0) {
+        tabs.push({ id: "labels", label: "Labels", hasError: hasErrorFor(["labels"]) });
+        panels.labels = (
             <fieldset className="rounded-2xl border border-ink-200 p-5">
               <legend className="px-2 text-sm font-semibold text-ink-900">
                 Labels and badges
@@ -507,9 +532,12 @@ export function ContentEditorFields({
                 ))}
               </div>
             </fieldset>
-          )}
+        );
+      }
 
-          {groups.includes("ctaBand") && (
+      if (groups.includes("ctaBand")) {
+        tabs.push({ id: "cta", label: "Call to action", hasError: hasErrorFor(["ctaBand"]) });
+        panels.cta = (
             <fieldset className="rounded-2xl border border-ink-200 p-5">
               <legend className="px-2 text-sm font-semibold text-ink-900">
                 Closing call to action
@@ -531,9 +559,12 @@ export function ContentEditorFields({
                 </Field>
               </div>
             </fieldset>
-          )}
+        );
+      }
 
-          {groups.includes("blocks") && (
+      if (groups.includes("blocks")) {
+        tabs.push({ id: "blocks", label: "Content blocks", hasError: hasErrorFor(["blocks"]) });
+        panels.blocks = (
             <RepeatableGroupList
               name="blocks"
               label="Content blocks"
@@ -547,9 +578,16 @@ export function ContentEditorFields({
                 </>
               )}
             />
-          )}
+        );
+      }
 
-          {groups.includes("about") && (
+      if (groups.includes("about")) {
+        tabs.push({
+          id: "about",
+          label: "About",
+          hasError: hasErrorFor(["principles", "leadership", "milestones"]),
+        });
+        panels.about = (
             <>
               <RepeatableGroupList
                 name="principles"
@@ -602,9 +640,16 @@ export function ContentEditorFields({
                 )}
               />
             </>
-          )}
+        );
+      }
 
-          {groups.includes("careers") && (
+      if (groups.includes("careers")) {
+        tabs.push({
+          id: "careers",
+          label: "Careers",
+          hasError: hasErrorFor(["benefits", "hiringProcess", "openings"]),
+        });
+        panels.careers = (
             <>
               <RepeatableGroupList
                 name="benefits"
@@ -669,9 +714,16 @@ export function ContentEditorFields({
                 )}
               />
             </>
-          )}
+        );
+      }
 
-          {groups.includes("technology") && (
+      if (groups.includes("technology")) {
+        tabs.push({
+          id: "technology",
+          label: "Technology",
+          hasError: hasErrorFor(["principles", "techGroups"]),
+        });
+        panels.technology = (
             <>
               <RepeatableGroupList
                 name="principles"
@@ -709,18 +761,24 @@ export function ContentEditorFields({
                 )}
               />
             </>
-          )}
+        );
+      }
 
-          {groups.includes("contact") && (
+      if (groups.includes("contact")) {
+        tabs.push({ id: "contact", label: "Contact", hasError: hasErrorFor(["expectations"]) });
+        panels.contact = (
             <RepeatableStringList
               name="expectations"
               label="What to expect"
               initialValues={arr(data, "expectations")}
               max={10}
             />
-          )}
-        </>
-      );
+        );
+      }
+
+      const defaultTabId = tabs.find((tab) => tab.hasError)?.id;
+
+      return <Tabs tabs={tabs} defaultTabId={defaultTabId} idPrefix="page" panels={panels} />;
     }
 
     case "navMenu":
@@ -805,187 +863,221 @@ export function ContentEditorFields({
         ["copyrightSuffix", "Copyright suffix"],
       ] as const;
 
-      return (
-        <>
-          <Field label="Company name" htmlFor="name" error={errors.name}>
-            <Input id="name" name="name" defaultValue={str(data, "name")} required />
-          </Field>
-          <Field label="Legal entity name" htmlFor="legalName" error={errors.legalName}>
-            <Input id="legalName" name="legalName" defaultValue={str(data, "legalName")} required />
-          </Field>
-          <Field label="Tagline" htmlFor="tagline" error={errors.tagline}>
-            <Input id="tagline" name="tagline" defaultValue={str(data, "tagline")} required />
-          </Field>
-          <Field label="Description" htmlFor="description" error={errors.description}>
-            <Textarea id="description" name="description" defaultValue={str(data, "description")} required />
-          </Field>
-          <Field label="Founding year" htmlFor="foundingYear" error={errors.foundingYear}>
-            <Input id="foundingYear" name="foundingYear" defaultValue={str(data, "foundingYear")} required />
-          </Field>
+      const hasErrorFor = (prefixes: string[]) =>
+        Object.keys(errors).some((key) =>
+          prefixes.some((prefix) => key === prefix || key.startsWith(`${prefix}.`)),
+        );
 
-          <div className="grid grid-cols-3 gap-4">
-            <Field label="Contact email" htmlFor="contact.email" error={errors["contact.email"]}>
-              <Input
-                id="contact.email"
-                name="contact.email"
-                type="email"
-                defaultValue={str(contact, "email")}
-                required
-              />
-            </Field>
-            <Field label="Phone (E.164)" htmlFor="contact.phone" error={errors["contact.phone"]}>
-              <Input id="contact.phone" name="contact.phone" defaultValue={str(contact, "phone")} required />
-            </Field>
-            <Field
-              label="Phone (display)"
-              htmlFor="contact.phoneDisplay"
-              error={errors["contact.phoneDisplay"]}
-            >
-              <Input
-                id="contact.phoneDisplay"
-                name="contact.phoneDisplay"
-                defaultValue={str(contact, "phoneDisplay")}
-                required
-              />
-            </Field>
-          </div>
+      const tabs: TabDef[] = [
+        {
+          id: "company",
+          label: "Company",
+          hasError: hasErrorFor(["name", "legalName", "tagline", "description", "foundingYear"]),
+        },
+        {
+          id: "contact",
+          label: "Contact & offices",
+          hasError: hasErrorFor(["contact", "promises", "offices"]),
+        },
+        {
+          id: "social",
+          label: "Social & stats",
+          hasError: hasErrorFor(["social", "stats", "credentials", "platformStrip"]),
+        },
+        { id: "header", label: "Header", hasError: hasErrorFor(["header"]) },
+        { id: "footer", label: "Footer", hasError: hasErrorFor(["footer"]) },
+      ];
 
-          <div className="grid grid-cols-3 gap-4">
-            <Field
-              label="Free consultation length"
-              htmlFor="promises.consultationLength"
-              error={errors["promises.consultationLength"]}
-            >
-              <Input
-                id="promises.consultationLength"
-                name="promises.consultationLength"
-                defaultValue={str(promises, "consultationLength")}
-                required
-              />
+      const panels: Record<string, React.ReactNode> = {
+        company: (
+          <>
+            <Field label="Company name" htmlFor="name" error={errors.name}>
+              <Input id="name" name="name" defaultValue={str(data, "name")} required />
             </Field>
-            <Field
-              label="Discovery length"
-              htmlFor="promises.discoveryLength"
-              error={errors["promises.discoveryLength"]}
-            >
-              <Input
-                id="promises.discoveryLength"
-                name="promises.discoveryLength"
-                defaultValue={str(promises, "discoveryLength")}
-                required
-              />
+            <Field label="Legal entity name" htmlFor="legalName" error={errors.legalName}>
+              <Input id="legalName" name="legalName" defaultValue={str(data, "legalName")} required />
             </Field>
-            <Field
-              label="Response time"
-              htmlFor="promises.responseTime"
-              error={errors["promises.responseTime"]}
-            >
-              <Input
-                id="promises.responseTime"
-                name="promises.responseTime"
-                defaultValue={str(promises, "responseTime")}
-                required
-              />
+            <Field label="Tagline" htmlFor="tagline" error={errors.tagline}>
+              <Input id="tagline" name="tagline" defaultValue={str(data, "tagline")} required />
             </Field>
-          </div>
+            <Field label="Description" htmlFor="description" error={errors.description}>
+              <Textarea id="description" name="description" defaultValue={str(data, "description")} required />
+            </Field>
+            <Field label="Founding year" htmlFor="foundingYear" error={errors.foundingYear}>
+              <Input id="foundingYear" name="foundingYear" defaultValue={str(data, "foundingYear")} required />
+            </Field>
+          </>
+        ),
+        contact: (
+          <>
+            <div className="grid grid-cols-3 gap-4">
+              <Field label="Contact email" htmlFor="contact.email" error={errors["contact.email"]}>
+                <Input
+                  id="contact.email"
+                  name="contact.email"
+                  type="email"
+                  defaultValue={str(contact, "email")}
+                  required
+                />
+              </Field>
+              <Field label="Phone (E.164)" htmlFor="contact.phone" error={errors["contact.phone"]}>
+                <Input id="contact.phone" name="contact.phone" defaultValue={str(contact, "phone")} required />
+              </Field>
+              <Field
+                label="Phone (display)"
+                htmlFor="contact.phoneDisplay"
+                error={errors["contact.phoneDisplay"]}
+              >
+                <Input
+                  id="contact.phoneDisplay"
+                  name="contact.phoneDisplay"
+                  defaultValue={str(contact, "phoneDisplay")}
+                  required
+                />
+              </Field>
+            </div>
 
-          <RepeatableGroupList
-            name="offices"
-            label="Offices"
-            initialValues={objArr<Record<string, unknown>>(data, "offices").map((office) => ({
-              label: String(office.label ?? ""),
-              street: String(office.street ?? ""),
-              city: String(office.city ?? ""),
-              region: String(office.region ?? ""),
-              postalCode: String(office.postalCode ?? ""),
-              country: String(office.country ?? ""),
-              phone: String(office.phone ?? ""),
-              phoneDisplay: String(office.phoneDisplay ?? ""),
-            }))}
-            emptyRow={{
-              label: "",
-              street: "",
-              city: "",
-              region: "",
-              postalCode: "",
-              country: "",
-              phone: "",
-              phoneDisplay: "",
-            }}
-            max={6}
-            renderRow={(fieldName, row) => (
-              <>
-                <Input name={fieldName("label")} defaultValue={row.label} placeholder="Label" />
-                <Input name={fieldName("street")} defaultValue={row.street} placeholder="Street" />
-                <div className="grid grid-cols-2 gap-3">
-                  <Input name={fieldName("city")} defaultValue={row.city} placeholder="City" />
-                  <Input name={fieldName("region")} defaultValue={row.region} placeholder="Region" />
+            <div className="grid grid-cols-3 gap-4">
+              <Field
+                label="Free consultation length"
+                htmlFor="promises.consultationLength"
+                error={errors["promises.consultationLength"]}
+              >
+                <Input
+                  id="promises.consultationLength"
+                  name="promises.consultationLength"
+                  defaultValue={str(promises, "consultationLength")}
+                  required
+                />
+              </Field>
+              <Field
+                label="Discovery length"
+                htmlFor="promises.discoveryLength"
+                error={errors["promises.discoveryLength"]}
+              >
+                <Input
+                  id="promises.discoveryLength"
+                  name="promises.discoveryLength"
+                  defaultValue={str(promises, "discoveryLength")}
+                  required
+                />
+              </Field>
+              <Field
+                label="Response time"
+                htmlFor="promises.responseTime"
+                error={errors["promises.responseTime"]}
+              >
+                <Input
+                  id="promises.responseTime"
+                  name="promises.responseTime"
+                  defaultValue={str(promises, "responseTime")}
+                  required
+                />
+              </Field>
+            </div>
+
+            <RepeatableGroupList
+              name="offices"
+              label="Offices"
+              initialValues={objArr<Record<string, unknown>>(data, "offices").map((office) => ({
+                label: String(office.label ?? ""),
+                street: String(office.street ?? ""),
+                city: String(office.city ?? ""),
+                region: String(office.region ?? ""),
+                postalCode: String(office.postalCode ?? ""),
+                country: String(office.country ?? ""),
+                phone: String(office.phone ?? ""),
+                phoneDisplay: String(office.phoneDisplay ?? ""),
+              }))}
+              emptyRow={{
+                label: "",
+                street: "",
+                city: "",
+                region: "",
+                postalCode: "",
+                country: "",
+                phone: "",
+                phoneDisplay: "",
+              }}
+              max={6}
+              renderRow={(fieldName, row) => (
+                <>
+                  <Input name={fieldName("label")} defaultValue={row.label} placeholder="Label" />
+                  <Input name={fieldName("street")} defaultValue={row.street} placeholder="Street" />
+                  <div className="grid grid-cols-2 gap-3">
+                    <Input name={fieldName("city")} defaultValue={row.city} placeholder="City" />
+                    <Input name={fieldName("region")} defaultValue={row.region} placeholder="Region" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Input
+                      name={fieldName("postalCode")}
+                      defaultValue={row.postalCode}
+                      placeholder="Postal code"
+                    />
+                    <Input
+                      name={fieldName("country")}
+                      defaultValue={row.country}
+                      placeholder="Country (ISO-2)"
+                      maxLength={2}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <Input name={fieldName("phone")} defaultValue={row.phone} placeholder="Phone (E.164)" />
+                    <Input
+                      name={fieldName("phoneDisplay")}
+                      defaultValue={row.phoneDisplay}
+                      placeholder="Phone (display)"
+                    />
+                  </div>
+                </>
+              )}
+            />
+          </>
+        ),
+        social: (
+          <>
+            <RepeatableGroupList
+              name="social"
+              label="Social links"
+              initialValues={Object.entries(social).map(([platform, url]) => ({ platform, url }))}
+              emptyRow={{ platform: "", url: "" }}
+              renderRow={(fieldName, row) => (
+                <div className="grid grid-cols-[1fr_2fr] gap-3">
+                  <Input name={fieldName("platform")} defaultValue={row.platform} placeholder="Platform" />
+                  <Input name={fieldName("url")} defaultValue={row.url} placeholder="https://…" />
                 </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <Input
-                    name={fieldName("postalCode")}
-                    defaultValue={row.postalCode}
-                    placeholder="Postal code"
-                  />
-                  <Input
-                    name={fieldName("country")}
-                    defaultValue={row.country}
-                    placeholder="Country (ISO-2)"
-                    maxLength={2}
-                  />
+              )}
+            />
+
+            <RepeatableGroupList
+              name="stats"
+              label="Stats"
+              initialValues={objArr<{ value: string; label: string }>(data, "stats")}
+              emptyRow={{ value: "", label: "" }}
+              max={4}
+              renderRow={(fieldName, row) => (
+                <div className="grid grid-cols-[1fr_2fr] gap-3">
+                  <Input name={fieldName("value")} defaultValue={row.value} placeholder="Value" />
+                  <Input name={fieldName("label")} defaultValue={row.label} placeholder="Label" />
                 </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <Input name={fieldName("phone")} defaultValue={row.phone} placeholder="Phone (E.164)" />
-                  <Input
-                    name={fieldName("phoneDisplay")}
-                    defaultValue={row.phoneDisplay}
-                    placeholder="Phone (display)"
-                  />
-                </div>
-              </>
-            )}
-          />
+              )}
+            />
 
-          <RepeatableGroupList
-            name="social"
-            label="Social links"
-            initialValues={Object.entries(social).map(([platform, url]) => ({ platform, url }))}
-            emptyRow={{ platform: "", url: "" }}
-            renderRow={(fieldName, row) => (
-              <div className="grid grid-cols-[1fr_2fr] gap-3">
-                <Input name={fieldName("platform")} defaultValue={row.platform} placeholder="Platform" />
-                <Input name={fieldName("url")} defaultValue={row.url} placeholder="https://…" />
-              </div>
-            )}
-          />
-
-          <RepeatableGroupList
-            name="stats"
-            label="Stats"
-            initialValues={objArr<{ value: string; label: string }>(data, "stats")}
-            emptyRow={{ value: "", label: "" }}
-            max={4}
-            renderRow={(fieldName, row) => (
-              <div className="grid grid-cols-[1fr_2fr] gap-3">
-                <Input name={fieldName("value")} defaultValue={row.value} placeholder="Value" />
-                <Input name={fieldName("label")} defaultValue={row.label} placeholder="Label" />
-              </div>
-            )}
-          />
-
-          <RepeatableStringList
-            name="credentials"
-            label="Credentials"
-            initialValues={arr(data, "credentials")}
-            max={8}
-          />
-          <RepeatableStringList
-            name="platformStrip"
-            label="Platform strip"
-            initialValues={arr(data, "platformStrip")}
-            max={16}
-          />
-
+            <RepeatableStringList
+              name="credentials"
+              label="Credentials"
+              initialValues={arr(data, "credentials")}
+              max={8}
+            />
+            <RepeatableStringList
+              name="platformStrip"
+              label="Platform strip"
+              initialValues={arr(data, "platformStrip")}
+              max={16}
+            />
+          </>
+        ),
+        header: (
           <fieldset className="rounded-2xl border border-ink-200 p-5">
             <legend className="px-2 text-sm font-semibold text-ink-900">Header</legend>
             <div className="space-y-4">
@@ -1000,7 +1092,8 @@ export function ContentEditorFields({
               ))}
             </div>
           </fieldset>
-
+        ),
+        footer: (
           <fieldset className="rounded-2xl border border-ink-200 p-5">
             <legend className="px-2 text-sm font-semibold text-ink-900">Footer</legend>
             <div className="space-y-4">
@@ -1015,8 +1108,12 @@ export function ContentEditorFields({
               ))}
             </div>
           </fieldset>
-        </>
-      );
+        ),
+      };
+
+      const defaultTabId = tabs.find((tab) => tab.hasError)?.id;
+
+      return <Tabs tabs={tabs} defaultTabId={defaultTabId} idPrefix="settings" panels={panels} />;
     }
 
     default: {
