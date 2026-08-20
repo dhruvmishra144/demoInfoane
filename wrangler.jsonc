@@ -29,7 +29,7 @@
 			// when the real database is migrated. It also means the prerendered
 			// HTML would carry static fallback copy instead of the published
 			// content — the opposite of what this architecture is for.
-			"remote": false
+			"remote": true
 		},
 		{
 			// Next.js tag cache — powers revalidateTag()/revalidatePath() so that
@@ -48,7 +48,7 @@
 			// Create with `npx wrangler kv namespace create NEXT_INC_CACHE_KV`.
 			"binding": "NEXT_INC_CACHE_KV",
 			"id": "c2241b9e44d544aa9aaf96e6cc149c76",
-			"remote": false
+			"remote": true
 		}
 	],
 	// Editor uploads (logos, team photos, case study imagery) live in ImageKit
