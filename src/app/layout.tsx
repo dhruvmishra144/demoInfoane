@@ -1,6 +1,20 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces } from "next/font/google";
 import "./globals.css";
 import { site } from "@/config/site";
+
+/**
+ * Display serif for headline moments (the homepage H1, section H2s). Body
+ * copy stays on the system sans stack — this is the one deliberate, additive
+ * typographic flourish, not a full-site font swap.
+ */
+const displaySerif = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display-serif",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
 
 /**
  * Site-wide metadata.
@@ -65,7 +79,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#090d20" },
+    { media: "(prefers-color-scheme: dark)", color: "#120e0a" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -81,7 +95,7 @@ export default function RootLayout({
     // search engines to target the right locale.
     // `lang` is required for screen readers to pick the right voice and for
     // search engines to target the right locale.
-    <html lang="en">
+    <html lang="en" className={displaySerif.variable}>
       {/* Deliberately bare: the public site's header, footer and JSON-LD live in
           the (site) group's layout, and the admin panel has its own chrome in
           (admin). A single root layout carrying the marketing header would either

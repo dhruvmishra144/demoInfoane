@@ -26,19 +26,21 @@ export default function Image() {
           flexDirection: "column",
           justifyContent: "space-between",
           background:
-            "linear-gradient(135deg, #0a2540 0%, #114f80 55%, #1e97e5 100%)",
+            "linear-gradient(135deg, #120b21 0%, #2c1c4e 55%, #5b3aa0 100%)",
           padding: "72px",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <div
-            style={{
-              width: 64,
-              height: 64,
-              borderRadius: 18,
-              background: "linear-gradient(135deg, #4fb2f5, #114f80)",
-            }}
-          />
+          <svg width="64" height="64" viewBox="0 0 84 84">
+            <rect width="84" height="84" rx="20" fill="#5b3aa0" />
+            <path
+              d="M28 52c-8 0-14-6-14-13s6-13 14-13c9 0 12 8 14 13s5 13 14 13c8 0 14-6 14-13s-6-13-14-13"
+              stroke="white"
+              strokeWidth="7"
+              strokeLinecap="round"
+              fill="none"
+            />
+          </svg>
           <div style={{ color: "white", fontSize: 40, fontWeight: 700 }}>
             {site.name}
           </div>
@@ -63,7 +65,7 @@ export default function Image() {
           >
             IT consulting and custom software development
           </div>
-          <div style={{ color: "#c2cede", fontSize: 30, maxWidth: 860 }}>
+          <div style={{ color: "#dde1e6", fontSize: 30, maxWidth: 860 }}>
             Cloud migration · Legacy modernization · Data & AI · Dedicated teams
           </div>
         </div>
@@ -73,7 +75,7 @@ export default function Image() {
             display: "flex",
             alignItems: "center",
             gap: "16px",
-            color: "#8ccdfb",
+            color: "#c9adeb",
             fontSize: 26,
           }}
         >

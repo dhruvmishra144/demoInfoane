@@ -1,4 +1,5 @@
 import { Reveal } from "./Reveal";
+import { SplitReveal } from "./SplitReveal";
 
 /**
  * Section shell.
@@ -55,16 +56,28 @@ export function Section({
           </p>
         </Reveal>
       )}
-      <Reveal delay={60}>
-        <h2
+      {typeof title === "string" ? (
+        <SplitReveal
+          as="h2"
           id={headingId}
-          className={`text-3xl font-semibold sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12] ${
-            dark ? "text-white" : ""
+          className={`font-display text-3xl font-medium sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12] ${
+            dark ? "text-white" : "text-ink-900"
           }`}
         >
           {title}
-        </h2>
-      </Reveal>
+        </SplitReveal>
+      ) : (
+        <Reveal delay={60}>
+          <h2
+            id={headingId}
+            className={`font-display text-3xl font-medium sm:text-4xl lg:text-[2.6rem] lg:leading-[1.12] ${
+              dark ? "text-white" : "text-ink-900"
+            }`}
+          >
+            {title}
+          </h2>
+        </Reveal>
+      )}
       {lead && (
         <Reveal delay={120}>
           <p
@@ -101,16 +114,11 @@ export function Section({
       <section id={id} aria-labelledby={headingId} className="scroll-mt-28 py-8">
         <div className="container-x">
           <Reveal scale>
-            <div className="relative isolate overflow-hidden rounded-5xl bg-brand-950 px-6 py-16 sm:px-10 lg:px-14 lg:py-20">
-              <div className="mesh absolute inset-0 -z-10 opacity-50" aria-hidden="true" />
+            <div className="relative isolate overflow-hidden rounded-5xl bg-ink-950 px-6 py-16 sm:px-10 lg:px-14 lg:py-20">
+              <div className="accent-glow absolute inset-0 -z-10" aria-hidden="true" />
               <div
-                className="grid-lines absolute inset-0 -z-10 opacity-40"
+                className="grid-lines absolute inset-0 -z-10 opacity-[0.06]"
                 aria-hidden="true"
-                style={{
-                  maskImage: "radial-gradient(70% 60% at 50% 0%, black, transparent)",
-                  WebkitMaskImage:
-                    "radial-gradient(70% 60% at 50% 0%, black, transparent)",
-                }}
               />
               {inner}
             </div>

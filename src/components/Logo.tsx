@@ -3,9 +3,10 @@ import Link from "next/link";
 /**
  * Wordmark.
  *
- * The mark echoes the attached logo's treatment — a cyan-to-navy gradient — and
- * the optional tagline mirrors its "DEVELOP · SUPPORT · 24x7" strip. It is still
- * a placeholder: swap in the real brand SVG when you send it (CONTENT-TODO.md).
+ * The mark is "Loop" — a single continuous, unbroken line standing for
+ * delivery that doesn't drop the thread between discovery, build, and
+ * handover. Deep violet, matching the site's one committed accent color
+ * rather than a gradient.
  *
  * The company name stays real text rather than an image, so it is readable to
  * crawlers and scales crisply.
@@ -28,28 +29,19 @@ export function Logo({
       aria-label={`${name} — home`}
     >
       <svg
-        viewBox="0 0 36 36"
+        viewBox="0 0 84 84"
         className="h-9 w-9 shrink-0"
         aria-hidden="true"
         focusable="false"
       >
-        <defs>
-          <linearGradient id="logo-mark" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#4fb2f5" />
-            <stop offset="55%" stopColor="#1e97e5" />
-            <stop offset="100%" stopColor="#114f80" />
-          </linearGradient>
-        </defs>
-        <rect width="36" height="36" rx="10" fill="url(#logo-mark)" />
+        <rect width="84" height="84" rx="20" fill="#5b3aa0" />
         <path
-          d="M10 23.5l5-5.5 3.4 3.4L26 12.5"
+          d="M28 52c-8 0-14-6-14-13s6-13 14-13c9 0 12 8 14 13s5 13 14 13c8 0 14-6 14-13s-6-13-14-13"
           stroke="white"
-          strokeWidth="2.6"
+          strokeWidth="5.5"
           strokeLinecap="round"
-          strokeLinejoin="round"
           fill="none"
         />
-        <circle cx="26" cy="12.5" r="2.1" fill="white" />
       </svg>
 
       <span className="flex flex-col leading-none">

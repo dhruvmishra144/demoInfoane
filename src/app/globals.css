@@ -3,40 +3,60 @@
 /* ---------------------------------------------------------------------------
    Design tokens.
 
-   Palette is taken from the Infoane logo: a bright cyan-blue highlight running
-   into a deep navy, on white. Tailwind v4 reads this block and generates the
-   matching utilities, so `bg-brand-600` / `text-ink-500` all come from here —
-   change a hex and the whole site follows.
+   One confident, saturated accent — deep violet, matching the new "Loop"
+   logo mark — replacing the earlier three-pastel experiment. Reference sites
+   that read as premium (Kastle, AHA, Styleport) all commit hard to one bold
+   color rather than several soft ones; this does the same. Tailwind v4 reads
+   this block and generates the matching utilities, so `bg-brand-600` /
+   `text-ink-500` all come from here — change a hex and the whole site follows.
 --------------------------------------------------------------------------- */
 @theme {
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-display-serif), Georgia, "Times New Roman", serif;
 
-  /* Blue: 500 is the logo highlight, 700–950 the dark end of its gradient. */
-  --color-brand-50: #eff7ff;
-  --color-brand-100: #dbedfe;
-  --color-brand-200: #bfe0fd;
-  --color-brand-300: #8ccdfb;
-  --color-brand-400: #4fb2f5;
-  --color-brand-500: #1e97e5;
-  --color-brand-600: #0f79c6;
-  --color-brand-700: #0d61a1;
-  --color-brand-800: #114f80;
-  --color-brand-900: #123f66;
-  --color-brand-950: #0a2540;
+  /* Deep violet — primary accent, matching the Loop mark (#5b3aa0 at 500). */
+  --color-brand-50: #f3eefb;
+  --color-brand-100: #e4d6f5;
+  --color-brand-200: #c9adeb;
+  --color-brand-300: #a67fdc;
+  --color-brand-400: #8760c4;
+  --color-brand-500: #5b3aa0;
+  --color-brand-600: #4a2f83;
+  --color-brand-700: #3a2568;
+  --color-brand-800: #2c1c4e;
+  --color-brand-900: #1e1336;
+  --color-brand-950: #120b21;
 
-  /* Cool, blue-tinted neutrals so greys never read warm next to the blue. */
-  --color-ink-50: #f6f9fc;
-  --color-ink-100: #eef3f8;
-  --color-ink-200: #dde5ef;
-  --color-ink-300: #c2cede;
-  --color-ink-400: #8f9fb5;
-  --color-ink-500: #697b95;
-  --color-ink-600: #4e6079;
-  --color-ink-700: #38485e;
-  --color-ink-800: #22303f;
-  --color-ink-900: #14202c;
-  --color-ink-950: #0a141d;
+  /* Pastel mint — secondary accent, used sparingly for rotation/variety. */
+  --color-mint-50: #f1f8f4;
+  --color-mint-100: #dcefe3;
+  --color-mint-200: #b9dfc9;
+  --color-mint-500: #4f9d6e;
+  --color-mint-600: #3d7d57;
+  --color-mint-700: #2f6244;
+
+  /* Pastel peach — secondary accent, used sparingly for rotation/variety. */
+  --color-peach-50: #fdf3ee;
+  --color-peach-100: #fbe3d6;
+  --color-peach-200: #f6c6ac;
+  --color-peach-500: #e08a55;
+  --color-peach-600: #c06f3f;
+  --color-peach-700: #9c5730;
+
+  /* Clean neutral gray — no blue or warm tint, pairs quietly with all three
+     pastel accents above. */
+  --color-ink-50: #f7f8f9;
+  --color-ink-100: #eef0f2;
+  --color-ink-200: #dde1e6;
+  --color-ink-300: #c2c8d0;
+  --color-ink-400: #97a0ac;
+  --color-ink-500: #707986;
+  --color-ink-600: #545b66;
+  --color-ink-700: #3d434c;
+  --color-ink-800: #282c33;
+  --color-ink-900: #16181c;
+  --color-ink-950: #0b0c0e;
 
   --radius-4xl: 2rem;
   --radius-5xl: 2.5rem;
@@ -123,12 +143,12 @@
    Surfaces
 --------------------------------------------------------------------------- */
 
-/* Soft blue glow behind hero and dark panels. */
+/* Soft violet glow behind hero and dark panels. */
 @utility mesh {
   background-image:
-    radial-gradient(55rem 28rem at 12% -10%, rgba(30, 151, 229, 0.45), transparent 60%),
-    radial-gradient(42rem 24rem at 88% 4%, rgba(79, 178, 245, 0.3), transparent 55%),
-    radial-gradient(38rem 38rem at 50% 115%, rgba(13, 97, 161, 0.5), transparent 60%);
+    radial-gradient(55rem 28rem at 12% -10%, rgba(91, 58, 160, 0.4), transparent 60%),
+    radial-gradient(42rem 24rem at 88% 4%, rgba(135, 96, 196, 0.28), transparent 55%),
+    radial-gradient(38rem 38rem at 50% 115%, rgba(58, 37, 104, 0.45), transparent 60%);
 }
 
 /* Very light page-level wash used behind white cards. Centers sit well below
@@ -137,11 +157,12 @@
    against the flat background behind the header. */
 @utility mesh-light {
   background-image:
-    radial-gradient(50rem 26rem at 10% 35%, rgba(30, 151, 229, 0.1), transparent 60%),
-    radial-gradient(40rem 22rem at 90% 30%, rgba(79, 178, 245, 0.08), transparent 55%);
+    radial-gradient(50rem 26rem at 10% 35%, rgba(91, 58, 160, 0.09), transparent 60%),
+    radial-gradient(40rem 22rem at 90% 30%, rgba(135, 96, 196, 0.07), transparent 55%);
 }
 
-/* Fine grid, decorative, used inside dark panels. */
+/* Fine grid, decorative, used inside dark panels. Palette-agnostic (white on
+   dark), so it needs no change when the accent color shifts. */
 @utility grid-lines {
   background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
@@ -149,7 +170,20 @@
   background-size: 72px 72px;
 }
 
-/* Gradient text using the logo's blue ramp. */
+/* Restrained single-corner accent glow for the homepage's dark panels —
+   deliberately quieter than `.mesh`'s three-blob treatment, used only where
+   the redesign wants a bespoke (not just recolored) dark surface. */
+@utility accent-glow {
+  background-image: radial-gradient(
+    46rem 30rem at 100% 0%,
+    rgba(91, 58, 160, 0.32),
+    transparent 60%
+  );
+}
+
+/* Gradient text using the accent ramp. Kept for pages that already reference
+   it; the homepage redesign favors a solid accent color over gradient text
+   (the earlier blue gradient headline was one of the "AI template" tells). */
 @utility text-gradient {
   background-image: linear-gradient(
     100deg,
