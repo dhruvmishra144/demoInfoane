@@ -47,6 +47,17 @@ export default nextConfig;
  * unconditionally makes the build depend on dev-only machinery being able to
  * start — and fail when it cannot.
  */
+/*
+ * Local bindings by default: `npm run dev` emulates D1/KV on this machine
+ * (`.wrangler/state`), so it starts without a Cloudflare login — the bindings
+ * marked `"remote": true` in wrangler.jsonc otherwise crash dev with
+ * RemoteSessionAuthenticationError whenever wrangler's session has expired.
+ * An empty local database is fine: pages fall back to the static content.
+ * Run `npm run db:migrate && npm run db:seed` to get local rows for the admin.
+ *
+ * `npm run dev:remote` (CF_REMOTE_DEV=1) reads the real remote database, as
+ * builds do; it needs `npx wrangler login`.
+ */
 if (process.env.NODE_ENV === "development") {
-  initOpenNextCloudflareForDev();
+  initOpenNextCloudflareForDev({ remoteBindings: process.env.CF_REMOTE_DEV === "1" });
 }

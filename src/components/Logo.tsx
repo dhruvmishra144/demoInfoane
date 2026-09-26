@@ -1,12 +1,7 @@
 import Link from "next/link";
 
 /**
- * Wordmark.
- *
- * The mark is "Loop" — a single continuous, unbroken line standing for
- * delivery that doesn't drop the thread between discovery, build, and
- * handover. Deep violet, matching the site's one committed accent color
- * rather than a gradient.
+ * Wordmark: a coral rounded tile carrying a lower-case "i", then the name.
  *
  * The company name stays real text rather than an image, so it is readable to
  * crawlers and scales crisply.
@@ -30,18 +25,13 @@ export function Logo({
     >
       <svg
         viewBox="0 0 84 84"
-        className="h-9 w-9 shrink-0"
+        className="h-9 w-9 shrink-0 transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:rotate-[-8deg] group-hover:scale-105"
         aria-hidden="true"
         focusable="false"
       >
-        <rect width="84" height="84" rx="20" fill="#5b3aa0" />
-        <path
-          d="M28 52c-8 0-14-6-14-13s6-13 14-13c9 0 12 8 14 13s5 13 14 13c8 0 14-6 14-13s-6-13-14-13"
-          stroke="white"
-          strokeWidth="5.5"
-          strokeLinecap="round"
-          fill="none"
-        />
+        <rect width="84" height="84" rx="20" fill="#ff6b4a" />
+        <circle cx="42" cy="27" r="4.5" fill="white" />
+        <rect x="38" y="36" width="8" height="24" rx="3" fill="white" />
       </svg>
 
       <span className="flex flex-col leading-none">
@@ -54,7 +44,7 @@ export function Logo({
         </span>
         {withTagline && tagline && (
           <span
-            className={`mt-1 text-[9px] font-semibold uppercase tracking-[0.18em] ${
+            className={`mt-1 text-xs font-semibold uppercase tracking-[0.18em] ${
               theme === "dark" ? "text-brand-200" : "text-brand-600"
             }`}
           >

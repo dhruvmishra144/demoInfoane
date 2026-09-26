@@ -92,9 +92,9 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
   return (
     <>
       {/* ------------------------------------------------------- desktop nav */}
-      <div ref={navRef} className="hidden items-center gap-2 lg:flex">
-        <nav aria-label="Primary" onMouseLeave={closeWithDelay}>
-          <ul className="flex items-center">
+      <div ref={navRef} className="hidden flex-1 items-center justify-between gap-6 lg:flex">
+        <nav aria-label="Primary" onMouseLeave={closeWithDelay} className="flex flex-1 justify-center">
+          <ul className="flex items-center gap-1">
             {items.map((item) => {
               const active = sectionActive(item);
 
@@ -106,9 +106,7 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
                       aria-current={isActive(item.href) ? "page" : undefined}
                       onMouseEnter={closeWithDelay}
                       className={`block rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                        active
-                          ? "text-brand-700"
-                          : "text-ink-600 hover:bg-ink-50 hover:text-brand-700"
+                        active ? "text-brand-600" : "text-ink-900 hover:text-brand-600"
                       }`}
                     >
                       {item.label}
@@ -130,40 +128,39 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
                     aria-expanded={open}
                     aria-controls={panelId}
                     onClick={() => (open ? setOpenMenu(null) : setOpenMenu(item.label))}
-                    className={`inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                      active || open
-                        ? "text-brand-700"
-                        : "text-ink-600 hover:bg-ink-50 hover:text-brand-700"
+                    className={`relative inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                      active || open ? "text-brand-600" : "text-ink-900 hover:text-brand-600"
                     }`}
                   >
                     {item.label}
-                    <svg
-                      viewBox="0 0 24 24"
-                      className={`h-3.5 w-3.5 transition-transform duration-300 ${
-                        open ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
+                    {/* A hairline under the open trigger instead of a chevron —
+                        the redesign's bar is text-only. */}
+                    <span
                       aria-hidden="true"
-                    >
-                      <path d="m6 9 6 6 6-6" />
-                    </svg>
+                      className={`absolute inset-x-4 -bottom-0.5 h-px origin-left bg-brand-500 transition-transform duration-300 ${
+                        open ? "scale-x-100" : "scale-x-0"
+                      }`}
+                    />
                   </button>
 
                   {/* The panel is positioned against the header's container, so
                       it spans the container width rather than the pill. */}
+                  {/* `inert` + visibility rather than `hidden`, so the panel can
+                      transition out as well as in while staying unreachable by
+                      keyboard and screen readers when closed. */}
                   <div
                     id={panelId}
-                    hidden={!open}
-                    className="absolute inset-x-0 top-full z-40 pt-3"
+                    inert={!open}
+                    className={`absolute inset-x-0 top-full z-40 pt-2 transition-[visibility] duration-300 ${
+                      open ? "visible" : "invisible"
+                    }`}
                   >
                     <div
-                      className="origin-top rounded-4xl border border-ink-200 bg-white p-6 shadow-2xl shadow-brand-950/10 transition-all duration-300"
+                      className="origin-top rounded-3xl border border-ink-200 bg-white/95 p-6 shadow-2xl shadow-ink-900/10 backdrop-blur-xl transition-all duration-500 ease-[var(--ease-out-expo)]"
                       style={{
                         opacity: open ? 1 : 0,
-                        transform: open ? "none" : "translateY(-0.5rem) scale(0.99)",
+                        transform: open ? "none" : "translateY(-0.75rem) scale(0.98)",
+                        filter: open ? "none" : "blur(4px)",
                       }}
                     >
                       <div
@@ -239,28 +236,21 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
           </ul>
         </nav>
 
-        <Link
-          href={routes.contact}
-          className="group ml-2 inline-flex items-center gap-2 rounded-full bg-brand-950 py-2 pl-5 pr-2 text-sm font-semibold text-white transition-colors duration-300 hover:bg-brand-900"
-        >
-          {ctaLabel}
-          <span
-            className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 group-hover:translate-x-0.5"
-            aria-hidden="true"
+        <div className="flex items-center gap-2">
+          <Link
+            href={`${routes.home}#approach`}
+            className="inline-flex items-center rounded-full bg-ink-900 px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-px hover:bg-ink-800"
           >
-            <svg
-              viewBox="0 0 24 24"
-              className="h-3.5 w-3.5"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h13M12 6l6 6-6 6" />
-            </svg>
-          </span>
-        </Link>
+            See how we work
+          </Link>
+          <Link
+            href={routes.contact}
+            aria-current={isActive(routes.contact) ? "page" : undefined}
+            className="inline-flex items-center rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-ink-900 ring-1 ring-inset ring-ink-200 transition-all duration-300 hover:-translate-y-px hover:ring-ink-300"
+          >
+            {ctaLabel}
+          </Link>
+        </div>
       </div>
 
       {/* ---------------------------------------------------------- mobile */}
@@ -343,7 +333,7 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
                       <div id={panelId} className="pb-3">
                         {item.columns.map((column) => (
                           <div key={column.heading} className="mt-1">
-                            <p className="px-2 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-400">
+                            <p className="px-2 pb-1 pt-2 text-xs font-semibold uppercase tracking-[0.14em] text-ink-400">
                               {column.heading}
                             </p>
                             <ul>

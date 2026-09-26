@@ -635,51 +635,53 @@ export const navMenuDefaults: Record<
 > = {
   header: {
     label: "Header",
+    // The 2026 redesign's four-item bar. "About" keeps a panel so Careers,
+    // Case Studies and Technology stay one hover away.
     items: [
-      { label: "Home", href: "/", description: "", parent: "", group: "" },
       { label: "Services", href: "/services", description: "", parent: "", group: "" },
       { label: "Industries", href: "/industries", description: "", parent: "", group: "" },
-      { label: "Company", href: "/about", description: "", parent: "", group: "" },
+      { label: "AI", href: "/ai", description: "", parent: "", group: "" },
+      { label: "About", href: "/about", description: "", parent: "", group: "" },
       {
         label: "About Us",
         href: "/about",
         description: "How we work and who you will work with",
-        parent: "Company",
-        group: "Company",
-      },
-      {
-        label: "Case Studies",
-        href: "/case-studies",
-        description: "Problem, approach and measured result",
-        parent: "Company",
+        parent: "About",
         group: "Company",
       },
       {
         label: "Careers",
         href: "/careers",
         description: "Open roles and how we hire",
-        parent: "Company",
+        parent: "About",
+        group: "Company",
+      },
+      {
+        label: "Case Studies",
+        href: "/case-studies",
+        description: "Problem, approach and measured result",
+        parent: "About",
         group: "Company",
       },
       {
         label: "Technology",
         href: "/technology",
         description: "Our stack and how we choose it",
-        parent: "Company",
+        parent: "About",
         group: "Capability",
       },
       {
-        label: "All Services",
-        href: "/services",
-        description: "Six practices in one place",
-        parent: "Company",
+        label: "AI & Safety",
+        href: "/ai",
+        description: "How we put models into production safely",
+        parent: "About",
         group: "Capability",
       },
       {
         label: "Contact Us",
         href: "/contact",
         description: "Talk to an engineer, not a salesperson",
-        parent: "Company",
+        parent: "About",
         group: "Capability",
       },
     ],
@@ -687,28 +689,25 @@ export const navMenuDefaults: Record<
   "footer-pages": {
     label: "Footer — pages",
     items: [
-      { label: "Home", href: "/", description: "", parent: "", group: "" },
-      { label: "About Us", href: "/about", description: "", parent: "", group: "" },
-      { label: "Case Studies", href: "/case-studies", description: "", parent: "", group: "" },
+      { label: "About", href: "/about", description: "", parent: "", group: "" },
+      { label: "Services", href: "/services", description: "", parent: "", group: "" },
       { label: "Industries", href: "/industries", description: "", parent: "", group: "" },
-      { label: "Technology", href: "/technology", description: "", parent: "", group: "" },
+      { label: "AI", href: "/ai", description: "", parent: "", group: "" },
       { label: "Careers", href: "/careers", description: "", parent: "", group: "" },
-      { label: "Contact Us", href: "/contact", description: "", parent: "", group: "" },
     ],
   },
   legal: {
     label: "Footer — legal bar",
     items: [
-      { label: "Privacy Policy", href: "/privacy-policy", description: "", parent: "", group: "" },
-      { label: "Terms of Service", href: "/terms", description: "", parent: "", group: "" },
-      { label: "Sitemap", href: "/sitemap.xml", description: "", parent: "", group: "" },
+      { label: "Privacy", href: "/privacy-policy", description: "", parent: "", group: "" },
+      { label: "Terms", href: "/terms", description: "", parent: "", group: "" },
     ],
   },
 };
 
 /** Header/footer chrome defaults, matching what the components hardcoded. */
 export const headerDefaults = {
-  ctaLabel: "Contact us",
+  ctaLabel: "Contact",
   promoHeading: "Not sure where to start?",
   promoBody:
     "Describe the problem rather than the solution. We will tell you which service applies — or that you do not need us.",
@@ -721,16 +720,16 @@ export const headerDefaults = {
 };
 
 export const footerDefaults = {
-  blurb: "for enterprises that need software delivered predictably.",
+  blurb: "Engineering partner for companies who've outgrown their own roadmap.",
   newsletterHeading: "Sign up for our newsletter",
   newsletterBody:
     "Occasional notes on modernisation, cloud cost and delivery — no more than once a month.",
   newsletterPlaceholder: "you@company.com",
   newsletterCtaLabel: "Subscribe",
-  pagesHeading: "Pages",
+  pagesHeading: "Company",
   servicesHeading: "Services",
-  officesHeading: "Offices",
-  copyrightSuffix: "All rights reserved.",
+  officesHeading: "Contact",
+  copyrightSuffix: "Built for teams who ship.",
 };
 
 /* --------------------------------------------------------------- resolving -- */

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { absolute, routes, serviceHref } from "@/lib/routes";
+import { absolute, jobHref, routes, serviceHref } from "@/lib/routes";
+import { jobs } from "@/content/jobs";
 import { getCollectionOrFallback } from "@/server/content/with-fallback";
 import { serviceFallback } from "@/server/content/static-fallback";
 
@@ -71,11 +72,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
+      url: absolute(routes.ai),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: absolute(routes.careers),
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.5,
     },
+    ...jobs.map((job) => ({
+      url: absolute(jobHref(job.slug)),
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.4,
+    })),
     // /privacy-policy and /terms are intentionally absent: both are noindexed
     // until their real text lands. Add them here when that changes.
   ];

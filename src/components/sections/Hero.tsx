@@ -152,7 +152,7 @@ export function Hero({
             <div className="rounded-4xl border border-ink-200 bg-white p-7 shadow-2xl shadow-ink-950/10">
               <div className="flex items-center justify-between">
                 <p className="font-display text-lg font-medium text-ink-900">{hero.cardTitle}</p>
-                <span className="rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-700">
+                <span className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-semibold text-brand-700">
                   {settings.promises.discoveryLength}
                 </span>
               </div>
@@ -173,7 +173,7 @@ export function Hero({
 
             <div className="mt-5 grid grid-cols-3 gap-3">
               <div className="rounded-2xl border border-brand-200 bg-brand-50 px-4 py-3.5 text-center">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-brand-700">
+                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-brand-700">
                   {labels["hero.cadenceLabel"]}
                 </p>
                 <p className="mt-1 font-display text-base font-medium text-brand-800">
@@ -181,7 +181,7 @@ export function Hero({
                 </p>
               </div>
               <div className="rounded-2xl border border-mint-200 bg-mint-50 px-4 py-3.5 text-center">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-mint-700">
+                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-mint-700">
                   {labels["hero.demoLabel"]}
                 </p>
                 <p className="mt-1 font-display text-base font-medium text-mint-700">
@@ -189,7 +189,7 @@ export function Hero({
                 </p>
               </div>
               <div className="rounded-2xl border border-peach-200 bg-peach-50 px-4 py-3.5 text-center">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-peach-700">
+                <p className="text-xs font-semibold uppercase tracking-[0.1em] text-peach-700">
                   {labels["hero.ipLabel"]}
                 </p>
                 <p className="mt-1 font-display text-base font-medium text-peach-600">

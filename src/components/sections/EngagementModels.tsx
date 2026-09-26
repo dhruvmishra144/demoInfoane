@@ -100,7 +100,7 @@ export function EngagementModels({
                       {model.name}
                     </span>
                     {model.popular && (
-                      <span className="rounded-full bg-brand-500 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                      <span className="rounded-full bg-brand-500 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-white">
                         {labels["engagement.popularBadge"]}
                       </span>
                     )}

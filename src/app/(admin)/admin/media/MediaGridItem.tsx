@@ -51,7 +51,7 @@ export function MediaGridItem({
         />
 
         {!savedAltText && (
-          <p className="text-[11px] text-amber-700">Needs alt text before it can be used.</p>
+          <p className="text-xs text-amber-700">Needs alt text before it can be used.</p>
         )}
 
         <button

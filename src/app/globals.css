@@ -3,30 +3,54 @@
 /* ---------------------------------------------------------------------------
    Design tokens.
 
-   One confident, saturated accent — deep violet, matching the new "Loop"
-   logo mark — replacing the earlier three-pastel experiment. Reference sites
-   that read as premium (Kastle, AHA, Styleport) all commit hard to one bold
-   color rather than several soft ones; this does the same. Tailwind v4 reads
-   this block and generates the matching utilities, so `bg-brand-600` /
-   `text-ink-500` all come from here — change a hex and the whole site follows.
+   One confident accent — coral, matching the 2026 redesign — over a warm
+   off-white page and near-black navy panels. Tailwind v4 reads this block and
+   generates the matching utilities, so `bg-brand-500` / `text-ink-500` all
+   come from here — change a hex and the whole site follows.
 --------------------------------------------------------------------------- */
 @theme {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
-  --font-display: var(--font-display-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Headlines use the same family as body copy in the redesign — kept as its
+     own token so older pages that reference `font-display` still resolve. */
+  --font-display: var(--font-sans);
 
-  /* Deep violet — primary accent, matching the Loop mark (#5b3aa0 at 500). */
-  --color-brand-50: #f3eefb;
-  --color-brand-100: #e4d6f5;
-  --color-brand-200: #c9adeb;
-  --color-brand-300: #a67fdc;
-  --color-brand-400: #8760c4;
-  --color-brand-500: #5b3aa0;
-  --color-brand-600: #4a2f83;
-  --color-brand-700: #3a2568;
-  --color-brand-800: #2c1c4e;
-  --color-brand-900: #1e1336;
-  --color-brand-950: #120b21;
+  /* Type scale. 14px is the floor: nothing on the site renders smaller, so
+     `text-xs` *is* 14px and every step above it is nudged up to keep the
+     rhythm between steps. */
+  --text-xs: 0.875rem;
+  --text-xs--line-height: 1.35rem;
+  --text-sm: 0.9375rem;
+  --text-sm--line-height: 1.5rem;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.7rem;
+  --text-lg: 1.1875rem;
+  --text-lg--line-height: 1.8rem;
+  --text-xl: 1.3125rem;
+  --text-xl--line-height: 1.9rem;
+  --text-2xl: 1.625rem;
+  --text-2xl--line-height: 2.1rem;
+
+  /* Coral — primary accent (#ff6b4a at 500, the redesign's button color). */
+  --color-brand-50: #fff4f0;
+  --color-brand-100: #ffe6dd;
+  --color-brand-200: #ffc9b6;
+  --color-brand-300: #ffa487;
+  --color-brand-400: #ff8664;
+  --color-brand-500: #ff6b4a;
+  --color-brand-600: #ec5431;
+  --color-brand-700: #c53f21;
+  --color-brand-800: #9c331d;
+  /* The two darkest steps are navy rather than deep coral: every existing
+     "dark panel" and "dark button" reads them, and the redesign's dark
+     surfaces are navy. */
+  --color-brand-900: #25273a;
+  --color-brand-950: #13141d;
+
+  /* Warm off-white page background and the navy used for dark panels. */
+  --color-paper: #faf9f7;
+  --color-night: #13141d;
+  --color-night-card: #1d1f2e;
 
   /* Pastel mint — secondary accent, used sparingly for rotation/variety. */
   --color-mint-50: #f1f8f4;
@@ -44,19 +68,19 @@
   --color-peach-600: #c06f3f;
   --color-peach-700: #9c5730;
 
-  /* Clean neutral gray — no blue or warm tint, pairs quietly with all three
-     pastel accents above. */
-  --color-ink-50: #f7f8f9;
-  --color-ink-100: #eef0f2;
-  --color-ink-200: #dde1e6;
-  --color-ink-300: #c2c8d0;
-  --color-ink-400: #97a0ac;
-  --color-ink-500: #707986;
-  --color-ink-600: #545b66;
-  --color-ink-700: #3d434c;
-  --color-ink-800: #282c33;
-  --color-ink-900: #16181c;
-  --color-ink-950: #0b0c0e;
+  /* Neutral gray with a faint cool cast, ending in the redesign's navy-black
+     so headings and dark panels share one hue. */
+  --color-ink-50: #f6f6f8;
+  --color-ink-100: #eeeef2;
+  --color-ink-200: #e2e3e9;
+  --color-ink-300: #c7c9d3;
+  --color-ink-400: #9a9daa;
+  --color-ink-500: #6e7180;
+  --color-ink-600: #545766;
+  --color-ink-700: #3e404d;
+  --color-ink-800: #272935;
+  --color-ink-900: #14151f;
+  --color-ink-950: #0d0e15;
 
   --radius-4xl: 2rem;
   --radius-5xl: 2.5rem;
@@ -77,7 +101,7 @@
   }
 
   body {
-    background-color: var(--color-ink-50);
+    background-color: var(--color-paper);
     color: var(--color-ink-700);
     font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
@@ -89,7 +113,7 @@
   h3,
   h4 {
     color: var(--color-ink-900);
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
     text-wrap: balance;
   }
 
@@ -146,9 +170,62 @@
 /* Soft violet glow behind hero and dark panels. */
 @utility mesh {
   background-image:
-    radial-gradient(55rem 28rem at 12% -10%, rgba(91, 58, 160, 0.4), transparent 60%),
-    radial-gradient(42rem 24rem at 88% 4%, rgba(135, 96, 196, 0.28), transparent 55%),
-    radial-gradient(38rem 38rem at 50% 115%, rgba(58, 37, 104, 0.45), transparent 60%);
+    radial-gradient(55rem 28rem at 12% -10%, rgba(255, 107, 74, 0.22), transparent 60%),
+    radial-gradient(42rem 24rem at 88% 4%, rgba(132, 118, 255, 0.22), transparent 55%),
+    radial-gradient(38rem 38rem at 50% 115%, rgba(255, 107, 74, 0.14), transparent 60%);
+}
+
+/* The redesign's lavender hero wash — the soft blue-violet haze the glass
+   renders sit in. */
+@utility wash {
+  background-color: #f1f0f7;
+  background-image:
+    radial-gradient(60rem 36rem at 85% 10%, rgba(173, 162, 255, 0.35), transparent 60%),
+    radial-gradient(40rem 30rem at 0% 100%, rgba(186, 196, 255, 0.35), transparent 60%),
+    radial-gradient(30rem 20rem at 60% 100%, rgba(255, 190, 170, 0.25), transparent 60%);
+}
+
+/* A peach halo, used behind light sections' corners and the closing CTA. */
+@utility halo {
+  background-image: radial-gradient(
+    closest-side,
+    rgba(255, 107, 74, 0.1),
+    rgba(255, 107, 74, 0.04) 60%,
+    transparent
+  );
+}
+
+/* Glass spheres drawn in CSS — cheaper than shipping more renders, and they
+   parallax independently of the images they float around. */
+@utility orb {
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 26%),
+    radial-gradient(circle at 70% 75%, rgba(255, 140, 110, 0.85), rgba(255, 140, 110, 0) 55%),
+    radial-gradient(circle at 40% 40%, #b8b3ff, #8f86f5 60%, #7b6ff0);
+  box-shadow:
+    inset -6px -10px 24px rgba(80, 60, 200, 0.35),
+    0 20px 40px -12px rgba(110, 90, 230, 0.35);
+}
+@utility orb-peach {
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 28%),
+    radial-gradient(circle at 60% 70%, #ff9e80, #ff7a55 55%, #f26a4a);
+  box-shadow:
+    inset -6px -10px 24px rgba(200, 70, 40, 0.3),
+    0 20px 40px -12px rgba(255, 107, 74, 0.35);
+}
+
+/* Section kicker: letter-spaced coral caps. 600 rather than 500 on light
+   backgrounds, which keeps the small caps legible. */
+@utility eyebrow {
+  font-size: var(--text-xs);
+  line-height: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-brand-600);
 }
 
 /* Very light page-level wash used behind white cards. Centers sit well below
@@ -157,8 +234,8 @@
    against the flat background behind the header. */
 @utility mesh-light {
   background-image:
-    radial-gradient(50rem 26rem at 10% 35%, rgba(91, 58, 160, 0.09), transparent 60%),
-    radial-gradient(40rem 22rem at 90% 30%, rgba(135, 96, 196, 0.07), transparent 55%);
+    radial-gradient(50rem 26rem at 10% 35%, rgba(255, 107, 74, 0.06), transparent 60%),
+    radial-gradient(40rem 22rem at 90% 30%, rgba(132, 118, 255, 0.07), transparent 55%);
 }
 
 /* Fine grid, decorative, used inside dark panels. Palette-agnostic (white on
@@ -176,7 +253,7 @@
 @utility accent-glow {
   background-image: radial-gradient(
     46rem 30rem at 100% 0%,
-    rgba(91, 58, 160, 0.32),
+    rgba(255, 107, 74, 0.16),
     transparent 60%
   );
 }
@@ -244,6 +321,36 @@
       transform: none;
     }
   }
+}
+
+/* GSAP intro elements (components/motion/*).
+
+   Above-the-fold content is server-rendered and painted before React hydrates,
+   so GSAP alone would flash it visible, hide it, then animate it in. These
+   rules hide `[data-intro]` from first paint instead. Two guarantees keep that
+   safe:
+    - Gated on `scripting: enabled`, like the reveal system above.
+    - A delayed CSS animation reveals the element anyway after 2.5s. Motion
+      code adds `.gsap-on` before animating, which cancels the fallback — so it
+      only ever fires if GSAP failed to load. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-intro]:not(.gsap-on) {
+    opacity: 0;
+    animation: intro-fallback 0.6s ease 2.5s forwards;
+  }
+}
+
+@keyframes intro-fallback {
+  to {
+    opacity: 1;
+  }
+}
+
+/* SplitText line masks: each line clips its words so they rise into view. */
+.split-mask {
+  overflow: clip;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
 }
 
 /* Continuous, decorative float on the hero's stacked cards. */

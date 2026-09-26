@@ -38,10 +38,10 @@ export const site = {
     "Infoane is an IT consulting and custom software development company helping enterprises modernize legacy systems, move to the cloud, and ship software faster.",
 
   /** Year founded — feeds the Organization schema and the footer. */
-  foundingYear: "[YYYY]",
+  foundingYear: "2011",
 
   contact: {
-    email: "[hello@your-domain.com]",
+    email: "hello@infoane.com",
     /** E.164 format for the tel: link, e.g. +1-555-123-4567 */
     phone: "[+1-000-000-0000]",
     phoneDisplay: "[+1 (000) 000-0000]",

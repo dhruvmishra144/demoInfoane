@@ -24,7 +24,7 @@ export function Showcase() {
                     <span key={index} className={`h-2.5 w-2.5 rounded-full ${tone}`} />
                   ))}
                 </div>
-                <div className="mx-auto flex w-full max-w-xs items-center justify-center rounded-full bg-white px-3 py-1 text-[11px] text-ink-400 ring-1 ring-ink-200">
+                <div className="mx-auto flex w-full max-w-xs items-center justify-center rounded-full bg-white px-3 py-1 text-xs text-ink-400 ring-1 ring-ink-200">
                   delivery.infoane.internal
                 </div>
               </div>
@@ -53,7 +53,7 @@ export function Showcase() {
                     )}
                   </ul>
                   <div className="mt-8 rounded-xl bg-ink-50 p-3">
-                    <p className="text-[10px] font-semibold uppercase tracking-wider text-ink-400">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-ink-400">
                       Uptime
                     </p>
                     <p className="mt-1 text-lg font-bold text-ink-900">99.9%</p>
@@ -71,7 +71,7 @@ export function Showcase() {
                         6 of 9 stories accepted · demo Friday
                       </p>
                     </div>
-                    <span className="rounded-full bg-brand-600 px-3 py-1.5 text-[11px] font-semibold text-white">
+                    <span className="rounded-full bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white">
                       On track
                     </span>
                   </div>
@@ -87,7 +87,7 @@ export function Showcase() {
                         key={tile.label}
                         className="rounded-2xl border border-ink-100 bg-ink-50/60 p-4"
                       >
-                        <p className="text-[10px] font-semibold uppercase tracking-wider text-ink-400">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-ink-400">
                           {tile.label}
                         </p>
                         <p className="mt-1.5 text-2xl font-bold text-ink-900">
@@ -104,7 +104,7 @@ export function Showcase() {
                         <p className="text-xs font-semibold text-ink-700">
                           Throughput
                         </p>
-                        <p className="text-[10px] text-ink-400">last 8 sprints</p>
+                        <p className="text-xs text-ink-400">last 8 sprints</p>
                       </div>
                       <div className="mt-4 flex h-28 items-end gap-2">
                         {[42, 51, 47, 63, 58, 74, 69, 86].map((height, index) => (
@@ -129,7 +129,7 @@ export function Showcase() {
                         ].map((row) => (
                           <li
                             key={row.name}
-                            className="flex items-center justify-between gap-3 text-[11px]"
+                            className="flex items-center justify-between gap-3 text-xs"
                           >
                             <span className="truncate text-ink-600">{row.name}</span>
                             <span

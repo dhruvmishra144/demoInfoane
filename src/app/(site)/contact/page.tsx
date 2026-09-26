@@ -158,7 +158,7 @@ export default async function ContactPage() {
                 <icons.pin className="h-5 w-5 shrink-0 text-brand-400" />
                 {office.label}
                 {office.isHeadquarters && (
-                  <span className="rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-ink-300">
+                  <span className="rounded bg-white/10 px-1.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-ink-300">
                     HQ
                   </span>
                 )}
