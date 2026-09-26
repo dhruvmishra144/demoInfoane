@@ -1,25 +1,24 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
-import { icons, socialIcons, type SocialNetwork } from "./ui/Icons";
-import { Reveal } from "./ui/Reveal";
-import { serviceHref } from "@/lib/routes";
+import { ScrollReveal } from "./motion/ScrollReveal";
+import { officeLine } from "@/content/redesign";
 import type { CollectionData } from "@/server/content/schemas";
 
 type ServiceLink = { slug: string; title: string };
 type NavMenu = CollectionData["navMenu"];
 
 /**
- * Footer: newsletter row, four link/contact columns, an oversized email address,
- * and the copyright bar — the reference design's structure, carrying the same
- * Quick Links / Services / per-office contact grouping as before.
+ * Footer (2026 redesign): brand and blurb on the left, Company links and
+ * Contact on the right, then the copyright and legal bar — on the same navy
+ * as the site's dark sections.
  *
- * The address blocks are the site's NAP data (name, address, phone) — the details
- * Google matches against your Business Profile and directory listings. Keep them
- * byte-identical everywhere they appear online, punctuation included.
+ * Links still come from the `footer-pages` and `legal` nav menus in D1, and the
+ * email from site settings, so editors can change them without a deploy. The
+ * full street addresses stay in the Organization JSON-LD (siteSchema); the
+ * footer shows the one-line city list the design calls for.
  */
 export function SiteFooter({
   settings,
-  services,
   pagesMenu,
   legalMenu,
 }: {
@@ -29,183 +28,71 @@ export function SiteFooter({
   legalMenu: NavMenu;
 }) {
   const year = new Date().getFullYear();
-  const site = settings;
   const chrome = settings.footer;
 
   return (
-    <footer className="bg-ink-50">
-      <div className="container-x pb-10">
-        <div className="overflow-hidden rounded-5xl border border-ink-200 bg-white">
-          {/* Newsletter */}
-          <div className="flex flex-col gap-6 border-b border-ink-100 p-8 lg:flex-row lg:items-center lg:justify-between lg:p-10">
-            <div>
-              <h2 className="text-xl font-semibold">{chrome.newsletterHeading}</h2>
-              <p className="mt-2 text-sm text-ink-500">{chrome.newsletterBody}</p>
-            </div>
-
-            {/* Composes an email rather than posting nowhere. Swap the action for
-                your provider's endpoint when you pick one — CONTENT-TODO.md. */}
-            <form
-              action={`mailto:${site.contact.email}`}
-              method="post"
-              encType="text/plain"
-              className="flex w-full max-w-md gap-2"
-            >
-              <label htmlFor="newsletter-email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="newsletter-email"
-                name="email"
-                type="email"
-                required
-                autoComplete="email"
-                placeholder={chrome.newsletterPlaceholder}
-                className="min-w-0 flex-1 rounded-full border border-ink-200 bg-white px-5 py-3 text-sm placeholder:text-ink-400 focus:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-500/30"
-              />
-              <button
-                type="submit"
-                className="shrink-0 rounded-full bg-brand-950 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-900"
-              >
-                {chrome.newsletterCtaLabel}
-              </button>
-            </form>
+    <footer className="bg-night text-ink-400">
+      <ScrollReveal variant="up" stagger={0.08} className="container-x pb-10 pt-20">
+        <div className="grid gap-12 lg:grid-cols-[1fr_auto_auto] lg:gap-20">
+          <div data-reveal-item>
+            <Logo theme="dark" name={settings.name} />
+            <p className="mt-6 max-w-sm text-sm leading-relaxed text-ink-400">{chrome.blurb}</p>
           </div>
 
-          {/* Columns */}
-          <div className="grid gap-10 p-8 lg:grid-cols-[1.4fr_1fr_1.1fr_1.5fr] lg:p-10">
-            <div>
-              <Logo withTagline name={site.name} />
-              <p className="mt-5 max-w-xs text-sm leading-relaxed text-ink-500">
-                {site.tagline} {chrome.blurb}
-              </p>
-
-              <ul className="mt-6 flex gap-2.5">
-                {(Object.entries(site.social) as [SocialNetwork, string][]).map(
-                  ([network, url]) => {
-                    const Icon = socialIcons[network];
-                    return (
-                      <li key={network}>
-                        <a
-                          href={url}
-                          rel="noopener noreferrer me"
-                          target="_blank"
-                          aria-label={`${site.name} on ${network}`}
-                          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink-200 text-ink-500 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-300 hover:text-brand-600"
-                        >
-                          <Icon className="h-4 w-4" />
-                        </a>
-                      </li>
-                    );
-                  },
-                )}
-              </ul>
-
-              <ul className="mt-6 space-y-1.5 text-xs text-ink-500">
-                {site.credentials.map((credential) => (
-                  <li key={credential} className="flex items-center gap-2">
-                    <icons.shield className="h-3.5 w-3.5 shrink-0 text-brand-500" />
-                    {credential}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <nav aria-labelledby="footer-quick">
-              <h2 id="footer-quick" className="text-sm font-semibold text-ink-900">
-                {chrome.pagesHeading}
-              </h2>
-              <ul className="mt-5 space-y-3 text-sm">
-                {pagesMenu.items.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="text-ink-500 transition-colors hover:text-brand-700"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <nav aria-labelledby="footer-services">
-              <h2 id="footer-services" className="text-sm font-semibold text-ink-900">
-                {chrome.servicesHeading}
-              </h2>
-              <ul className="mt-5 space-y-3 text-sm">
-                {services.map((service) => (
-                  <li key={service.slug}>
-                    <Link
-                      href={serviceHref(service.slug)}
-                      className="text-ink-500 transition-colors hover:text-brand-700"
-                    >
-                      {service.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <div>
-              <h2 className="text-sm font-semibold text-ink-900">{chrome.officesHeading}</h2>
-              <ul className="mt-5 space-y-5 text-sm">
-                {site.offices.map((office) => (
-                  <li key={office.label}>
-                    <p className="flex items-center gap-2 font-medium text-ink-800">
-                      <icons.pin className="h-4 w-4 shrink-0 text-brand-500" />
-                      {office.label}
-                      {office.isHeadquarters && (
-                        <span className="rounded bg-brand-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand-700">
-                          HQ
-                        </span>
-                      )}
-                    </p>
-                    <address className="mt-1.5 not-italic leading-relaxed text-ink-500">
-                      {office.street}
-                      <br />
-                      {office.city}, {office.region} {office.postalCode}
-                      <br />
-                      <a
-                        href={`tel:${office.phone}`}
-                        className="transition-colors hover:text-brand-700"
-                      >
-                        {office.phoneDisplay}
-                      </a>
-                    </address>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Oversized email, as in the reference footer */}
-          <Reveal className="border-t border-ink-100 px-8 py-10 lg:px-10">
-            <a
-              href={`mailto:${site.contact.email}`}
-              className="block text-2xl font-semibold tracking-tight text-ink-300 transition-colors duration-300 hover:text-brand-600 sm:text-4xl lg:text-5xl"
+          <nav data-reveal-item aria-labelledby="footer-company">
+            <h2
+              id="footer-company"
+              className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-500"
             >
-              {site.contact.email}
-            </a>
-          </Reveal>
-
-          {/* Bottom bar */}
-          <div className="flex flex-col gap-4 border-t border-ink-100 px-8 py-6 text-xs text-ink-500 sm:flex-row sm:items-center sm:justify-between lg:px-10">
-            <p>
-              © {year} {site.legalName}. {chrome.copyrightSuffix}
-            </p>
-            <ul className="flex flex-wrap gap-6">
-              {legalMenu.items.map((item) => (
-                <li key={`${item.label}-${item.href}`}>
-                  <Link href={item.href} className="transition-colors hover:text-brand-700">
+              {chrome.pagesHeading}
+            </h2>
+            <ul className="mt-5 space-y-3 text-sm">
+              {pagesMenu.items.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="text-ink-400 transition-colors duration-300 hover:text-white"
+                  >
                     {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
+          </nav>
+
+          <div data-reveal-item>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-500">
+              {chrome.officesHeading}
+            </h2>
+            <ul className="mt-5 space-y-3 text-sm">
+              <li>
+                <a
+                  href={`mailto:${settings.contact.email}`}
+                  className="text-ink-300 transition-colors duration-300 hover:text-white"
+                >
+                  {settings.contact.email}
+                </a>
+              </li>
+              <li className="max-w-xs leading-relaxed">{officeLine}</li>
+            </ul>
           </div>
         </div>
-      </div>
+
+        <div className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {year} {settings.name}. {chrome.copyrightSuffix}
+          </p>
+          <ul className="flex flex-wrap gap-7">
+            {legalMenu.items.map((item) => (
+              <li key={`${item.label}-${item.href}`}>
+                <Link href={item.href} className="transition-colors duration-300 hover:text-white">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </ScrollReveal>
     </footer>
   );
 }

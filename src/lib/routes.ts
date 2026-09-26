@@ -15,6 +15,7 @@ export const routes = {
   about: "/about",
   services: "/services",
   industries: "/industries",
+  ai: "/ai",
   technology: "/technology",
   caseStudies: "/case-studies",
   careers: "/careers",
@@ -25,6 +26,10 @@ export const routes = {
 
 export function serviceHref(slug: string): string {
   return `${routes.services}/${slug}`;
+}
+
+export function jobHref(slug: string): string {
+  return `${routes.careers}/${slug}`;
 }
 
 /** Absolute URLs, for structured data and the sitemap. */

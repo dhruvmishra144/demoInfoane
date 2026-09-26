@@ -100,7 +100,7 @@ export function TechStack({
                   <p className="text-sm font-semibold text-ink-900">
                     {labels["technologies.askHeading"]}
                   </p>
-                  <span className="rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-700">
+                  <span className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-semibold text-brand-700">
                     {labels["technologies.askCta"]}
                   </span>
                 </div>

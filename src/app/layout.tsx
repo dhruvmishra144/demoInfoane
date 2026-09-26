@@ -1,18 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { site } from "@/config/site";
 
 /**
- * Display serif for headline moments (the homepage H1, section H2s). Body
- * copy stays on the system sans stack — this is the one deliberate, additive
- * typographic flourish, not a full-site font swap.
+ * Inter carries the whole redesign — headlines at 700 with tight tracking,
+ * body at 400. Self-hosted by next/font, so no request to Google at runtime.
  */
-const displaySerif = Fraunces({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-display-serif",
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -78,8 +75,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#120e0a" },
+    { media: "(prefers-color-scheme: light)", color: "#faf9f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#13141d" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -93,9 +90,7 @@ export default function RootLayout({
   return (
     // `lang` is required for screen readers to pick the right voice and for
     // search engines to target the right locale.
-    // `lang` is required for screen readers to pick the right voice and for
-    // search engines to target the right locale.
-    <html lang="en" className={displaySerif.variable}>
+    <html lang="en" className={inter.variable}>
       {/* Deliberately bare: the public site's header, footer and JSON-LD live in
           the (site) group's layout, and the admin panel has its own chrome in
           (admin). A single root layout carrying the marketing header would either

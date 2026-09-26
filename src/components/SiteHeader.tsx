@@ -1,3 +1,4 @@
+import { HeaderShell } from "./HeaderShell";
 import { Logo } from "./Logo";
 import { SiteNav } from "./SiteNav";
 import { routes, serviceHref, type NavColumn, type NavItem } from "@/lib/routes";
@@ -9,11 +10,9 @@ type NavMenu = CollectionData["navMenu"];
 type HeaderSettings = CollectionData["settings"]["header"];
 
 /**
- * Floating pill header.
- *
- * The bar itself is a rounded pill, but — as requested — it and its mega panel
- * are both constrained to `container-x` rather than spanning the viewport, so the
- * header lines up with every section below it.
+ * Full-width header bar (2026 redesign): logo left, four links centred, the
+ * two calls to action right. Content and mega panels are constrained to
+ * `container-x`, so the header lines up with every section below it.
  *
  * Server component: it assembles the nav data and hands it to the client
  * component that owns the interaction.
@@ -136,13 +135,13 @@ export function SiteHeader({
     });
 
   return (
-    <header className="sticky top-0 z-50 pt-4 lg:pt-5">
+    <HeaderShell>
       <div className="container-x relative">
-        <div className="flex items-center justify-between gap-6 rounded-full border border-ink-200/80 bg-white/85 py-2.5 pl-5 pr-2.5 shadow-lg shadow-brand-950/5 backdrop-blur-xl lg:pl-6">
+        <div className="flex h-[4.5rem] items-center justify-between gap-6">
           <Logo name={brandName} />
           <SiteNav items={items} ctaLabel={header.ctaLabel} />
         </div>
       </div>
-    </header>
+    </HeaderShell>
   );
 }

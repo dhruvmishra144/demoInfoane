@@ -1,69 +1,53 @@
 import Link from "next/link";
 
-type Variant = "primary" | "light" | "outline" | "onDark";
+type Variant = "primary" | "coral" | "light" | "outline" | "onDark";
 
 /**
- * Pill buttons matching the reference design: a dark/blue solid primary and a
- * white secondary, both with a circular icon chip on the right that slides on
- * hover.
+ * Pill buttons from the 2026 redesign: a navy-black primary, a coral action
+ * button, and a quiet outlined secondary. Hover lifts the pill a pixel and
+ * deepens its fill; the optional arrow nudges right.
  */
 const variants: Record<Variant, string> = {
-  primary:
-    "bg-brand-950 text-white hover:bg-brand-900 shadow-lg shadow-brand-950/20",
-  light:
-    "bg-white text-ink-900 ring-1 ring-inset ring-ink-200 hover:ring-ink-300 shadow-sm",
-  outline:
-    "bg-transparent text-ink-800 ring-1 ring-inset ring-ink-300 hover:bg-white",
-  onDark:
-    "bg-white/10 text-white ring-1 ring-inset ring-white/20 backdrop-blur hover:bg-white/20",
-};
-
-const chipVariants: Record<Variant, string> = {
-  primary: "bg-white/15 text-white",
-  light: "bg-brand-600 text-white",
-  outline: "bg-brand-600 text-white",
-  onDark: "bg-white/15 text-white",
+  primary: "bg-ink-900 text-white hover:bg-ink-800 shadow-lg shadow-ink-900/15",
+  coral: "bg-brand-500 text-white hover:bg-brand-600 shadow-lg shadow-brand-500/25",
+  light: "bg-white text-ink-900 ring-1 ring-inset ring-ink-200 hover:ring-ink-300",
+  outline: "bg-transparent text-ink-900 ring-1 ring-inset ring-ink-300 hover:bg-white",
+  onDark: "bg-white/10 text-white ring-1 ring-inset ring-white/20 backdrop-blur hover:bg-white/20",
 };
 
 export function Button({
   href,
   children,
   variant = "primary",
-  withChip = true,
+  withChip = false,
   className = "",
 }: {
   href: string;
   children: React.ReactNode;
   variant?: Variant;
-  /** The circular arrow chip. Off for plain text pills. */
+  /** A trailing arrow. Off by default — the redesign's pills are text-only. */
   withChip?: boolean;
   className?: string;
 }) {
   return (
     <Link
       href={href}
-      className={`group inline-flex items-center gap-2.5 rounded-full py-2 pl-5 text-sm font-semibold transition-all duration-300 ${
-        withChip ? "pr-2" : "pr-5"
-      } ${variants[variant]} ${className}`}
+      className={`group inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 hover:-translate-y-px ${variants[variant]} ${className}`}
     >
       {children}
       {withChip && (
-        <span
-          className={`inline-flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-300 group-hover:translate-x-0.5 ${chipVariants[variant]}`}
+        <svg
+          viewBox="0 0 24 24"
+          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           aria-hidden="true"
         >
-          <svg
-            viewBox="0 0 24 24"
-            className="h-3.5 w-3.5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M5 12h13M12 6l6 6-6 6" />
-          </svg>
-        </span>
+          <path d="M5 12h13M12 6l6 6-6 6" />
+        </svg>
       )}
     </Link>
   );

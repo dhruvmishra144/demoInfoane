@@ -169,7 +169,7 @@ export function Capabilities({
                     <div className="mesh absolute inset-0 -z-10 opacity-40" aria-hidden="true" />
                     <div className="flex items-center justify-between">
                       <p className="text-sm font-semibold text-white">{visual.label}</p>
-                      <span className="rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-brand-200">
+                      <span className="rounded-full bg-white/10 px-2.5 py-1 text-xs font-semibold text-brand-200">
                         {labels["process.stageWord"]} {step.step}
                       </span>
                     </div>
@@ -189,7 +189,7 @@ export function Capabilities({
                             </span>
                             {row}
                           </span>
-                          <span className="text-[11px] font-semibold text-ink-400">
+                          <span className="text-xs font-semibold text-ink-400">
                             {rowIndex === 0
                               ? labels["process.statusComplete"]
                               : rowIndex === 1

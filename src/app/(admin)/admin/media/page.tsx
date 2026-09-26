@@ -38,7 +38,7 @@ export default async function MediaLibraryPage() {
                   filename={asset.filename}
                   altText={asset.altText}
                 />
-                <p className="mt-1.5 truncate text-[11px] text-ink-400" title={asset.id}>
+                <p className="mt-1.5 truncate text-xs text-ink-400" title={asset.id}>
                   ID: {asset.id}
                 </p>
               </div>
