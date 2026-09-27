@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 
 /**
  * Registers GSAP plugins exactly once. Only ever import this from client
@@ -15,8 +16,8 @@ let registered = false;
 
 export function ensureGsapRegistered() {
   if (registered) return;
-  gsap.registerPlugin(ScrollTrigger, SplitText, ScrollSmoother, ScrollToPlugin);
+  gsap.registerPlugin(ScrollTrigger, SplitText, ScrollSmoother, ScrollToPlugin, DrawSVGPlugin);
   registered = true;
 }
 
-export { gsap, ScrollTrigger, SplitText, ScrollSmoother, ScrollToPlugin };
+export { gsap, ScrollTrigger, SplitText, ScrollSmoother, ScrollToPlugin, DrawSVGPlugin };

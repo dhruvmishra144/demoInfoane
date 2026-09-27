@@ -689,11 +689,11 @@ export const navMenuDefaults: Record<
   "footer-pages": {
     label: "Footer — pages",
     items: [
-      { label: "About", href: "/about", description: "", parent: "", group: "" },
-      { label: "Services", href: "/services", description: "", parent: "", group: "" },
-      { label: "Industries", href: "/industries", description: "", parent: "", group: "" },
-      { label: "AI", href: "/ai", description: "", parent: "", group: "" },
+      { label: "Home", href: "/", description: "", parent: "", group: "" },
+      { label: "About Us", href: "/about", description: "", parent: "", group: "" },
       { label: "Careers", href: "/careers", description: "", parent: "", group: "" },
+      { label: "Technology", href: "/technology", description: "", parent: "", group: "" },
+      { label: "Contact Us", href: "/contact", description: "", parent: "", group: "" },
     ],
   },
   legal: {
@@ -726,10 +726,10 @@ export const footerDefaults = {
     "Occasional notes on modernisation, cloud cost and delivery — no more than once a month.",
   newsletterPlaceholder: "you@company.com",
   newsletterCtaLabel: "Subscribe",
-  pagesHeading: "Company",
+  pagesHeading: "Quick Links",
   servicesHeading: "Services",
-  officesHeading: "Contact",
-  copyrightSuffix: "Built for teams who ship.",
+  officesHeading: "Contact Info",
+  copyrightSuffix: "All Rights Reserved.",
 };
 
 /* --------------------------------------------------------------- resolving -- */

@@ -11,6 +11,7 @@
  */
 
 import { routes, serviceHref } from "@/lib/routes";
+import type { StepIconName } from "@/components/design/StepIcon";
 
 export type IconName =
   | "monitor"
@@ -51,8 +52,23 @@ export const locations = [
   },
 ];
 
-/** One-line office list for the footer and contact cards. */
-export const officeLine = "Alpharetta, Georgia · Hyderabad, India · Bengaluru, India";
+/** One-line office list for the contact cards. Keep in step with site settings. */
+export const officeLine = "Frisco, Texas · Hyderabad, India · Kovilpatti, India";
+
+/**
+ * The footer's Services column. The names are the ones the company lists
+ * publicly; each links to the closest service page that exists today, or to
+ * the services index where there is no dedicated page yet.
+ */
+export const footerServices = [
+  { label: "Web Application", href: serviceHref("custom-software-development") },
+  { label: "Web Designing", href: routes.services },
+  { label: "Mobile App Development", href: serviceHref("custom-software-development") },
+  { label: "Quality Assurance", href: routes.services },
+  { label: "Remote DBA", href: routes.services },
+  { label: "Cloud Services", href: serviceHref("cloud-migration-devops") },
+  { label: "DevOps", href: serviceHref("cloud-migration-devops") },
+];
 
 export const foundedYear = "2011";
 
@@ -179,14 +195,17 @@ export const home = {
       "We start with context, then move into delivery with senior engineers who are accountable for the outcome, not just the output.",
     steps: [
       {
+        icon: "scan" as StepIconName,
         title: "Understand first",
         body: "Understand the system as it actually runs today, not as the diagram says it does.",
       },
       {
+        icon: "team" as StepIconName,
         title: "Embed senior engineers",
         body: "Put senior engineers directly inside your team, from week one.",
       },
       {
+        icon: "launch" as StepIconName,
         title: "Ship and hand over",
         body: "Ship in weeks, not quarters, and hand over something your team can actually own.",
       },

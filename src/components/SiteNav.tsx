@@ -67,6 +67,43 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
     if (closeTimer.current) clearTimeout(closeTimer.current);
   }, []);
 
+  const listRef = useRef<HTMLUListElement>(null);
+  const pillRef = useRef<HTMLLIElement>(null);
+  // `slide` is false when the pill appears from hidden, so it fades in on the
+  // hovered link instead of sweeping across from wherever it last was.
+  const [pill, setPill] = useState<{ left: number; width: number; visible: boolean; slide: boolean }>({
+    left: 0,
+    width: 0,
+    visible: false,
+    slide: false,
+  });
+
+  function movePill(target: HTMLElement) {
+    const base = pillRef.current?.offsetParent;
+    if (!base) return;
+    const a = target.getBoundingClientRect();
+    const b = base.getBoundingClientRect();
+    setPill((prev) => ({ left: a.left - b.left, width: a.width, visible: true, slide: prev.visible }));
+  }
+
+  /** Back to the current section's link, or away if the page isn't in the bar. */
+  function restPill() {
+    const active = listRef.current?.querySelector<HTMLElement>("[data-nav-active]");
+    if (active) movePill(active);
+    else setPill((prev) => ({ ...prev, visible: false, slide: false }));
+  }
+
+  // Re-rest on navigation, and when fonts load or the window resizes (both
+  // change link widths).
+  useEffect(() => {
+    restPill();
+    const onResize = () => restPill();
+    window.addEventListener("resize", onResize);
+    document.fonts?.ready.then(onResize);
+    return () => window.removeEventListener("resize", onResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
   function openWithHover(label: string) {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     setOpenMenu(label);
@@ -93,8 +130,39 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
     <>
       {/* ------------------------------------------------------- desktop nav */}
       <div ref={navRef} className="hidden flex-1 items-center justify-between gap-6 lg:flex">
-        <nav aria-label="Primary" onMouseLeave={closeWithDelay} className="flex flex-1 justify-center">
-          <ul className="flex items-center gap-1">
+        <nav
+          aria-label="Primary"
+          onMouseLeave={() => {
+            closeWithDelay();
+            restPill();
+          }}
+          className="flex flex-1 justify-center"
+        >
+          <ul
+            ref={listRef}
+            onMouseOver={(event) => {
+              const target = (event.target as HTMLElement).closest<HTMLElement>("[data-nav-item]");
+              if (target) movePill(target);
+            }}
+            onFocus={(event) => {
+              const target = (event.target as HTMLElement).closest<HTMLElement>("[data-nav-item]");
+              if (target) movePill(target);
+            }}
+            className="flex items-center gap-1"
+          >
+            {/* The sliding pill: glides to whichever link is hovered or
+                focused, and rests behind the current section otherwise.
+                Positioned against the header container (the list is left
+                static on purpose — a positioned list would also become the
+                mega panels' containing block and shrink them to its width). */}
+            <li
+              ref={pillRef}
+              aria-hidden="true"
+              className={`pointer-events-none absolute top-1/2 h-9 -translate-y-1/2 rounded-full bg-ink-900/[0.055] ring-1 ring-inset ring-ink-900/[0.04] duration-500 ease-[var(--ease-out-expo)] ${
+                pill.slide ? "transition-[left,width,opacity]" : "transition-opacity"
+              }`}
+              style={{ left: pill.left, width: pill.width, opacity: pill.visible ? 1 : 0 }}
+            />
             {items.map((item) => {
               const active = sectionActive(item);
 
@@ -105,8 +173,10 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
                       href={item.href}
                       aria-current={isActive(item.href) ? "page" : undefined}
                       onMouseEnter={closeWithDelay}
-                      className={`block rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                        active ? "text-brand-600" : "text-ink-900 hover:text-brand-600"
+                      data-nav-item
+                      data-nav-active={active || undefined}
+                      className={`relative z-10 block rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                        active ? "text-brand-600" : "text-ink-800 hover:text-ink-950"
                       }`}
                     >
                       {item.label}
@@ -128,19 +198,13 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
                     aria-expanded={open}
                     aria-controls={panelId}
                     onClick={() => (open ? setOpenMenu(null) : setOpenMenu(item.label))}
-                    className={`relative inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                      active || open ? "text-brand-600" : "text-ink-900 hover:text-brand-600"
+                    data-nav-item
+                    data-nav-active={active || undefined}
+                    className={`relative z-10 inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                      active || open ? "text-brand-600" : "text-ink-800 hover:text-ink-950"
                     }`}
                   >
                     {item.label}
-                    {/* A hairline under the open trigger instead of a chevron —
-                        the redesign's bar is text-only. */}
-                    <span
-                      aria-hidden="true"
-                      className={`absolute inset-x-4 -bottom-0.5 h-px origin-left bg-brand-500 transition-transform duration-300 ${
-                        open ? "scale-x-100" : "scale-x-0"
-                      }`}
-                    />
                   </button>
 
                   {/* The panel is positioned against the header's container, so
@@ -239,14 +303,26 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
         <div className="flex items-center gap-2">
           <Link
             href={`${routes.home}#approach`}
-            className="inline-flex items-center rounded-full bg-ink-900 px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-px hover:bg-ink-800"
+            className="group inline-flex items-center gap-2 rounded-full bg-ink-900 py-2.5 pl-6 pr-5 text-sm font-semibold text-white shadow-[0_8px_20px_-8px_rgba(20,21,31,0.5),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-300 hover:-translate-y-px hover:bg-ink-800"
           >
             See how we work
+            <svg
+              viewBox="0 0 24 24"
+              className="h-4 w-4 transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-rotate-45"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h13M12 6l6 6-6 6" />
+            </svg>
           </Link>
           <Link
             href={routes.contact}
             aria-current={isActive(routes.contact) ? "page" : undefined}
-            className="inline-flex items-center rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-ink-900 ring-1 ring-inset ring-ink-200 transition-all duration-300 hover:-translate-y-px hover:ring-ink-300"
+            className="inline-flex items-center rounded-full bg-white/70 px-6 py-2.5 text-sm font-semibold text-ink-900 ring-1 ring-inset ring-ink-200 backdrop-blur transition-all duration-300 hover:-translate-y-px hover:bg-white hover:ring-ink-300"
           >
             {ctaLabel}
           </Link>

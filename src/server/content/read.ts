@@ -27,6 +27,19 @@ export function itemTag(collection: Collection, slug: string): string {
   return `content:${collection}:${slug}`;
 }
 
+/**
+ * Cache options for the public reads. In production entries live until a
+ * publish revalidates their tag. In `next dev` they also expire after a second:
+ * the dev data cache persists on disk across restarts, so a change made
+ * outside the admin panel (a SQL update, a reseed) would otherwise stay
+ * invisible until someone deleted `.next/cache`. Stale-while-revalidate
+ * semantics apply, so the first reload after a change may still show the old
+ * copy and the next one the new.
+ */
+function cacheOptions(tags: string[]) {
+  return process.env.NODE_ENV === "development" ? { tags, revalidate: 1 } : { tags };
+}
+
 type PublishedRow = { slug: string; sortOrder: number; data: string };
 
 /**
@@ -101,7 +114,7 @@ export function getCollection<C extends Collection>(
   const load = unstable_cache(
     async () => parseRows(collection, await queryPublished(collection)),
     ["collection", collection],
-    { tags: [collectionTag(collection)] },
+    cacheOptions([collectionTag(collection)]),
   );
   return load();
 }
@@ -118,7 +131,7 @@ export async function getItem<C extends Collection>(
       return parseRows(collection, match)[0] ?? null;
     },
     ["item", collection, slug],
-    { tags: [collectionTag(collection), itemTag(collection, slug)] },
+    cacheOptions([collectionTag(collection), itemTag(collection, slug)]),
   );
   return load();
 }
@@ -137,7 +150,7 @@ export async function getSettings(): Promise<CollectionData["settings"] | null> 
       return parseRows("settings", rows)[0] ?? null;
     },
     ["settings"],
-    { tags: [collectionTag("settings")] },
+    cacheOptions([collectionTag("settings")]),
   );
   return load();
 }

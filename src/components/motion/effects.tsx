@@ -1,6 +1,7 @@
 "use client";
 
 import { gsap, SplitText } from "@/lib/gsap";
+// DrawSVG is registered in ensureGsapRegistered(); `drawSVG` below relies on it.
 import { EASE, useGsap } from "./useGsap";
 
 /**
@@ -243,6 +244,13 @@ export function Float({
  * A vertical list whose items come into focus one at a time as they pass the
  * middle of the viewport: the active card is full strength, the others recede.
  * Mark items with `[data-step]`.
+ *
+ * Optional extras, picked up when present:
+ *  - `[data-draw]` strokes inside a step draw on the first time it arrives,
+ *    `[data-fill]` shapes bloom in behind them, then the step gets `.is-live`
+ *    so its icon's idle loop starts.
+ *  - `[data-ping]` inside a step pulses outward once as it arrives.
+ *  - `[data-rail-fill]` anywhere in the list fills top-to-bottom with scroll.
  */
 export function StepFocus({
   children,
@@ -255,18 +263,58 @@ export function StepFocus({
 }) {
   const ref = useGsap<HTMLOListElement>((root) => {
     root.querySelectorAll<HTMLElement>("[data-step]").forEach((step) => {
+      // The card itself only moves and scales; its *contents* do the fading.
+      // Fading the card would make its background translucent too, letting
+      // whatever sits behind it (the connector rail) show through.
+      const content = Array.from(step.children);
       gsap
         .timeline({
           scrollTrigger: { trigger: step, start: "top 85%", end: "bottom 30%", scrub: 0.5 },
         })
-        .fromTo(
-          step,
-          { opacity: 0.35, scale: 0.94, y: 40 },
-          { opacity: 1, scale: 1, y: 0, ease: EASE, duration: 0.4 },
+        .fromTo(step, { scale: 0.94, y: 40 }, { scale: 1, y: 0, ease: EASE, duration: 0.4 })
+        .fromTo(content, { opacity: 0.3 }, { opacity: 1, ease: EASE, duration: 0.4 }, 0)
+        .to(step, { scale: 1, duration: 0.3 })
+        .to(step, { scale: 0.98, duration: 0.3 })
+        .to(content, { opacity: 0.5, duration: 0.3 }, "<");
+
+      // One-shot arrival: draw the outlines, bloom the duotone fills in behind
+      // them, ping the badge, then go live.
+      const strokes = step.querySelectorAll("[data-draw]");
+      const fills = step.querySelectorAll("[data-fill]");
+      const ping = step.querySelector("[data-ping]");
+      if (strokes.length) gsap.set(strokes, { drawSVG: "0%" });
+      if (fills.length) {
+        gsap.set(fills, { opacity: 0, scale: 0.6, transformOrigin: "50% 50%" });
+      }
+      gsap
+        .timeline({ scrollTrigger: { trigger: step, start: "top 70%", once: true } })
+        .to(strokes, { drawSVG: "100%", duration: 0.9, stagger: 0.12, ease: "power2.inOut" })
+        .to(
+          fills,
+          { opacity: 1, scale: 1, duration: 0.7, stagger: 0.08, ease: "back.out(2)" },
+          0.45,
         )
-        .to(step, { opacity: 1, duration: 0.3 })
-        .to(step, { opacity: 0.55, scale: 0.98, duration: 0.3 });
+        .fromTo(
+          ping,
+          { scale: 1, opacity: 0.6 },
+          { scale: 1.9, opacity: 0, duration: 0.9, ease: "power2.out" },
+          0.2,
+        )
+        .call(() => step.classList.add("is-live"));
     });
+
+    const rail = root.querySelector("[data-rail-fill]");
+    if (rail) {
+      gsap.fromTo(
+        rail,
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: { trigger: root, start: "top 65%", end: "bottom 55%", scrub: 0.5 },
+        },
+      );
+    }
   });
 
   return (
