@@ -353,6 +353,64 @@
   margin-bottom: -0.08em;
 }
 
+/* Footer wordmark (components/motion/FooterWordmark.tsx). The gradient fill
+   lives in `--word-fill` and is painted on the whole word until SplitText
+   splits it, then on each letter instead — `background-clip: text` stops
+   working on a parent once its letters carry their own transforms. */
+.wordmark:not(.is-split),
+.wordmark .wordmark-char {
+  background-image: var(--word-fill);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Idle loops for the step icons (components/design/StepIcon.tsx). They only
+   start once the step has come into focus — StepFocus adds `.is-live` — so
+   the icon draws on first and then comes alive, rather than wobbling while
+   it is still being drawn. `transform-box` makes each part pivot on itself. */
+.icon-scan,
+.icon-pop,
+.icon-lift,
+.icon-flame {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.is-live .icon-scan {
+  animation: icon-scan 3.2s ease-in-out infinite;
+}
+.is-live .icon-pop {
+  transform-origin: 50% 100%;
+  animation: icon-pop 2.8s var(--ease-out-expo) infinite;
+}
+.is-live .icon-lift {
+  animation: icon-lift 2.6s ease-in-out infinite;
+}
+.is-live .icon-flame {
+  transform-origin: 50% 0%;
+  animation: icon-flicker 0.35s ease-in-out infinite alternate;
+}
+
+@keyframes icon-scan {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-3px, -4px); }
+  50% { transform: translate(-6px, -1px); }
+  75% { transform: translate(-2px, 2px); }
+}
+@keyframes icon-pop {
+  0%, 55%, 100% { transform: scale(1); }
+  70% { transform: scale(1.18); }
+  82% { transform: scale(0.96); }
+}
+@keyframes icon-lift {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-2.5px) rotate(-4deg); }
+}
+@keyframes icon-flicker {
+  from { transform: scaleY(0.7); opacity: 0.7; }
+  to { transform: scaleY(1.25); opacity: 1; }
+}
+
 /* Continuous, decorative float on the hero's stacked cards. */
 @utility float-slow {
   animation: float 7s ease-in-out infinite;

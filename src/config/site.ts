@@ -41,10 +41,10 @@ export const site = {
   foundingYear: "2011",
 
   contact: {
-    email: "hello@infoane.com",
+    email: "info@infoane.com",
     /** E.164 format for the tel: link, e.g. +1-555-123-4567 */
-    phone: "[+1-000-000-0000]",
-    phoneDisplay: "[+1 (000) 000-0000]",
+    phone: "+1-214-929-2500",
+    phoneDisplay: "+1 214 929 2500",
   },
 
   /**
@@ -54,37 +54,36 @@ export const site = {
    */
   offices: [
     {
-      label: "[USA office city]",
-      street: "[Street address]",
-      city: "[City]",
-      region: "[State]",
-      postalCode: "[ZIP]",
-      country: "[US]", // ISO 3166-1 alpha-2
-      phone: "[+1-000-000-0000]",
-      phoneDisplay: "[+1 (000) 000-0000]",
+      label: "USA",
+      street: "11899 Presley Pl",
+      city: "Frisco",
+      region: "TX",
+      postalCode: "75035",
+      country: "US", // ISO 3166-1 alpha-2
+      phone: "+1-214-929-2500",
+      phoneDisplay: "+1 214 929 2500",
       isHeadquarters: true,
     },
     {
-      label: "[India office city]",
-      street: "[Street address]",
-      city: "[City]",
-      region: "[State]",
-      postalCode: "[PIN]",
-      country: "[IN]",
-      phone: "[+91-00000-00000]",
-      phoneDisplay: "[+91 00000 00000]",
+      label: "INDIA",
+      street: "1403 B, 14th Floor, Manjeera Trinity, JNTU Hi-Tech City Road, KPHB",
+      city: "Hyderabad",
+      region: "Telangana",
+      postalCode: "500 072",
+      country: "IN",
+      phone: "+91-903-017-5190",
+      phoneDisplay: "+91-903 017 5190",
       isHeadquarters: false,
     },
     {
-      // Delete this entry if you only have two locations.
-      label: "[Second India office city]",
-      street: "[Street address]",
-      city: "[City]",
-      region: "[State]",
-      postalCode: "[PIN]",
-      country: "[IN]",
-      phone: "[+91-00000-00000]",
-      phoneDisplay: "[+91 00000 00000]",
+      label: "INDIA",
+      street: "14/3, Jaya Complex, Kovilpatti New town, Suba Nagar",
+      city: "Kovilpatti",
+      region: "Tamil Nadu",
+      postalCode: "628502",
+      country: "IN",
+      phone: "+91-912-357-0321",
+      phoneDisplay: "+91-912 357 0321",
       isHeadquarters: false,
     },
   ],
@@ -94,10 +93,11 @@ export const site = {
    * every page is worse than no link. Order here is the order in the footer.
    */
   social: {
-    linkedin: "https://www.linkedin.com/company/[handle]",
-    x: "https://x.com/[handle]",
-    facebook: "https://www.facebook.com/[handle]",
-    instagram: "https://www.instagram.com/[handle]",
+    x: "https://x.com/infoanetech",
+    facebook: "https://www.facebook.com/infoanetech/",
+    linkedin: "https://www.linkedin.com/company/infoane-technologies-pvt--ltd/",
+    instagram: "https://www.instagram.com/infoanetech/",
+    telegram: "https://t.me/infoane",
   },
 
   /**
