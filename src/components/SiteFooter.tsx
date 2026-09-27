@@ -117,7 +117,10 @@ export function SiteFooter({
                 <li key={`${office.label}-${index}`}>
                   <address className="not-italic leading-relaxed">
                     <span className="font-semibold text-white">{office.label}:</span>{" "}
-                    {office.street}, {office.city}, {office.region} - {office.postalCode}.
+                    {office.street}, {office.city}, {office.region}
+                    {/* Local convention: "TX 75035" in the US, "Telangana - 500 072" in India. */}
+                    {office.country === "IN" ? " - " : " "}
+                    {office.postalCode}.
                   </address>
                   <a
                     href={`tel:${office.phone}`}
