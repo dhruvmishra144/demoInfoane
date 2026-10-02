@@ -64,6 +64,11 @@ and the bracketed timeframes and price band inside the service FAQs
   credibility. Once the roles are real I will add `JobPosting` structured data so
   they can appear in Google Jobs; I left it out deliberately because placeholder
   roles with no salary or valid post date would be invalid markup.
+- **Confirm the 11 openings copied from the design mockup** in `src/content/jobs.ts`
+  (everything except Web Developer): titles, categories and locations come from
+  the mockup, while descriptions, responsibilities and skills are generic
+  placeholder copy. Confirm each is a real open role and replace the copy with the
+  hiring managers' requirements, or delete the entry.
 - **Benefits**: working model, learning budget, health cover, leave policy.
 - **Hiring process timings** — the response times currently in brackets.
 

@@ -49,8 +49,8 @@ export function HomeHero() {
           <Image
             src="/images/hero-orbit.webp"
             alt=""
-            width={1436}
-            height={1238}
+            width={1800}
+            height={1200}
             priority
             sizes="(min-width: 1024px) 50vw, 100vw"
             className="h-auto w-full select-none [mask-image:radial-gradient(closest-side,#000_75%,transparent)]"
