@@ -47,7 +47,7 @@ export function AboutExpertise() {
             src={e.image}
             alt="A glass orb ringed by floating Flutter, ColdFusion and Selenium tiles"
             width={1800}
-            height={1055}
+            height={1193}
             sizes="(min-width: 1024px) 60vw, 100vw"
             className="h-auto w-full [mask-image:radial-gradient(closest-side,#000_80%,transparent)]"
           />

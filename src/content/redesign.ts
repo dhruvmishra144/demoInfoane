@@ -406,6 +406,37 @@ export const aboutPage = {
     title: "Accountable for your engineering outcome.",
     lead: "Our leaders are hands-on architects who have shipped major platforms. Direct engineering accountability, no intermediaries.",
     groups: ["Operations", "Delivery"],
+    // Names, roles and photos as supplied with the design.
+    people: [
+      {
+        group: 0,
+        name: "Mohan Duggi",
+        role: "CEO",
+        bio: "Ph.D. in distributed databases. Directly manages our 24/7 monitoring and core delivery squads across Hyderabad.",
+        photo: "/images/leader-mohan-duggi.webp",
+      },
+      {
+        group: 0,
+        name: "Steve Goldner",
+        role: "Head of USA Operations",
+        bio: "Legacy systems expert who has guided 50+ CF and database transitions without a single minute of unexpected downtime.",
+        photo: "/images/leader-steve-goldner.webp",
+      },
+      {
+        group: 1,
+        name: "Rohit Uppaluri",
+        role: "Delivery",
+        bio: "Former platform lead with 18+ years in systems infrastructure. Built Infoane from an independent consultancy to a global partner.",
+        photo: "/images/leader-rohit-uppaluri.webp",
+      },
+      {
+        group: 1,
+        name: "Archana Nagarajan",
+        role: "Delivery",
+        bio: "Delivery specialist with deep expertise in cross-functional team coordination and on-time engineering execution across global programs.",
+        photo: "/images/leader-archana-nagarajan.webp",
+      },
+    ],
   },
   cta: {
     eyebrow: "Get started",
@@ -683,7 +714,7 @@ export const careersRedesign = {
       title: "Be part of our amazing team",
       body: "Don't see a role that fits your profile perfectly? We are always on the lookout for talented, passionate architects, engineers, and designers. Shoot us your resume and let's discuss.",
       cta: { label: "Send Your Resume", href: routes.apply },
-      image: "/images/mission-team.webp",
+      image: "/images/openings-team.webp",
       imageAlt: "Engineers gathered around a desk with curved monitors, discussing an architecture diagram",
     },
   },

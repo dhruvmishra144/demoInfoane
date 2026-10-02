@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
-import { Float, ZoomImage } from "@/components/motion/effects";
+import { ZoomImage } from "@/components/motion/effects";
 import { SectionIntro } from "@/components/design/blocks";
 import { webApplications } from "@/content/web-applications";
-import { ArchitectureDiagram } from "./ArchitectureDiagram";
 
 function CheckList({ items }: { items: readonly string[] }) {
   return (
@@ -55,18 +54,19 @@ export function WaStandards() {
 
         <div className="mt-16 grid items-center gap-10 lg:mt-20 lg:grid-cols-2 lg:gap-24">
           <FeatureCopy {...standards.scalable} />
-          <ZoomImage className="relative overflow-hidden rounded-3xl bg-[#f1f4f8] p-4 ring-1 ring-ink-200/60 sm:p-6">
-            <div data-zoom-media className="relative aspect-[14/10]">
-              <ArchitectureDiagram label={standards.scalable.diagramLabel} />
-              <Float amount={6} duration={5} className="absolute right-[6%] top-[8%]">
-                <span className="block h-3 w-3 rounded-full bg-brand-500 shadow-[0_0_0_6px_rgba(255,107,74,0.18)]" />
-              </Float>
-            </div>
+          <ZoomImage className="relative aspect-[1134/715] overflow-hidden rounded-3xl ring-1 ring-ink-200/60">
+            <Image
+              src="/images/wa-architecture.webp"
+              alt={standards.scalable.diagramLabel}
+              fill
+              sizes="(min-width: 1024px) 45vw, 90vw"
+              className="object-cover"
+            />
           </ZoomImage>
         </div>
 
         <div className="mt-20 grid items-center gap-10 lg:mt-28 lg:grid-cols-2 lg:gap-24">
-          <ZoomImage className="relative order-2 aspect-[7/6] overflow-hidden rounded-3xl lg:order-1">
+          <ZoomImage className="relative order-2 aspect-[1134/712] overflow-hidden rounded-3xl lg:order-1">
             <Image
               src={standards.security.image}
               alt={standards.security.imageAlt}

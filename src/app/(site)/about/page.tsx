@@ -44,8 +44,11 @@ export default async function AboutPage() {
       <AboutTrusted />
       <AboutExpertise />
       <AboutSuccess />
-      <AboutLeadership people={about.leadership} />
-      <Locations lead="Three offices across the United States and India, connected by a shared standard of engineering delivery." />
+      <AboutLeadership />
+      <Locations
+        globe="/images/globe-dark.webp"
+        lead="Three offices across the United States and India, connected by a shared standard of engineering delivery."
+      />
       <CenterCta {...aboutPage.cta} />
     </>
   );
