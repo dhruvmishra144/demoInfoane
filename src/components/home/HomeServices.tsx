@@ -16,7 +16,7 @@ export function HomeServices() {
       <div className="wash absolute inset-0 -z-20" aria-hidden="true" />
       {/* Glass render drifting behind the cards at its own pace. */}
       <Parallax speed={0.5} rotate={-8} className="absolute left-1/2 top-24 -z-10 w-[56rem] -translate-x-1/2 opacity-60">
-        <Image src="/images/hero-orbit.webp" alt="" width={1436} height={1238} className="h-auto w-full [mask-image:radial-gradient(closest-side,#000_60%,transparent)]" />
+        <Image src="/images/hero-orbit.webp" alt="" width={1800} height={1200} className="h-auto w-full [mask-image:radial-gradient(closest-side,#000_60%,transparent)]" />
       </Parallax>
       <Float className="absolute right-[18%] top-28 -z-10" amount={22}>
         <div className="orb-peach h-24 w-24 opacity-70" />

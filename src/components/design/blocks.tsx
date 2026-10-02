@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
-import { Float, Parallax } from "@/components/motion/effects";
+import { Parallax } from "@/components/motion/effects";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { locations } from "@/content/redesign";
 
@@ -83,33 +83,25 @@ export function SectionIntro({
 /* ------------------------------------------------------------ GlassBackdrop */
 
 /**
- * The lavender wash with floating glass spheres and the ribbon render, used
- * behind the hero of every redesigned inner page. Purely decorative.
+ * The glass-sphere render the mockups use as the backdrop of every redesigned
+ * inner page's hero (spheres, orbit lines and discs on a lavender wash). It
+ * drifts slowly against the scroll. `position` is the CSS object-position, for
+ * pages whose mockup crops the render differently. Purely decorative.
  */
-export function GlassBackdrop({ ribbon = true }: { ribbon?: boolean }) {
+export function GlassBackdrop({ position = "center" }: { position?: string }) {
   return (
     <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
       <div className="wash absolute inset-0" />
-      {ribbon && (
-        <Parallax speed={0.35} rotate={6} className="absolute -right-24 -top-10 w-[34rem] opacity-90 sm:w-[42rem] lg:w-[48rem]">
-          <Image
-            src="/images/glass-ribbon.webp"
-            alt=""
-            width={1008}
-            height={957}
-            priority
-            className="h-auto w-full [mask-image:radial-gradient(closest-side,#000_65%,transparent)]"
-          />
-        </Parallax>
-      )}
-      <Float className="absolute left-[46%] top-[14%]" amount={16}>
-        <div className="orb h-10 w-10 opacity-90" />
-      </Float>
-      <Float className="absolute bottom-[12%] left-[30%]" amount={20} duration={7}>
-        <div className="orb-peach h-16 w-16" />
-      </Float>
-      <Parallax speed={-0.4} className="absolute -bottom-40 -left-40 h-[30rem] w-[30rem]">
-        <div className="h-full w-full rounded-full border-[10px] border-white/50 bg-gradient-to-br from-[#c9c4ff]/60 via-[#e7e4ff]/30 to-[#ffd1c4]/50 shadow-[inset_0_0_60px_rgba(255,255,255,0.8)] blur-[1px]" />
+      <Parallax speed={0.1} className="absolute inset-x-0 -inset-y-[6%]">
+        <Image
+          src="/images/glass-backdrop.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+          style={{ objectPosition: position }}
+        />
       </Parallax>
     </div>
   );

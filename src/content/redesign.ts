@@ -61,7 +61,7 @@ export const officeLine = "Frisco, Texas · Hyderabad, India · Kovilpatti, Indi
  * the services index where there is no dedicated page yet.
  */
 export const footerServices = [
-  { label: "Web Application", href: serviceHref("custom-software-development") },
+  { label: "Web Application", href: routes.webApplications },
   { label: "Web Designing", href: routes.services },
   { label: "Mobile App Development", href: serviceHref("custom-software-development") },
   { label: "Quality Assurance", href: routes.services },
@@ -548,7 +548,7 @@ export const careersRedesign = {
     eyebrow: "Careers at Infoane",
     title: "Join our team of builders, architects, and systems engineers.",
     body: "We embed directly with world-class product teams to turn technical debt into operational leverage. No fluff, no endless decks — just clean systems that ship on time.",
-    primary: { label: "Explore Openings", href: "#openings" },
+    primary: { label: "Explore Openings", href: routes.openings },
     secondary: { label: "Our Philosophy", href: routes.about },
   },
   benefits: {
@@ -652,8 +652,92 @@ export const careersRedesign = {
     eyebrow: "Get started",
     title: "Ready to build something meaningful?",
     body: "Connect directly with our delivery team to learn more about our roadmap ownership model and how we ship better systems.",
-    primary: { label: "View Open Positions", href: "#openings" },
+    primary: { label: "View Open Positions", href: routes.openings },
     secondary: { label: "See how we work", href: "/#approach" },
+  },
+  heroPlaceholder: {
+    title: "Team photo placeholder",
+    body: "Your team photo here",
+    hint: "Recommended size: 800 × 400px",
+  },
+  /** /careers/openings */
+  openingsPage: {
+    eyebrow: "Careers at Infoane",
+    title: "Current Openings",
+    lead: "Join a high-performance team building the next generation of robust software architectures. We value builders who take pride in system craft.",
+    filters: {
+      search: "Search jobs",
+      searchPlaceholder: "Search by role or keywords...",
+      category: "Job category",
+      allCategories: "All Categories",
+      type: "Job type",
+      allTypes: "All Types",
+      location: "Job location",
+      allLocations: "All Locations",
+    },
+    moreDetails: "More Details",
+    loadMore: "Load More Positions",
+    empty: "No positions match those filters. Try clearing a filter, or send us a general application.",
+    join: {
+      eyebrow: "Join our team",
+      title: "Be part of our amazing team",
+      body: "Don't see a role that fits your profile perfectly? We are always on the lookout for talented, passionate architects, engineers, and designers. Shoot us your resume and let's discuss.",
+      cta: { label: "Send Your Resume", href: routes.apply },
+      image: "/images/mission-team.webp",
+      imageAlt: "Engineers gathered around a desk with curved monitors, discussing an architecture diagram",
+    },
+  },
+  /** /careers/apply */
+  applyPage: {
+    eyebrow: "Careers at Infoane",
+    title: "Don't see your role? Let's talk.",
+    body: "We are builders, systems engineers, and systems architects. Even when we don't have a formal vacancy open, we're always looking to meet exceptional minds who want to turn technical debt into operational leverage.",
+    whyLabel: "Why apply speculatively?",
+    why: [
+      {
+        icon: "chart" as IconName,
+        title: "We're always growing",
+        body: "We operate lean, high-performing structures, meaning we adapt to demand quickly. A great candidate always creates their own necessity.",
+      },
+      {
+        icon: "code" as IconName,
+        title: "Your skills might shape a new role",
+        body: "If you bring unique capabilities across DevOps, QA Automation, or Product Delivery, we structure the position around your expertise.",
+      },
+      {
+        icon: "globe" as IconName,
+        title: "Join our talent pipeline",
+        body: "Get on our radar. When high-priority client modernizations ramp up, we go directly to our curated pipeline before going public.",
+      },
+      {
+        icon: "check" as IconName,
+        title: "Get priority when roles open",
+        body: "Speculative applications demonstrate initiative and proactive builder mentalities. You're already one step ahead of public candidates.",
+      },
+    ],
+    form: {
+      title: "Submit an open application",
+      lead: "Tell us what you're passionate about building. Our technical directors review speculative applications weekly.",
+    },
+    expertise: [
+      "Software engineering",
+      "Quality assurance & test automation",
+      "DevOps & infrastructure",
+      "Data & databases",
+      "Architecture",
+      "Project & program management",
+      "Talent acquisition",
+      "Sales & account management",
+      "Other",
+    ],
+  },
+  /** /careers/[slug] */
+  jobPage: {
+    eyebrow: "Careers at Infoane",
+    responsibilities: "Responsibilities",
+    skills: "Required Skills",
+    formTitle: "Apply for this position",
+    back: "All openings",
   },
 };
 
