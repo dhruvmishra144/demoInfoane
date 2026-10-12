@@ -16,7 +16,10 @@ export function HomeHero() {
 
   return (
     <section className="relative isolate flex min-h-[741px] items-center overflow-hidden border-b border-ink-200/60 bg-[#eae5f3]">
-      <div data-intro="media" className="pointer-events-none absolute inset-0 -z-10">
+      {/* Not a [data-intro] element: it sits outside <Intro>, so nothing would
+          reveal it and the CSS fallback would hide it for 2.5s on every load.
+          LiquidMetal fades its own canvas in once the first frame is drawn. */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
         <LiquidMetal className="absolute inset-0" />
       </div>
 
