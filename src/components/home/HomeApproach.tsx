@@ -1,76 +1,62 @@
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
-import { StepFocus } from "@/components/motion/effects";
-import { Eyebrow, SectionIntro } from "@/components/design/blocks";
-import { StepIcon } from "@/components/design/StepIcon";
+import { Eyebrow } from "@/components/design/blocks";
 import { home } from "@/content/redesign";
 
 /**
- * "We embed, not just deliver." The left column sticks while the three steps
- * scroll past it, each one coming into focus as it crosses the middle of the
- * screen.
+ * "We embed, not just deliver." A 420px column of copy beside three numbered
+ * cards, all at the design's measured sizes: 544px cards, 20px apart, with
+ * 24px padding around a 40px badge.
  */
 export function HomeApproach() {
   const approach = home.approach;
 
   return (
-    <section id="approach" className="bg-ink-50/70 py-24 lg:py-32">
+    <section id="approach" className="bg-[#f9fafb] pb-[83px] pt-[81px]">
       <div className="container-x">
         <ScrollReveal>
-          <SectionIntro eyebrow={approach.eyebrow} title={approach.title} />
+          <div data-reveal-item>
+            <Eyebrow>{approach.eyebrow}</Eyebrow>
+          </div>
+          <h2 data-split className="mt-[14px] text-[36px] font-bold leading-[40px] [text-wrap:wrap]">
+            {approach.title}
+          </h2>
         </ScrollReveal>
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-[0.8fr_1fr] lg:gap-16">
-          <div className="lg:sticky lg:top-32 lg:self-start">
-            <ScrollReveal variant="blur" stagger={0.1}>
-              <div data-reveal-item>
-                <Eyebrow>{approach.kicker}</Eyebrow>
-              </div>
-              <h3 data-reveal-item className="mt-4 text-3xl font-bold leading-tight">
-                {approach.subtitle}
-              </h3>
-              <div data-reveal-item className="mt-8 border-t border-ink-200 pt-8">
-                <Eyebrow>{approach.howEyebrow}</Eyebrow>
-                <h4 className="mt-4 text-xl font-bold">{approach.howTitle}</h4>
-                <p className="mt-4 max-w-md text-base leading-relaxed text-ink-600">
-                  {approach.howBody}
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
+        <div className="mt-14 grid gap-12 lg:grid-cols-[420px_544px]">
+          <ScrollReveal variant="blur" stagger={0.1} className="pt-0.5">
+            <div data-reveal-item>
+              <Eyebrow>{approach.kicker}</Eyebrow>
+            </div>
+            <h3 data-reveal-item className="mt-[15px] text-[29.5px] font-bold leading-[31px] [text-wrap:wrap]">
+              {approach.subtitle}
+            </h3>
+            <div data-reveal-item className="mt-[34px] border-t border-ink-200 pt-[34px]">
+              <Eyebrow>{approach.howEyebrow}</Eyebrow>
+              <h4 className="mt-3 text-[18.7px] font-bold leading-7 [text-wrap:wrap]">{approach.howTitle}</h4>
+              <p className="mt-2.5 text-[15px] leading-6 text-body [text-wrap:wrap]">{approach.howBody}</p>
+            </div>
+          </ScrollReveal>
 
-          <StepFocus className="relative isolate space-y-10 lg:py-16">
-            {/* Connector rail through the icon column. The cards cover it, so
-                only the stretches in the gaps show — filling coral with scroll,
-                it reads as the steps linking up one after another. */}
-            <span
-              aria-hidden="true"
-              className="absolute inset-y-0 left-[3.75rem] -z-10 w-0.5 bg-ink-200 lg:inset-y-16 lg:left-16"
-            >
-              <span data-rail-fill className="block h-full w-full origin-top bg-brand-500" />
-            </span>
-
+          <ScrollReveal as="ol" variant="up" stagger={0.14} className="space-y-5">
             {approach.steps.map((step, index) => (
               <li
                 key={step.title}
-                data-step
-                className="flex gap-6 rounded-3xl border border-ink-200 bg-white p-7 shadow-sm lg:p-8"
+                data-reveal-item
+                className="flex gap-5 rounded-3xl border border-ink-200 bg-white px-6 py-[22px]"
               >
-                <span className="relative inline-flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-50 to-white shadow-lg shadow-brand-500/10 ring-1 ring-inset ring-brand-100">
-                  <span data-ping className="absolute inset-0 rounded-2xl bg-brand-200 opacity-0" aria-hidden="true" />
-                  <span className="relative">
-                    <StepIcon name={step.icon} />
-                  </span>
+                <span
+                  className="mt-0.5 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-500 text-[14px] font-bold text-white"
+                  aria-hidden="true"
+                >
+                  {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ink-400">
-                    Step {String(index + 1).padStart(2, "0")}
-                  </p>
-                  <h3 className="mt-1 text-xl font-bold">{step.title}</h3>
-                  <p className="mt-2 text-base leading-relaxed text-ink-600">{step.body}</p>
+                  <h3 className="text-[19px] font-bold leading-7">{step.title}</h3>
+                  <p className="mt-1 text-[14px] leading-[22px] text-body">{step.body}</p>
                 </div>
               </li>
             ))}
-          </StepFocus>
+          </ScrollReveal>
         </div>
       </div>
     </section>

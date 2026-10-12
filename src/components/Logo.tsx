@@ -20,7 +20,7 @@ export function Logo({
   return (
     <Link
       href="/"
-      className="group inline-flex items-center gap-2.5"
+      className="group inline-flex items-center gap-3"
       aria-label={`${name} — home`}
     >
       <svg

@@ -1,28 +1,16 @@
+import Image from "next/image";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { Parallax } from "@/components/motion/effects";
 import { SectionIntro } from "@/components/design/blocks";
 import { aboutPage } from "@/content/redesign";
 
-type Person = { name: string; role: string; bio: string; linkedin: string };
-
-function initials(name: string) {
-  const letters = name
-    .replace(/[[\]]/g, "")
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((w) => w.charAt(0).toUpperCase());
-  return (letters[0] ?? "") + (letters.length > 1 ? letters[letters.length - 1] : "");
-}
-
 /**
- * Leadership, grouped Operations / Delivery. The CMS has no photo or group
- * field, so every person gets a ringed gradient initials avatar and people are
- * split across the two groups in CMS order.
+ * Leadership, grouped Operations / Delivery, each with a ringed circular
+ * portrait. Names, roles, bios and photos live in `aboutPage.leadership.people`.
  */
-export function AboutLeadership({ people }: { people: Person[] }) {
+export function AboutLeadership() {
   const l = aboutPage.leadership;
-  const half = Math.ceil(people.length / 2);
-  const groups = [people.slice(0, half), people.slice(half)];
+  const groups = l.groups.map((_, gi) => l.people.filter((person) => person.group === gi));
 
   return (
     <section id="leadership" className="relative isolate overflow-hidden py-20 lg:py-28">
@@ -47,24 +35,18 @@ export function AboutLeadership({ people }: { people: Person[] }) {
                   {group.map((person, pi) => (
                     <li key={`${person.role}-${pi}`} data-reveal-item className="flex flex-col items-center text-center">
                       <span className="rounded-full p-1.5 shadow-[0_0_50px_-8px_rgba(255,107,74,0.45)] ring-2 ring-brand-500/50">
-                        <span
-                          className="flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-brand-400 via-brand-500 to-[#8f86f5] text-3xl font-bold text-white sm:h-36 sm:w-36"
-                          aria-hidden="true"
-                        >
-                          {initials(person.name)}
-                        </span>
+                        <Image
+                          src={person.photo}
+                          alt={`Portrait of ${person.name}`}
+                          width={160}
+                          height={160}
+                          sizes="144px"
+                          className="h-32 w-32 rounded-full object-cover sm:h-36 sm:w-36"
+                        />
                       </span>
                       <h3 className="mt-6 text-base font-bold">{person.name}</h3>
                       <p className="mt-1 text-sm font-semibold text-brand-600">{person.role}</p>
-                      <p className="mt-3 max-w-[16rem] text-xs leading-relaxed text-ink-600">{person.bio}</p>
-                      <a
-                        href={person.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-3 text-xs font-semibold text-brand-700 hover:text-brand-800"
-                      >
-                        LinkedIn profile
-                      </a>
+                      <p className="mt-3 max-w-[16rem] text-sm leading-relaxed text-ink-600">{person.bio}</p>
                     </li>
                   ))}
                 </ScrollReveal>

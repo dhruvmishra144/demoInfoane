@@ -109,7 +109,7 @@ export function GlassBackdrop({ position = "center" }: { position?: string }) {
 
 /* ---------------------------------------------------------------- Locations */
 
-export function Locations({ lead }: { lead: string }) {
+export function Locations({ lead, globe }: { lead: string; globe?: string }) {
   return (
     <section id="locations" className="relative overflow-hidden py-24 lg:py-32">
       <div className="container-x">
@@ -118,18 +118,31 @@ export function Locations({ lead }: { lead: string }) {
         </ScrollReveal>
 
         <div className="mt-14 grid items-center gap-10 lg:grid-cols-[1fr_1.2fr]">
-          <div className="relative aspect-square max-w-lg overflow-hidden rounded-l-full">
-            <Parallax speed={0.15} className="absolute inset-0">
+          {globe ? (
+            <Parallax speed={0.15} className="relative mx-auto aspect-square w-full max-w-sm">
               <Image
-                src="/images/globe.webp"
+                src={globe}
                 alt="A glowing globe with light trails connecting the Americas to India"
-                width={1040}
-                height={1040}
-                sizes="(min-width: 1024px) 40vw, 90vw"
-                className="h-full w-full scale-110 object-cover"
+                width={560}
+                height={560}
+                sizes="(min-width: 1024px) 24rem, 80vw"
+                className="h-full w-full object-contain"
               />
             </Parallax>
-          </div>
+          ) : (
+            <div className="relative aspect-square max-w-lg overflow-hidden rounded-l-full">
+              <Parallax speed={0.15} className="absolute inset-0">
+                <Image
+                  src="/images/globe.webp"
+                  alt="A glowing globe with light trails connecting the Americas to India"
+                  width={1040}
+                  height={1040}
+                  sizes="(min-width: 1024px) 40vw, 90vw"
+                  className="h-full w-full scale-110 object-cover"
+                />
+              </Parallax>
+            </div>
+          )}
 
           <ScrollReveal as="ul" variant="up" stagger={0.14} className="space-y-5">
             {locations.map((office) => (

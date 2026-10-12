@@ -106,38 +106,15 @@ export function SiteHeader({
         };
       }
 
-      if (item.href === routes.industries) {
-        return {
-          label: item.label,
-          href: item.href,
-          columns: [
-            ...twoColumns(
-              industries,
-              header.industryGroupPrimary,
-              header.industryGroupSecondary,
-              (industry) => ({
-                label: industry.name,
-                href: `${routes.industries}#${industry.slug}`,
-                description: industry.focus[0],
-              }),
-            ),
-            ...manual,
-          ],
-        };
-      }
-
-      return {
-        label: item.label,
-        href: item.href,
-        // No children means a plain link rather than a mega-menu trigger.
-        ...(manual.length > 0 ? { columns: manual } : {}),
-      };
+      // Services is the only mega-menu trigger; every other tab is a plain
+      // link (the industries list lives on the Industries page itself).
+      return { label: item.label, href: item.href };
     });
 
   return (
     <HeaderShell>
       <div className="container-x relative">
-        <div className="flex h-[4.5rem] items-center justify-between gap-6">
+        <div className="flex h-[83px] items-center justify-between gap-6">
           <Logo name={brandName} />
           <SiteNav items={items} ctaLabel={header.ctaLabel} />
         </div>

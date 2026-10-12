@@ -2,16 +2,12 @@ import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { ZoomImage } from "@/components/motion/effects";
 import { SectionIntro } from "@/components/design/blocks";
 import { webApplications } from "@/content/web-applications";
-import { ApiArt, CommerceArt, PortalArt } from "./WaArt";
+import Image from "next/image";
 import { WaIcon } from "./WaIcon";
 
 type Card = (typeof webApplications.build.cards)[number];
 
-const ART = { portal: PortalArt, commerce: CommerceArt, api: ApiArt } as const;
-
 function BuildCard({ card, large = false }: { card: Card; large?: boolean }) {
-  const Art = card.art ? ART[card.art] : null;
-
   return (
     <article
       data-reveal-item
@@ -22,11 +18,15 @@ function BuildCard({ card, large = false }: { card: Card; large?: boolean }) {
         {card.title}
       </h3>
       <p className="mt-4 text-sm leading-relaxed text-ink-600">{card.body}</p>
-      {Art && (
-        <ZoomImage className="mt-6 h-40 overflow-hidden rounded-xl">
-          <div data-zoom-media className="h-full w-full">
-            <Art />
-          </div>
+      {card.art && (
+        <ZoomImage className="relative mt-6 aspect-[2/1] overflow-hidden rounded-xl">
+          <Image
+            src={card.art}
+            alt={`${card.title} example`}
+            fill
+            sizes="(min-width: 1024px) 26vw, 90vw"
+            className="object-cover"
+          />
         </ZoomImage>
       )}
     </article>
