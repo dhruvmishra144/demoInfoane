@@ -88,9 +88,9 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
 
   /** Back to the current section's link, or away if the page isn't in the bar. */
   function restPill() {
-    const active = listRef.current?.querySelector<HTMLElement>("[data-nav-active]");
-    if (active) movePill(active);
-    else setPill((prev) => ({ ...prev, visible: false, slide: false }));
+    // The design marks the current page by colour alone, so the pill only
+    // appears on hover and rests hidden.
+    setPill((prev) => ({ ...prev, visible: false, slide: false }));
   }
 
   // Re-rest on navigation, and when fonts load or the window resizes (both
@@ -148,7 +148,7 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
               const target = (event.target as HTMLElement).closest<HTMLElement>("[data-nav-item]");
               if (target) movePill(target);
             }}
-            className="flex items-center gap-1"
+            className="flex items-center gap-0"
           >
             {/* The sliding pill: glides to whichever link is hovered or
                 focused, and rests behind the current section otherwise.
@@ -175,7 +175,7 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
                       onMouseEnter={closeWithDelay}
                       data-nav-item
                       data-nav-active={active || undefined}
-                      className={`relative z-10 block rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                      className={`relative z-10 block rounded-full px-4 py-2 text-[14px] font-medium transition-colors duration-300 ${
                         active ? "text-brand-600" : "text-ink-800 hover:text-ink-950"
                       }`}
                     >
@@ -200,7 +200,7 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
                     onClick={() => (open ? setOpenMenu(null) : setOpenMenu(item.label))}
                     data-nav-item
                     data-nav-active={active || undefined}
-                    className={`relative z-10 inline-flex items-center rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                    className={`relative z-10 inline-flex items-center rounded-full px-4 py-2 text-[14px] font-medium transition-colors duration-300 ${
                       active || open ? "text-brand-600" : "text-ink-800 hover:text-ink-950"
                     }`}
                   >
@@ -300,29 +300,17 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Link
             href={`${routes.home}#approach`}
-            className="group inline-flex items-center gap-2 rounded-full bg-ink-900 py-2.5 pl-6 pr-5 text-sm font-semibold text-white shadow-[0_8px_20px_-8px_rgba(20,21,31,0.5),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-300 hover:-translate-y-px hover:bg-ink-800"
+            className="group inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[14px] font-semibold leading-5 text-white shadow-[0_8px_20px_-8px_rgba(20,21,31,0.5),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-300 hover:-translate-y-px hover:bg-ink-800"
           >
             See how we work
-            <svg
-              viewBox="0 0 24 24"
-              className="h-4 w-4 transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-0.5 group-hover:-rotate-45"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M5 12h13M12 6l6 6-6 6" />
-            </svg>
           </Link>
           <Link
             href={routes.contact}
             aria-current={isActive(routes.contact) ? "page" : undefined}
-            className="inline-flex items-center rounded-full bg-white/70 px-6 py-2.5 text-sm font-semibold text-ink-900 ring-1 ring-inset ring-ink-200 backdrop-blur transition-all duration-300 hover:-translate-y-px hover:bg-white hover:ring-ink-300"
+            className="inline-flex items-center rounded-full bg-white/70 px-6 py-3 text-[14px] font-semibold leading-5 text-ink-900 ring-1 ring-inset ring-ink-200 backdrop-blur transition-all duration-300 hover:-translate-y-px hover:bg-white hover:ring-ink-300"
           >
             {ctaLabel}
           </Link>

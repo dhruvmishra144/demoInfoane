@@ -92,9 +92,11 @@ export function DesignIcon({ name, className = "h-5 w-5" }: { name: IconName; cl
 export function IconTile({
   name,
   tone = "light",
+  size = "md",
 }: {
   name: IconName;
   tone?: "light" | "dark" | "solid";
+  size?: "md" | "sm";
 }) {
   const tones = {
     light: "bg-brand-50 text-brand-600 ring-1 ring-inset ring-brand-100",
@@ -103,7 +105,7 @@ export function IconTile({
   };
   return (
     <span
-      className={`inline-flex h-12 w-12 items-center justify-center rounded-xl ${tones[tone]}`}
+      className={`inline-flex ${size === "sm" ? "h-10 w-10" : "h-12 w-12"} items-center justify-center rounded-xl ${tones[tone]}`}
     >
       <DesignIcon name={name} />
     </span>

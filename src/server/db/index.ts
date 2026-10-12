@@ -17,7 +17,20 @@ export type Db = DrizzleD1Database<typeof schema>;
  * ergonomic one: every value is bound as a parameter, so string interpolation —
  * the usual route to SQL injection in D1 code — never enters the picture.
  */
+/**
+ * `npm run dev:static` runs without the Workers runtime. Throw before
+ * `getCloudflareContext` is reached: in development it would otherwise start
+ * wrangler itself, which is exactly what that mode exists to avoid. Public
+ * pages catch this and render their static content.
+ */
+function assertBindingsAvailable() {
+  if (process.env.CF_SKIP_BINDINGS === "1") {
+    throw new Error("Cloudflare bindings are disabled (dev:static); using static content.");
+  }
+}
+
 export function getDb(): Db {
+  assertBindingsAvailable();
   const { env } = getCloudflareContext();
   if (!env.DB) {
     throw new Error(
@@ -28,6 +41,7 @@ export function getDb(): Db {
 }
 
 export async function getDbAsync(): Promise<Db> {
+  assertBindingsAvailable();
   const { env } = await getCloudflareContext({ async: true });
   if (!env.DB) {
     throw new Error("D1 binding `DB` is missing during static generation.");

@@ -57,7 +57,13 @@ export default nextConfig;
  *
  * `npm run dev:remote` (CF_REMOTE_DEV=1) reads the real remote database, as
  * builds do; it needs `npx wrangler login`.
+ *
+ * `npm run dev:static` (CF_SKIP_BINDINGS=1) skips the local Workers runtime
+ * altogether, for machines where workerd cannot start (an access violation on
+ * Windows with an outdated Visual C++ runtime). Every page then renders its
+ * checked-in static content; only the admin, which needs a database, is
+ * unavailable.
  */
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "development" && process.env.CF_SKIP_BINDINGS !== "1") {
   initOpenNextCloudflareForDev({ remoteBindings: process.env.CF_REMOTE_DEV === "1" });
 }

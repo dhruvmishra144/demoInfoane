@@ -49,8 +49,11 @@
 
   /* Warm off-white page background and the navy used for dark panels. */
   --color-paper: #faf9f7;
-  --color-night: #13141d;
-  --color-night-card: #1d1f2e;
+  --color-night: #12131a;
+  --color-night-card: #1e2030;
+  /* Body copy and its dark-surface counterpart, as sampled from the design. */
+  --color-body: #4a5565;
+  --color-body-dark: #9ca3af;
 
   /* Pastel mint — secondary accent, used sparingly for rotation/variety. */
   --color-mint-50: #f1f8f4;
@@ -79,7 +82,7 @@
   --color-ink-600: #545766;
   --color-ink-700: #3e404d;
   --color-ink-800: #272935;
-  --color-ink-900: #14151f;
+  --color-ink-900: #12131a;
   --color-ink-950: #0d0e15;
 
   --radius-4xl: 2rem;
@@ -146,7 +149,7 @@
 @utility container-x {
   margin-inline: auto;
   width: 100%;
-  max-width: 88rem; /* 1408px */
+  max-width: 81rem; /* 1296px: 1200px of content at 1440, as designed */
   padding-inline: 1.25rem;
 
   @media (width >= 768px) {
@@ -220,12 +223,12 @@
 /* Section kicker: letter-spaced coral caps. 600 rather than 500 on light
    backgrounds, which keeps the small caps legible. */
 @utility eyebrow {
-  font-size: var(--text-xs);
+  font-size: 0.9375rem;
   line-height: 1.25rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-brand-600);
+  color: var(--color-brand-500);
 }
 
 /* Very light page-level wash used behind white cards. Centers sit well below

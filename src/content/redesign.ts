@@ -36,7 +36,7 @@ export type IconName =
  */
 export const locations = [
   {
-    city: "Atlanta, USA",
+    city: "Frisco, USA",
     role: "Headquarters",
     body: "Headquarters · Strategic planning, client partnerships, and delivery oversight.",
   },
@@ -46,7 +46,7 @@ export const locations = [
     body: "Engineering Hub · Core delivery, architecture, and 24/7 monitoring operations.",
   },
   {
-    city: "Bengaluru, India",
+    city: "Kovilpatti, India",
     role: "Modernization Studio",
     body: "Modernization Studio · Legacy migrations, QA automation, and platform modernization.",
   },
@@ -78,7 +78,7 @@ export const home = {
   hero: {
     headline: "Every system we build starts as someone else's bottleneck.",
     subhead:
-      "Infoane is an engineering partner for companies who've outgrown their own roadmap — data platforms, product teams, and infrastructure rebuilt by people who've shipped them before.",
+      "Infoane is an engineering partner for companies who've outgrown their own roadmap - data platforms, product teams, and infrastructure rebuilt by people who've shipped them before.",
     primaryCta: { label: "See how we work", href: "#approach" },
     secondaryCta: { label: "Read the client stories", href: routes.caseStudies },
     note: `Working with teams across manufacturing, fintech, and healthcare since ${foundedYear}.`,
@@ -220,7 +220,7 @@ export const home = {
       {
         name: "Healthcare",
         headline: "Healthcare systems built for regulatory reality.",
-        body: "We've rebuilt claims platforms, patient data pipelines, and compliance tooling for mid-size health systems — working within real constraints, not around them.",
+        body: "We've rebuilt claims platforms, patient data pipelines, and compliance tooling for mid-size health systems - working within real constraints, not around them.",
         tagline: ["Claims systems.", "Patient data platforms.", "Compliance tooling."],
         points: [
           "Claims processing & adjudication systems",

@@ -72,7 +72,7 @@ export function IndustryTabs({ items, activeLabel }: { items: Industry[]; active
         role="tablist"
         aria-label="Industries"
         onKeyDown={onKeyDown}
-        className="flex gap-1 overflow-x-auto rounded-2xl bg-ink-100/70 p-1.5"
+        className="flex gap-1 overflow-x-auto rounded-2xl bg-[#f3f2ef] p-1"
       >
         {items.map((item, index) => {
           const selected = index === active;
@@ -89,10 +89,10 @@ export function IndustryTabs({ items, activeLabel }: { items: Industry[]; active
               aria-controls={`${baseId}-panel`}
               tabIndex={selected ? 0 : -1}
               onClick={() => select(index)}
-              className={`shrink-0 rounded-xl px-6 py-2.5 text-sm font-medium transition-all duration-500 ease-[var(--ease-out-expo)] ${
+              className={`shrink-0 rounded-xl px-5 py-2.5 leading-5 transition-all duration-500 ease-[var(--ease-out-expo)] ${
                 selected
-                  ? "bg-white font-semibold text-brand-600 shadow-sm"
-                  : "text-ink-600 hover:text-ink-900"
+                  ? "bg-white text-[15px] font-semibold text-brand-500 shadow-sm"
+                  : "text-[13px] font-medium text-body hover:text-ink-900"
               }`}
             >
               {item.name}
@@ -106,18 +106,18 @@ export function IndustryTabs({ items, activeLabel }: { items: Industry[]; active
         role="tabpanel"
         id={`${baseId}-panel`}
         aria-labelledby={`${baseId}-tab-${active}`}
-        className="mt-8 grid overflow-hidden rounded-[2rem] border border-ink-200 bg-white shadow-xl shadow-ink-900/5 lg:grid-cols-[0.9fr_1.4fr]"
+        className="mt-10 grid overflow-hidden rounded-[28px] border border-ink-200 bg-white shadow-xl shadow-ink-900/5 lg:min-h-[419px] lg:grid-cols-[420px_1fr]"
       >
         <div
-          className={`relative isolate flex min-h-[20rem] flex-col justify-end overflow-hidden bg-gradient-to-br p-8 lg:p-10 ${industry.gradient}`}
+          className={`relative isolate flex min-h-[20rem] flex-col justify-end overflow-hidden bg-gradient-to-br p-8 lg:px-8 lg:pb-8 lg:pt-10 ${industry.gradient}`}
         >
           {/* Line-art diamond and arc from the mockup. */}
-          <div className="absolute right-8 top-8 h-40 w-40 rotate-45 border border-white/70 lg:right-10 lg:top-10" aria-hidden="true" />
+          <div className="absolute right-[48px] top-[54px] h-[127px] w-[127px] rotate-45 border border-white/70" aria-hidden="true" />
           <div className="absolute -bottom-40 -left-24 h-96 w-96 rounded-full border border-white/60" aria-hidden="true" />
-          <p className="eyebrow relative inline-flex self-start rounded-full bg-white/15 px-4 py-1.5 !text-brand-300">
+          <p className="relative inline-flex self-start rounded-full bg-white/15 px-3 py-1 text-[13px] font-bold uppercase leading-5 tracking-[0.14em] text-brand-500">
             {industry.name}
           </p>
-          <p className="relative mt-5 text-2xl font-bold leading-snug text-white">
+          <p className="relative mt-4 text-[21px] font-bold leading-7 text-white">
             {industry.tagline.map((line) => (
               <span key={line} className="block">
                 {line}
@@ -126,17 +126,17 @@ export function IndustryTabs({ items, activeLabel }: { items: Industry[]; active
           </p>
         </div>
 
-        <div className="p-8 lg:p-12">
-          <p className="eyebrow inline-flex rounded-full bg-brand-50 px-4 py-1.5">{activeLabel}</p>
-          <h3 className="mt-6 max-w-lg text-2xl font-bold leading-tight lg:text-3xl">
+        <div className="p-8 lg:px-12 lg:pb-6 lg:pt-12">
+          <p className="inline-flex rounded-full bg-brand-50 px-3 py-1 text-[13px] font-bold uppercase leading-5 tracking-[0.14em] text-brand-500">{activeLabel}</p>
+          <h3 className="mt-[26px] max-w-[22rem] text-[24px] font-bold leading-[30px] [text-wrap:wrap]">
             {industry.headline}
           </h3>
-          <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-600">{industry.body}</p>
-          <ul className="mt-8 space-y-4">
+          <p className="mt-[7px] max-w-[26rem] text-[15px] leading-6 text-body [text-wrap:wrap]">{industry.body}</p>
+          <ul className="mt-[22px] space-y-3">
             {industry.points.map((point) => (
-              <li key={point} data-tab-item className="flex items-center gap-4 text-base text-ink-700">
-                <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
-                  <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <li key={point} data-tab-item className="flex items-center gap-3 text-[14px] leading-6 text-body">
+                <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-500">
+                  <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="m5 12 5 5L20 7" />
                   </svg>
                 </span>

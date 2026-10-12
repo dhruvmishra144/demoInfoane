@@ -31,6 +31,9 @@ async function orFallback<T>(
   try {
     value = await read();
   } catch (error) {
+    // dev:static has no database by design; logging every read would bury the
+    // output that matters.
+    if (process.env.CF_SKIP_BINDINGS === "1") return fallback;
     console.error(
       `[content] D1 read failed for ${what}; serving static fallback. ` +
         `If this is a fresh database, apply migrations with \`npm run db:migrate:remote\`.`,

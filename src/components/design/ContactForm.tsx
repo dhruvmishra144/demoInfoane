@@ -41,11 +41,11 @@ export function ContactForm({
   }
 
   const field =
-    "peer mt-2 block w-full border-0 border-b border-ink-200 bg-transparent px-0 pb-3 pt-1 text-base text-ink-900 placeholder:text-ink-300 transition-colors duration-300 focus:border-brand-500 focus:outline-none focus:ring-0";
-  const label = "block text-xs font-semibold uppercase tracking-[0.14em] text-ink-600";
+    "peer mt-0.5 block w-full border-0 border-b border-ink-200 bg-transparent px-0 pb-[6px] pt-0 text-[15px] leading-6 text-ink-900 placeholder:text-ink-300 transition-colors duration-300 focus:border-brand-500 focus:outline-none focus:ring-0";
+  const label = "block text-[12px] font-semibold uppercase leading-4 tracking-[0.14em] text-ink-600";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-7">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <div>
         <label htmlFor="cf-name" className={label}>
           First name
@@ -86,16 +86,16 @@ export function ContactForm({
         />
       </div>
 
-      <div className="pt-2">
+      <div className="pt-3">
         <button
           type="submit"
-          className={`rounded-full bg-brand-500 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-brand-500/25 transition-all duration-300 hover:-translate-y-px hover:bg-brand-600 ${
-            fullWidthButton ? "w-full" : ""
+          className={`rounded-full bg-brand-500 text-[14px] font-semibold leading-6 text-white shadow-lg shadow-brand-500/25 transition-all duration-300 hover:-translate-y-px hover:bg-brand-600 ${
+            fullWidthButton ? "w-full px-8 py-4" : "px-6 py-3"
           }`}
         >
           {submitLabel}
         </button>
-        <p className="mt-4 text-xs text-ink-500" role={sent ? "status" : undefined}>
+        <p className={sent ? "mt-4 text-xs text-ink-500" : "sr-only"} role={sent ? "status" : undefined}>
           {sent
             ? "Your email client should have opened with the message ready to send."
             : "Opens your email client with the details filled in."}
