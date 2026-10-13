@@ -101,6 +101,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: absolute(routes.mobileApps),
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
     ...jobs.map((job) => ({
       url: absolute(jobHref(job.slug)),
       lastModified: now,

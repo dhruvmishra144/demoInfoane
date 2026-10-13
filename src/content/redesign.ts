@@ -62,7 +62,7 @@ export const officeLine = "Frisco, Texas · Hyderabad, India · Kovilpatti, Indi
 export const footerServices = [
   { label: "Web Application", href: routes.webApplications },
   { label: "Web Designing", href: routes.services },
-  { label: "Mobile App Development", href: serviceHref("custom-software-development") },
+  { label: "Mobile App Development", href: routes.mobileApps },
   { label: "Quality Assurance", href: routes.services },
   { label: "Remote DBA", href: routes.services },
   { label: "Cloud Services", href: serviceHref("cloud-migration-devops") },
@@ -142,7 +142,7 @@ export const home = {
         icon: "phone" as IconName,
         title: "Mobile App Development",
         body: "Develop native and cross-platform mobile applications with a focus on usability, performance, quality, and ongoing application support.",
-        href: serviceHref("custom-software-development"),
+        href: routes.mobileApps,
       },
       {
         icon: "check" as IconName,

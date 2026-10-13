@@ -4,9 +4,16 @@ import { CenterCta } from "@/components/design/blocks";
 import { WaBuild } from "@/components/web-applications/WaBuild";
 import { WaColdFusion } from "@/components/web-applications/WaColdFusion";
 import { WaHero } from "@/components/web-applications/WaHero";
-import { WaProcess } from "@/components/web-applications/WaProcess";
 import { WaStandards } from "@/components/web-applications/WaStandards";
 import { WaStats } from "@/components/web-applications/WaStats";
+import {
+  ServiceApproach,
+  ServiceBenefits,
+  ServiceFaq,
+  ServiceRelated,
+  ServiceTechnology,
+  ServiceWhy,
+} from "@/components/services/ServiceSections";
 import { webApplications } from "@/content/web-applications";
 import { pageSchema } from "@/lib/schema";
 import { routes } from "@/lib/routes";
@@ -14,7 +21,7 @@ import { routes } from "@/lib/routes";
 const path = routes.webApplications;
 
 export const metadata: Metadata = {
-  title: webApplications.meta.title,
+  title: { absolute: webApplications.meta.title },
   description: webApplications.meta.description,
   alternates: { canonical: path },
   openGraph: {
@@ -27,7 +34,8 @@ export const metadata: Metadata = {
 
 /**
  * Web Applications service page (2026 redesign). A static route, so it takes
- * precedence over services/[slug]. No FAQ section, hence no FAQPage JSON-LD.
+ * precedence over services/[slug]. The FAQ is on the page, so the FAQPage
+ * structured data is emitted from the same list that renders it.
  */
 export default function WebApplicationsPage() {
   const { cta } = webApplications;
@@ -43,6 +51,7 @@ export default function WebApplicationsPage() {
             { name: "Services", path: routes.services },
             { name: "Web Applications", path },
           ],
+          faqs: [...webApplications.faq.items],
           service: {
             title: "Web Applications",
             metaDescription: webApplications.meta.description,
@@ -55,7 +64,12 @@ export default function WebApplicationsPage() {
       <WaStats />
       <WaStandards />
       <WaColdFusion />
-      <WaProcess />
+      <ServiceTechnology {...webApplications.technology} />
+      <ServiceWhy {...webApplications.why} />
+      <ServiceBenefits {...webApplications.benefits} />
+      <ServiceApproach {...webApplications.approach} />
+      <ServiceFaq {...webApplications.faq} />
+      <ServiceRelated {...webApplications.related} />
       <CenterCta eyebrow={cta.eyebrow} title={cta.title} body={cta.body} primary={cta.primary} secondary={cta.secondary} />
     </>
   );

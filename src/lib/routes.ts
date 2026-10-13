@@ -22,6 +22,7 @@ export const routes = {
   openings: "/careers/openings",
   apply: "/careers/apply",
   webApplications: "/services/web-applications",
+  mobileApps: "/services/mobile-app-development",
   contact: "/contact",
   privacy: "/privacy-policy",
   terms: "/terms",
