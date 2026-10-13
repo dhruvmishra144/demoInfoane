@@ -60,7 +60,7 @@ export function SectionIntro({
       </div>
       <h2
         data-split
-        className={`mt-4 text-3xl font-bold leading-[1.08] sm:text-4xl lg:text-[2.75rem] ${
+        className={`mt-5 text-3xl font-bold leading-[1.2] sm:text-4xl lg:text-[40px] lg:leading-[48px] ${
           dark ? "text-white" : "text-ink-900"
         } ${center ? "mx-auto" : ""} ${titleClassName}`}
       >
@@ -69,7 +69,7 @@ export function SectionIntro({
       {lead && (
         <p
           data-reveal-item
-          className={`mt-5 max-w-2xl text-base leading-relaxed ${
+          className={`mt-4 max-w-2xl text-[15px] leading-[24px] ${
             dark ? "text-ink-400" : "text-ink-600"
           } ${center ? "mx-auto" : ""}`}
         >
@@ -111,13 +111,13 @@ export function GlassBackdrop({ position = "center" }: { position?: string }) {
 
 export function Locations({ lead, globe }: { lead: string; globe?: string }) {
   return (
-    <section id="locations" className="relative overflow-hidden py-24 lg:py-32">
+    <section id="locations" className="relative overflow-hidden py-20 lg:py-24">
       <div className="container-x">
         <ScrollReveal>
-          <SectionIntro dot eyebrow="Locations" title="Where we build." lead={lead} />
+          <SectionIntro dot eyebrow="Locations" title="Where we build." lead={lead} className="[&_p:last-child]:max-w-[33rem]" />
         </ScrollReveal>
 
-        <div className="mt-14 grid items-center gap-10 lg:grid-cols-[1fr_1.2fr]">
+        <div className="mt-12 grid items-center gap-10 lg:grid-cols-[516px_1fr] lg:gap-[52px]">
           {globe ? (
             <Parallax speed={0.15} className="relative mx-auto aspect-square w-full max-w-sm">
               <Image
@@ -130,37 +130,36 @@ export function Locations({ lead, globe }: { lead: string; globe?: string }) {
               />
             </Parallax>
           ) : (
-            <div className="relative aspect-square max-w-lg overflow-hidden rounded-l-full">
-              <Parallax speed={0.15} className="absolute inset-0">
-                <Image
-                  src="/images/globe.webp"
-                  alt="A glowing globe with light trails connecting the Americas to India"
-                  width={1040}
-                  height={1040}
-                  sizes="(min-width: 1024px) 40vw, 90vw"
-                  className="h-full w-full scale-110 object-cover"
-                />
-              </Parallax>
-            </div>
+            // The art carries its own half-circle backdrop, so it is shown as is.
+            <Parallax speed={0.15} className="relative mx-auto aspect-square w-full max-w-[516px] lg:mx-0">
+              <Image
+                src="/images/globe.webp"
+                alt="A glowing globe with light trails connecting the Americas to India"
+                width={1040}
+                height={1040}
+                sizes="(min-width: 1024px) 516px, 90vw"
+                className="h-full w-full object-cover"
+              />
+            </Parallax>
           )}
 
-          <ScrollReveal as="ul" variant="up" stagger={0.14} className="space-y-5">
+          <ScrollReveal as="ul" variant="up" stagger={0.14} className="space-y-[29px]">
             {locations.map((office) => (
               <li
                 key={office.city}
                 data-reveal-item
-                className="group rounded-3xl border border-ink-200 bg-white p-7 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-ink-900/5"
+                className="group rounded-[14px] bg-white px-5 py-5 shadow-[0_8px_30px_-12px_rgba(18,19,26,0.12)] ring-1 ring-ink-900/[0.03] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_18px_40px_-14px_rgba(18,19,26,0.18)]"
               >
-                <div className="flex items-start gap-4">
-                  <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-50">
-                    <span className="h-2.5 w-2.5 rounded-full bg-brand-500 transition-transform duration-500 group-hover:scale-150" />
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full bg-brand-50">
+                    <span className="h-2 w-2 rounded-full bg-brand-500 transition-transform duration-500 group-hover:scale-150" />
                   </span>
                   <div>
-                    <h3 className="text-xl font-bold">{office.city}</h3>
-                    <p className="text-sm font-semibold text-brand-600">{office.role}</p>
+                    <h3 className="text-[18px] font-bold leading-6">{office.city}</h3>
+                    <p className="text-[11px] font-semibold leading-4 text-brand-600">{office.role}</p>
                   </div>
                 </div>
-                <p className="mt-4 text-sm leading-relaxed text-ink-600">{office.body}</p>
+                <p className="mt-3.5 text-[13px] leading-5 text-ink-600">{office.body}</p>
               </li>
             ))}
           </ScrollReveal>
@@ -178,7 +177,9 @@ export function CenterCta({
   body,
   primary,
   secondary,
+  plain = false,
 }: {
+  plain?: boolean;
   eyebrow: string;
   title: string;
   body: string;
@@ -186,25 +187,36 @@ export function CenterCta({
   secondary: { label: string; href: string };
 }) {
   return (
-    <section className="relative isolate overflow-hidden border-t border-ink-200/70 py-28 lg:py-36">
+    <section
+      className={`relative isolate overflow-hidden border-t border-ink-200/70 ${
+        plain ? "pb-24 pt-24 lg:pb-[120px] lg:pt-[120px]" : "py-28 lg:py-36"
+      }`}
+    >
       <Parallax speed={0.3} className="halo absolute left-1/2 top-0 -z-10 h-[36rem] w-[36rem] -translate-x-1/2" />
       <ScrollReveal variant="blur" stagger={0.12} className="container-x text-center">
         <p
           data-reveal-item
-          className="eyebrow mx-auto inline-flex rounded-full bg-brand-50 px-4 py-1.5"
+          className={`eyebrow mx-auto inline-flex ${plain ? "" : "rounded-full bg-brand-50 px-4 py-1.5"}`}
         >
           {eyebrow}
         </p>
         <h2
           data-reveal-item
-          className="mx-auto mt-8 max-w-3xl text-3xl font-bold leading-tight sm:text-4xl"
+          className={`mx-auto max-w-3xl font-bold ${
+            plain ? "mt-9 text-[1.75rem] leading-[1.25] sm:text-[2rem]" : "mt-8 text-3xl leading-tight sm:text-4xl"
+          }`}
         >
           {title}
         </h2>
-        <p data-reveal-item className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-ink-600">
+        <p
+          data-reveal-item
+          className={`mx-auto text-ink-600 ${
+            plain ? "mt-5 max-w-[30rem] text-[14px] leading-6" : "mt-6 max-w-xl text-base leading-relaxed"
+          }`}
+        >
           {body}
         </p>
-        <div data-reveal-item className="mt-10 flex flex-wrap justify-center gap-4">
+        <div data-reveal-item className={`flex flex-wrap justify-center gap-4 ${plain ? "mt-11" : "mt-10"}`}>
           <Button href={primary.href} variant="coral">
             {primary.label}
           </Button>

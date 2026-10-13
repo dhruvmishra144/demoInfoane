@@ -41,11 +41,15 @@ float height(vec2 p) {
   return h * 0.5 + pull * 0.45;
 }
 
-// Pastel hydrochrome palette: the colours the surface slides between.
-const vec3 PINK = vec3(1.0, 0.76, 0.92);
-const vec3 CYAN = vec3(0.58, 0.88, 1.0);
-const vec3 PEACH = vec3(1.0, 0.84, 0.76);
-const vec3 LILAC = vec3(0.74, 0.70, 0.98);
+// The colours the surface slides between, sampled from the brand render:
+// periwinkle glass, lilac, blush, and the peach-orange edge, with deeper
+// violet and coral kept for the folds.
+const vec3 PINK = vec3(0.98, 0.78, 0.82);   // blush
+const vec3 CYAN = vec3(0.68, 0.73, 0.97);   // periwinkle
+const vec3 PEACH = vec3(0.98, 0.70, 0.55);  // peach-orange
+const vec3 LILAC = vec3(0.83, 0.76, 0.96);  // lilac
+const vec3 VIOLET = vec3(0.55, 0.41, 0.89);
+const vec3 CORAL = vec3(0.96, 0.55, 0.38);
 
 void main() {
   float aspect = uRes.x / uRes.y;
@@ -61,16 +65,20 @@ void main() {
   float hy = height(p + vec2(0.0, e)) - h;
   vec3 n = normalize(vec3(-hx, -hy, e * 1.6));
 
-  // Hue follows the slope and the height, so colour pools along the folds.
-  float a = smoothstep(-0.55, 0.55, n.x + 0.25 * sin(h * 2.0 + uTime * 0.15));
-  float b = smoothstep(-0.5, 0.5, n.y + 0.2 * h);
-  vec3 col = mix(mix(PINK, CYAN, a), mix(PEACH, LILAC, a), b);
-  col = mix(col, LILAC, 0.25 * smoothstep(0.2, 1.0, h));
+  // Hue follows the slope and the height, so colour pools along the folds. It
+  // moves along an ordered ramp rather than blending opposites, which would
+  // average out to grey.
+  float t = smoothstep(-0.55, 1.15, n.x + 0.5 * n.y + 0.3 * sin(h * 2.0 + uTime * 0.15));
+  vec3 col = mix(CYAN, LILAC, smoothstep(0.0, 0.4, t));
+  col = mix(col, PINK, smoothstep(0.35, 0.7, t));
+  col = mix(col, PEACH, smoothstep(0.65, 1.0, t));
+  col = mix(col, VIOLET, 0.24 * (1.0 - smoothstep(0.0, 0.3, t)) * smoothstep(0.2, 0.8, h * 0.5 + 0.5));
+  col = mix(col, CORAL, 0.22 * smoothstep(0.82, 1.0, t));
 
   // Soft studio light: broad, creamy shading plus silky sheen on the creases.
   vec3 L = normalize(vec3(-0.45, 0.6, 0.65));
   float diff = dot(n, L) * 0.5 + 0.5;
-  col *= 0.8 + 0.36 * diff;
+  col *= 0.9 + 0.2 * diff;
   vec3 view = vec3(0.0, 0.0, -1.0);
   vec3 refl = reflect(view, n);
   col += vec3(1.0) * pow(max(dot(refl, L), 0.0), 9.0) * 0.55;
@@ -83,7 +91,7 @@ void main() {
   // A light veil over the middle so the copy stays legible.
   vec2 v = uv / vec2(0.5, 0.34);
   float veil = exp(-pow(dot(v, v), 1.2) * 1.0);
-  vec3 wash = vec3(0.95, 0.935, 0.985);
+  vec3 wash = vec3(0.945, 0.94, 0.985);
   col = mix(col, wash, veil * 0.72);
 
   gl_FragColor = vec4(col, 1.0);

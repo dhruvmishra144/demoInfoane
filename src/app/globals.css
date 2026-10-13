@@ -482,3 +482,21 @@ details[open] .accordion-panel {
     transform: none !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Aurora backdrop (components/about/AboutHero.tsx)
+
+   Soft coloured light that drifts slowly behind a hero, CSS only so it moves
+   before hydration. Each blob sets its own --t (duration) and --d (delay).
+--------------------------------------------------------------------------- */
+@keyframes aurora-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4%, 7%, 0) scale(1.14); }
+}
+.aurora-blob {
+  animation: aurora-drift var(--t, 22s) ease-in-out var(--d, 0s) infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob { animation: none; }
+}

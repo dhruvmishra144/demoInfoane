@@ -4,43 +4,46 @@ import { Eyebrow } from "@/components/design/blocks";
 import { aboutPage } from "@/content/redesign";
 
 /**
- * Dark "Trusted by" panel: a 16-column bento of client tiles, sized by each
- * client's `span`. Client names are published only with permission (see the
- * note in redesign.ts).
+ * Dark "Trusted by" panel: a ragged bento of client tiles, each with its own
+ * width and height (`size` in the content), tops aligned. Client names are
+ * published only with permission (see the note in redesign.ts).
  */
 export function AboutTrusted() {
   const t = aboutPage.trusted;
   return (
-    <ExpandPanel id="clients" className="relative isolate overflow-hidden bg-night py-20 lg:py-28">
-      <div className="accent-glow absolute inset-0 -z-10 opacity-40" aria-hidden="true" />
+    <ExpandPanel id="clients" className="relative isolate overflow-hidden bg-[#141420] py-16 lg:pb-20 lg:pt-20">
+      <div className="accent-glow absolute inset-0 -z-10 opacity-30" aria-hidden="true" />
       <div className="container-x">
-        <ScrollReveal stagger={0.12} className="grid items-end gap-6 lg:grid-cols-[1.4fr_1fr]">
+        <ScrollReveal stagger={0.12} className="grid items-start gap-6 lg:grid-cols-[1fr_20rem]">
           <div>
             <div data-reveal-item>
               <Eyebrow dot>{t.eyebrow}</Eyebrow>
             </div>
-            <h2 data-split className="mt-5 max-w-xl text-3xl font-bold leading-[1.1] text-white sm:text-4xl lg:text-[2.9rem]">
+            <h2
+              data-split
+              className="mt-7 max-w-[38rem] text-[2.25rem] font-bold leading-[1.15] text-white lg:text-[52px] lg:leading-[58px]"
+            >
               {t.title}
             </h2>
           </div>
-          <p data-reveal-item className="max-w-xs text-base leading-relaxed text-ink-400 lg:justify-self-end">
+          <p data-reveal-item className="text-[14px] leading-6 text-ink-400 lg:mt-[52px]">
             {t.lead}
           </p>
         </ScrollReveal>
 
-        <ScrollReveal as="ul" variant="scale" stagger={0.06} className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-16 lg:gap-4">
+        <ScrollReveal as="ul" variant="scale" stagger={0.06} className="mt-[53px] flex flex-wrap items-start gap-[15px]">
           {t.clients.map((client) => (
             <li
               key={client.name}
               data-reveal-item
-              className={`flex min-h-28 flex-col justify-end rounded-2xl p-5 ring-1 ring-inset transition-colors duration-500 lg:min-h-32 ${
+              className={`flex min-h-24 basis-[calc(50%-8px)] grow flex-col rounded-2xl px-5 pt-[26px] ring-1 ring-inset transition-colors duration-500 sm:basis-[calc(33%-8px)] lg:grow ${
                 client.warm
-                  ? "bg-[#2a1c19] ring-brand-500/20 hover:ring-brand-500/50"
-                  : "bg-night-card ring-white/10 hover:ring-white/25"
-              } ${client.span}`}
+                  ? "bg-[#2a1b14] ring-brand-500/15 hover:ring-brand-500/50"
+                  : "bg-[#1b1b2d] ring-white/[0.06] hover:ring-white/25"
+              } ${client.size}`}
             >
-              <p className="text-base font-bold text-white">{client.name}</p>
-              <p className="mt-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-brand-500">
+              <p className="text-[15px] font-bold leading-5 text-white">{client.name}</p>
+              <p className="mt-1.5 text-[9px] font-bold uppercase leading-[11px] tracking-[0.14em] text-brand-500">
                 {client.sector}
               </p>
             </li>
@@ -48,9 +51,11 @@ export function AboutTrusted() {
         </ScrollReveal>
 
         <ScrollReveal variant="blur">
-          <p data-reveal-item className="mt-14 border-t border-white/10 pt-8 text-center text-sm text-ink-400">
-            {t.footnote}
-          </p>
+          <div data-reveal-item className="mt-14 flex items-center gap-6 lg:mt-16">
+            <span className="hidden h-px flex-1 bg-white/10 sm:block" aria-hidden="true" />
+            <p className="max-w-[22rem] text-center text-[13px] leading-5 text-ink-400">{t.footnote}</p>
+            <span className="hidden h-px flex-1 bg-white/10 sm:block" aria-hidden="true" />
+          </div>
         </ScrollReveal>
       </div>
     </ExpandPanel>

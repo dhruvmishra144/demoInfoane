@@ -5,6 +5,9 @@ import { HomeAbout } from "@/components/home/HomeAbout";
 import { HomeAi, HomeServices } from "@/components/home/HomeServices";
 import { HomeApproach } from "@/components/home/HomeApproach";
 import { HomeContact, HomeIndustries } from "@/components/home/HomeIndustriesContact";
+import { HomeColdFusion, HomeWhy } from "@/components/home/HomeWhyColdFusion";
+import { HomeCareers, HomeFaq, HomeTechnology, HomeTrust } from "@/components/home/HomeMore";
+import { home as homeCopy } from "@/content/redesign";
 import { pageSchema } from "@/lib/schema";
 import { getItemOrFallback, getSettingsOrFallback } from "@/server/content/with-fallback";
 import { pageFallback, settingsFallback } from "@/server/content/static-fallback";
@@ -27,12 +30,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * Homepage (2026 redesign). Section order follows the mockup: hero, about +
- * numbers + ColdFusion card, services, AI, approach, industries, contact.
+ * Homepage. Section order and copy follow "Home Page Content Draft V2": hero,
+ * company introduction, services, why Infoane, ColdFusion, AI, industries, how
+ * we work, technology, trust, careers, FAQ and the closing contact form.
  *
- * The previous homepage sections still live in components/sections, where the
- * inner pages use them. The FAQ is no longer on this page, so neither is its
- * FAQPage structured data — that markup is only valid for visible questions.
+ * The FAQ is visible on the page, so its FAQPage structured data is valid —
+ * that markup must only ever describe questions a visitor can actually see.
  */
 export default async function HomePage() {
   // Sequential, not Promise.all: D1's remote connection during static
@@ -47,14 +50,21 @@ export default async function HomePage() {
           path: "/",
           name: `${settings.name} — ${settings.tagline}`,
           description: home.metaDescription,
+          faqs: homeCopy.faq.items,
         })}
       />
       <HomeHero />
       <HomeAbout />
       <HomeServices />
+      <HomeWhy />
+      <HomeColdFusion />
       <HomeAi />
-      <HomeApproach />
       <HomeIndustries />
+      <HomeApproach />
+      <HomeTechnology />
+      <HomeTrust />
+      <HomeCareers />
+      <HomeFaq />
       <HomeContact email={settings.contact.email} />
     </>
   );
