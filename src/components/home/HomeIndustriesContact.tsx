@@ -2,13 +2,17 @@ import { Button } from "@/components/ui/Button";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { Eyebrow, GlassBackdrop } from "@/components/design/blocks";
 import { ContactForm } from "@/components/design/ContactForm";
+import { IndustryTabs } from "./IndustryTabs";
 import { home, officeLine } from "@/content/redesign";
 
-/** Nine industries as a card grid: eyebrow, headline, lead, cards, CTA. */
+/**
+ * Industries: a segmented tab bar over a two-panel card (gradient tagline
+ * panel, then headline, copy and points), with the CTA beneath.
+ */
 export function HomeIndustries() {
   const industries = home.industries;
   return (
-    <section id="industries" className="py-24">
+    <section id="industries" className="py-20">
       <div className="container-x">
         <ScrollReveal>
           <div data-reveal-item>
@@ -22,17 +26,8 @@ export function HomeIndustries() {
           </p>
         </ScrollReveal>
 
-        <ScrollReveal as="ul" variant="up" stagger={0.06} className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {industries.items.map((industry) => (
-            <li
-              key={industry.name}
-              data-reveal-item
-              className="rounded-2xl border border-ink-200 bg-white p-6 shadow-[0_1px_3px_rgba(18,19,26,0.06)] transition-all duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-500/10"
-            >
-              <h3 className="text-[18px] font-bold leading-6">{industry.name}</h3>
-              <p className="mt-2 text-[14px] leading-[22px] text-body">{industry.body}</p>
-            </li>
-          ))}
+        <ScrollReveal variant="scale" className="mt-10">
+          <IndustryTabs items={industries.items} activeLabel={industries.activeLabel} />
         </ScrollReveal>
 
         <div className="mt-10">

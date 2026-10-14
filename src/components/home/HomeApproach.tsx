@@ -1,50 +1,78 @@
+import Image from "next/image";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
+import { StepFocus, ZoomImage } from "@/components/motion/effects";
 import { Eyebrow } from "@/components/design/blocks";
 import { home } from "@/content/redesign";
 
 /**
- * "How we work": the heading and lead stay in view in a 420px column while the
- * five numbered delivery steps (Understand through Support & Improve) run
- * beside them.
+ * "How we work": heading across the top, then three columns — a photo, the
+ * approach copy, and the five numbered delivery steps (Understand through
+ * Support & Improve) as cards.
  */
 export function HomeApproach() {
   const approach = home.approach;
 
   return (
-    <section id="approach" className="bg-[#f9fafb] py-24">
-      <div className="container-x grid gap-12 lg:grid-cols-[420px_544px] lg:justify-between">
-        <ScrollReveal variant="blur" stagger={0.1} className="lg:sticky lg:top-32 lg:self-start">
+    <section id="approach" className="border-t border-ink-200/70 bg-[#f8f9fb] pb-20 pt-[92px]">
+      <div className="container-x">
+        <ScrollReveal>
           <div data-reveal-item>
             <Eyebrow>{approach.eyebrow}</Eyebrow>
           </div>
-          <h2 data-split className="mt-[14px] text-[36px] font-bold leading-[40px] [text-wrap:wrap]">
+          <h2 data-split className="mt-[17px] max-w-[760px] text-[36px] font-bold leading-[40px] [text-wrap:wrap]">
             {approach.title}
           </h2>
-          <p data-reveal-item className="mt-4 text-[16px] leading-[26px] text-body [text-wrap:wrap]">
-            {approach.lead}
-          </p>
         </ScrollReveal>
 
-        <ScrollReveal as="ol" variant="up" stagger={0.12} className="space-y-5">
-          {approach.steps.map((step, index) => (
-            <li
-              key={step.title}
-              data-reveal-item
-              className="flex gap-5 rounded-3xl border border-ink-200 bg-white px-6 py-[22px]"
-            >
-              <span
-                className="mt-0.5 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-500 text-[14px] font-bold text-white"
-                aria-hidden="true"
+        {/* Photo and approach copy stay pinned while the steps scroll past;
+            the step nearest the middle of the screen is in focus and the rail
+            beside them fills as you go. */}
+        <div className="mt-14 grid items-start gap-10 md:grid-cols-2 lg:grid-cols-[320px_320px_464px] lg:justify-between lg:gap-12">
+          <ZoomImage className="relative aspect-square overflow-hidden rounded-2xl lg:sticky lg:top-32">
+            <Image
+              src={approach.image}
+              alt={approach.imageAlt}
+              fill
+              sizes="(min-width: 1024px) 320px, (min-width: 768px) 45vw, 90vw"
+              className="object-cover"
+            />
+          </ZoomImage>
+
+          <ScrollReveal variant="blur" stagger={0.1} className="lg:sticky lg:top-32">
+            <p data-reveal-item className="eyebrow">
+              {approach.leadLabel}
+            </p>
+            <p data-reveal-item className="mt-4 text-[15px] leading-6 text-body [text-wrap:wrap]">
+              {approach.lead}
+            </p>
+          </ScrollReveal>
+
+          <StepFocus as="div" className="relative pl-7 md:col-span-2 lg:col-span-1">
+            <span className="absolute inset-y-6 left-0 w-0.5 overflow-hidden rounded-full bg-ink-200" aria-hidden="true">
+              <span data-rail-fill className="block h-full w-full origin-top rounded-full bg-brand-500" />
+            </span>
+            <ol className="space-y-5">
+            {approach.steps.map((step, index) => (
+              <li
+                key={step.title}
+                data-step
+                className="flex gap-5 rounded-2xl border border-ink-200 bg-white px-6 py-[22px] transition-colors duration-300 hover:border-brand-200"
               >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <h3 className="text-[19px] font-bold leading-7">{step.title}</h3>
-                <p className="mt-1 text-[14px] leading-[22px] text-body">{step.body}</p>
-              </div>
-            </li>
-          ))}
-        </ScrollReveal>
+                <span className="relative mt-0.5 inline-flex h-10 w-10 shrink-0" aria-hidden="true">
+                  <span data-ping className="absolute inset-0 rounded-full bg-brand-500 opacity-0" />
+                  <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-500 text-[14px] font-bold text-white">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </span>
+                <div>
+                  <h3 className="text-[18px] font-bold leading-6">{step.title}</h3>
+                  <p className="mt-1 text-[14px] leading-[22px] text-body">{step.body}</p>
+                </div>
+              </li>
+            ))}
+            </ol>
+          </StepFocus>
+        </div>
       </div>
     </section>
   );

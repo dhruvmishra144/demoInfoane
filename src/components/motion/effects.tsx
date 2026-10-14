@@ -1,6 +1,6 @@
 "use client";
 
-import { gsap, SplitText } from "@/lib/gsap";
+import { gsap, ScrollTrigger, SplitText } from "@/lib/gsap";
 // DrawSVG is registered in ensureGsapRegistered(); `drawSVG` below relies on it.
 import { EASE, useGsap } from "./useGsap";
 
@@ -85,6 +85,106 @@ export function CountUp({ value, className }: { value: string; className?: strin
     <span ref={ref} className={className}>
       {value}
     </span>
+  );
+}
+
+/* -------------------------------------------------------- ChecklistProgress */
+
+/**
+ * A checklist that ticks itself off as it scrolls through the viewport: items
+ * marked `[data-check-item]` gain `data-checked` one by one, in order, and the
+ * markup's own `group-data-[checked]:` styles colour the icon and pop the
+ * badge. Each newly ticked item redraws the strokes inside its
+ * `[data-check-icon]`. Optional `[data-check-count]` shows "n/total" and
+ * `[data-check-bar]` scales across with the count.
+ *
+ * The server renders every item already checked, so no-JS and reduced-motion
+ * visitors see the finished list; scrolling back up un-ticks it.
+ */
+export function ChecklistProgress({
+  children,
+  className,
+  as: Tag = "div",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  as?: "div" | "ul";
+}) {
+  const ref = useGsap<HTMLDivElement>((root) => {
+    const items = Array.from(root.querySelectorAll<HTMLElement>("[data-check-item]"));
+    const count = root.querySelector<HTMLElement>("[data-check-count]");
+    const bar = root.querySelector<HTMLElement>("[data-check-bar]");
+    const total = items.length;
+    let shown = -1;
+
+    const render = (checked: number) => {
+      if (checked === shown) return;
+      items.forEach((item, index) => {
+        const on = index < checked;
+        if (on && !item.hasAttribute("data-checked")) {
+          const strokes = item.querySelectorAll("[data-check-icon] svg > *");
+          if (strokes.length) gsap.fromTo(strokes, { drawSVG: "0%" }, { drawSVG: "100%", duration: 0.8, stagger: 0.08, ease: "power2.inOut" });
+        }
+        item.toggleAttribute("data-checked", on);
+      });
+      if (count) count.textContent = `${checked}/${total}`;
+      if (bar) gsap.to(bar, { scaleX: checked / total, duration: 0.5, ease: EASE });
+      shown = checked;
+    };
+
+    render(0);
+    const trigger = ScrollTrigger.create({
+      trigger: root,
+      start: "top 75%",
+      end: "bottom 55%",
+      onUpdate: (self) => render(Math.round(self.progress * total)),
+    });
+    render(Math.round(trigger.progress * total));
+
+    return () => {
+      items.forEach((item) => item.setAttribute("data-checked", ""));
+      if (count) count.textContent = `${total}/${total}`;
+      if (bar) gsap.set(bar, { scaleX: 1 });
+    };
+  });
+
+  return (
+    // @ts-expect-error — one ref type covers every allowed tag here.
+    <Tag ref={ref} className={className}>
+      {children}
+    </Tag>
+  );
+}
+
+/* --------------------------------------------------------------- IconDrawIn */
+
+/**
+ * Duotone icons that draw themselves on as their card arrives. For every
+ * `[data-draw-item]` inside: its `[data-draw]` strokes draw on, its
+ * `[data-fill]` shapes bloom in behind them, then the item gets `.is-live` so
+ * the icon's idle loop (globals.css) starts. Cards in the same row start a
+ * beat apart. The same one-shot arrival StepFocus gives the step icons, for a
+ * grid instead of a list.
+ */
+export function IconDrawIn({ children, className }: { children: React.ReactNode; className?: string }) {
+  const ref = useGsap<HTMLDivElement>((root) => {
+    root.querySelectorAll<HTMLElement>("[data-draw-item]").forEach((item, index) => {
+      const strokes = item.querySelectorAll("[data-draw]");
+      const fills = item.querySelectorAll("[data-fill]");
+      if (strokes.length) gsap.set(strokes, { drawSVG: "0%" });
+      if (fills.length) gsap.set(fills, { opacity: 0, scale: 0.6, transformOrigin: "50% 50%" });
+      gsap
+        .timeline({ delay: (index % 4) * 0.12, scrollTrigger: { trigger: item, start: "top 85%", once: true } })
+        .to(strokes, { drawSVG: "100%", duration: 0.9, stagger: 0.1, ease: "power2.inOut" })
+        .to(fills, { opacity: 1, scale: 1, duration: 0.7, stagger: 0.06, ease: "back.out(2)" }, 0.45)
+        .call(() => item.classList.add("is-live"));
+    });
+  });
+
+  return (
+    <div ref={ref} className={className}>
+      {children}
+    </div>
   );
 }
 

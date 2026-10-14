@@ -414,6 +414,92 @@
   to { transform: scaleY(1.25); opacity: 1; }
 }
 
+/* Idle loops for the homepage service icons (components/design/ServiceIcon.tsx),
+   started the same way: IconDrawIn adds `.is-live` once a card has drawn on. */
+.icon-type > *,
+.icon-blink,
+.icon-rise,
+.icon-bars > *,
+.icon-nudge-l,
+.icon-nudge-r,
+.icon-beat {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.is-live .icon-type > * {
+  transform-origin: 0% 50%;
+  animation: icon-type 3.6s var(--ease-out-expo) infinite;
+}
+.is-live .icon-type > :nth-child(2) {
+  animation-delay: 0.25s;
+}
+.is-live .icon-type > :nth-child(3) {
+  animation-delay: 0.5s;
+}
+.is-live .icon-blink {
+  animation: icon-blink 1.1s steps(1) infinite;
+}
+.is-live .icon-pulse > * {
+  animation: icon-blink 1.6s steps(1) infinite;
+}
+.is-live .icon-pulse > :nth-child(2) {
+  animation-delay: 0.8s;
+}
+.is-live .icon-rise {
+  animation: icon-rise 2.2s ease-in-out infinite;
+}
+.is-live .icon-bars > * {
+  transform-origin: 50% 100%;
+  animation: icon-bars 2.8s var(--ease-out-expo) infinite;
+}
+.is-live .icon-bars > :nth-child(2) {
+  animation-delay: 0.18s;
+}
+.is-live .icon-bars > :nth-child(3) {
+  animation-delay: 0.36s;
+}
+.is-live .icon-nudge-l {
+  animation: icon-nudge-l 2.4s ease-in-out infinite;
+}
+.is-live .icon-nudge-r {
+  animation: icon-nudge-r 2.4s ease-in-out infinite;
+}
+.is-live .icon-beat {
+  animation: icon-beat 2.6s ease-in-out infinite;
+}
+
+@keyframes icon-type {
+  0% { transform: scaleX(0); }
+  30%, 85% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+@keyframes icon-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes icon-rise {
+  0%, 100% { transform: translateY(1px); }
+  50% { transform: translateY(-2.5px); }
+}
+@keyframes icon-bars {
+  0%, 100% { transform: scaleY(1); }
+  35% { transform: scaleY(0.55); }
+  60% { transform: scaleY(1.08); }
+}
+@keyframes icon-nudge-l {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-1.5px); }
+}
+@keyframes icon-nudge-r {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(1.5px); }
+}
+@keyframes icon-beat {
+  0%, 60%, 100% { transform: scale(1); }
+  70% { transform: scale(1.08); }
+  80% { transform: scale(0.98); }
+}
+
 /* Continuous, decorative float on the hero's stacked cards. */
 @utility float-slow {
   animation: float 7s ease-in-out infinite;

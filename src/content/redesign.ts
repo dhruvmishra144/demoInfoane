@@ -24,7 +24,13 @@ export type IconName =
   | "code"
   | "chart"
   | "lock"
-  | "file";
+  | "file"
+  | "terminal"
+  | "zap"
+  | "layers"
+  | "triangle"
+  | "server"
+  | "branch";
 
 /* ------------------------------------------------------------------ shared */
 
@@ -100,22 +106,22 @@ export const home = {
     link: { label: "Learn More About Infoane", href: routes.about },
     cards: [
       {
-        label: "Embedded delivery",
-        caption: "Engineers who plan and build alongside your product and operations teams.",
+        label: "Engineering",
+        caption: "Modernizing legacy systems with a practical, hands-on approach.",
         image: "/images/inside-whiteboard.webp",
         alt: "Three Infoane engineers sketching a system architecture on a glass whiteboard",
       },
       {
-        label: "Always-on operations",
-        caption: "Infrastructure, databases, and monitoring that keep critical systems running.",
-        image: "/images/ai-globe-hands.webp",
-        alt: "Gloved hands holding a glowing globe in front of a server rack",
+        label: "Performance",
+        caption: "Improving reliability and speed across critical applications.",
+        image: "/images/impact-datacenter.webp",
+        alt: "A long aisle of server racks lit in blue",
       },
       {
-        label: "Practical engineering",
-        caption: "Clean, maintainable code across modern stacks and legacy platforms alike.",
-        image: "/images/inside-code.webp",
-        alt: "A developer typing at a keyboard with code on the monitor behind",
+        label: "Operations",
+        caption: "Keeping systems running smoothly around the clock.",
+        image: "/images/ai-globe-hands.webp",
+        alt: "Gloved hands holding a glowing globe in front of a server rack",
       },
     ],
     numbersLabel: "By the numbers",
@@ -186,30 +192,49 @@ export const home = {
     eyebrow: "Why Infoane",
     title: "Engineering Expertise Backed by Practical Delivery",
     lead: "Technology projects need more than development skills. They need an understanding of business requirements, existing systems, technical constraints, and what it takes to keep applications running after deployment. Infoane brings software development and IT capabilities together to support projects from planning and development through modernization and ongoing support.",
+    // `tab` is the shorter label the design's tab list uses.
     items: [
       {
+        tab: "Established Technology",
         title: "Established Technology Expertise",
         body: "Work across established and modern technologies including Adobe ColdFusion, PHP, Python, Java, Angular, React, Node.js, cloud platforms, and DevOps technologies.",
+        image: "/images/openings-team.webp",
+        alt: "Engineers gathered around two monitors of code in an open-plan office",
       },
       {
+        tab: "ColdFusion Expertise",
         title: "ColdFusion Expertise",
         body: "Support and modernize business-critical ColdFusion applications with capabilities spanning development, maintenance, upgrades, migration, optimization, integrations, and cloud environments.",
+        image: "/images/expertise-orb.webp",
+        alt: "A glass orb ringed by ColdFusion, Flutter and Selenium logos",
       },
       {
+        tab: "End-to-End Delivery",
         title: "End-to-End Delivery",
         body: "Bring development, testing, deployment, infrastructure, databases, modernization, and ongoing technical support together across the application lifecycle.",
+        image: "/images/wa-architecture.webp",
+        alt: "An isometric diagram of a scalable cloud configuration",
       },
       {
+        tab: "Business-Focused",
         title: "Business-Focused Engineering",
         body: "Build solutions around practical requirements such as application performance, maintainability, operational efficiency, scalability, and long-term support.",
+        image: "/images/mission-team.webp",
+        alt: "Colleagues talking around a meeting table beneath a sign reading Good Ideas Better Together",
       },
       {
+        tab: "Flexible Engagement",
         title: "Flexible Engagement",
         body: "Choose an engagement approach that fits your project, including project-based development, dedicated teams, staff augmentation, and ongoing managed support where applicable.",
+        image: "/images/benefit-remote.webp",
+        alt: "A team working through documents together at a long table",
       },
       {
+        tab: "Global Client Experience",
         title: "Global Client Experience",
         body: "Support businesses across different industries and geographies with software development and IT services designed around their technology and operational requirements.",
+        image: "/images/globe.webp",
+        alt: "A glowing globe with light trails connecting the Americas to India",
       },
     ],
   },
@@ -221,33 +246,48 @@ export const home = {
       "Infoane provides ColdFusion development and support for organizations that need to maintain, improve, modernize, or migrate existing applications.",
       "Whether you need ongoing application support or are planning a move to a modern platform, our ColdFusion capabilities cover the application lifecycle.",
     ],
+    capabilitiesLabel: "What we do",
+    progressLabel: "ColdFusion capabilities",
     capabilities: [
-      { title: "ColdFusion Application Development", body: "Build and extend applications using ColdFusion and CFML." },
       {
+        icon: "code" as IconName,
+        title: "ColdFusion Application Development",
+        body: "Build and extend applications using ColdFusion and CFML.",
+      },
+      {
+        icon: "shield" as IconName,
         title: "Legacy ColdFusion Support",
         body: "Maintain and support existing applications while addressing technical issues and evolving business requirements.",
       },
       {
+        icon: "layers" as IconName,
         title: "ColdFusion Upgrades & Migration",
         body: "Upgrade ColdFusion environments or plan migration paths for applications that need a more modern foundation.",
       },
       {
+        icon: "branch" as IconName,
         title: "ColdFusion to Lucee Migration",
         body: "Support migration from Adobe ColdFusion to Lucee within the CFML ecosystem.",
       },
       {
+        icon: "zap" as IconName,
         title: "Performance Optimization",
         body: "Identify and address application performance issues to improve responsiveness and maintainability.",
       },
       {
+        icon: "server" as IconName,
         title: "API & System Integration",
         body: "Connect ColdFusion applications with APIs, third-party systems, and other enterprise applications.",
       },
       {
+        icon: "cloud" as IconName,
         title: "Cloud Migration & Hosting",
         body: "Move ColdFusion workloads toward cloud environments, including AWS and Azure-based infrastructure where applicable.",
       },
     ],
+    // The design's coral button opens the conversation; the draft's link to the
+    // service page sits beside it as the text link.
+    primaryCta: { label: "Start a discovery call", href: "#contact" },
     cta: { label: "Explore ColdFusion Services", href: serviceHref("application-modernization") },
     image: "/images/coldfusion-summit.webp",
     imageAlt: "An Infoane engineer presenting on stage at the Adobe ColdFusion Summit",
@@ -279,28 +319,73 @@ export const home = {
   },
   industries: {
     eyebrow: "Industries",
-    title: "Software and IT Solutions for Industry-Specific Needs",
-    lead: "Different industries operate with different workflows, data requirements, security considerations, customer expectations, and technology environments. Infoane applies its software development and IT capabilities to the needs of different business environments.",
+    title: "Built for the Complexity of Your Industry",
+    lead: "Industry workflows, data needs, security considerations, and technology environments differ. Infoane applies its software development and IT capabilities to the needs of each business environment.",
     cta: { label: "Explore Industries", href: routes.industries },
+    activeLabel: "Active industry",
+    // Name, body and points are from the separate Industries section draft,
+    // whose note asks that industry-specific experience be confirmed with
+    // Infoane before publication. `headline` and `tagline` fill the design's
+    // panel and are not in the draft: they restate the draft's own points and
+    // need the same sign-off.
     items: [
-      { name: "IT & Technology", body: "Software applications, infrastructure, databases, and technology support." },
-      { name: "Banking & Financial Services", body: "Software and data solutions for financial and business operations." },
-      { name: "Healthcare", body: "Technology solutions supporting healthcare applications and digital operations." },
-      { name: "Travel & Hospitality", body: "Web and mobile applications for travel, hospitality, and related businesses." },
+      {
+        name: "Retail",
+        headline: "Applications that keep retail operations moving.",
+        tagline: ["Retail applications.", "Connected systems.", "Evolving platforms."],
+        body: "Retail businesses rely on applications and systems that support daily operations, customer interactions, and changing business requirements.",
+        points: [
+          "Develop and maintain applications that support retail operations.",
+          "Connect systems and data where integration is required.",
+          "Improve existing platforms as workflows and business needs evolve.",
+        ],
+        gradient: "from-[#d9584a] via-[#9e2f3a] to-[#3d1a2a]",
+      },
+      {
+        name: "E-commerce",
+        headline: "Dependable platforms for online business.",
+        tagline: ["Commerce platforms.", "System integrations.", "Ongoing performance."],
+        body: "E-commerce businesses need dependable digital platforms to support online transactions, customer journeys, and ongoing operations.",
+        points: [
+          "Build and maintain e-commerce applications and platforms.",
+          "Support integrations across relevant systems and databases.",
+          "Address application performance, maintainability, and changing requirements.",
+        ],
+        gradient: "from-[#5b6cf0] via-[#3b3fa8] to-[#1a1c45]",
+      },
       {
         name: "Telecommunications",
-        body: "Application and technology solutions for communication-driven environments.",
+        headline: "Reliable applications for connected operations.",
+        tagline: ["Business applications.", "System integration.", "Reliable operations."],
+        body: "Telecommunications environments depend on connected systems, reliable applications, and technology that supports complex operations.",
+        points: [
+          "Develop and maintain applications for business operations.",
+          "Support system integration, databases, and infrastructure needs.",
+          "Improve existing applications with attention to reliability and maintainability.",
+        ],
+        gradient: "from-[#2fb3a0] via-[#1c6f6a] to-[#0f2a2c]",
       },
-      { name: "Retail & E-commerce", body: "Web, mobile, and digital solutions for customer-facing commerce." },
-      { name: "Manufacturing", body: "Software and technology support for operational environments." },
-      { name: "Logistics", body: "Applications and data capabilities supporting logistics operations." },
-      { name: "Energy & Utilities", body: "Technology solutions for business processes and operational environments." },
+      {
+        name: "IT Services",
+        headline: "Technology that supports service delivery.",
+        tagline: ["Client-facing applications.", "Cloud and DevOps.", "Legacy modernization."],
+        body: "IT services organizations need software and technology environments that support service delivery, client requirements, and ongoing change.",
+        points: [
+          "Build and maintain business and client-facing applications.",
+          "Support cloud, DevOps, database, and integration requirements.",
+          "Modernize legacy systems and provide ongoing technical support where required.",
+        ],
+        gradient: "from-[#f08a4b] via-[#b8552e] to-[#3f1f14]",
+      },
     ],
   },
   approach: {
     eyebrow: "How we work",
     title: "From Business Requirements to Ongoing Support",
     lead: "Every project starts with understanding what the business needs, what already exists, and what success looks like. Our delivery approach connects planning, engineering, testing, deployment, and ongoing support.",
+    leadLabel: "Our approach",
+    image: "/images/vision-engineer.webp",
+    imageAlt: "An Infoane engineer working at a laptop in the office",
     steps: [
       {
         title: "Understand",
@@ -326,22 +411,32 @@ export const home = {
   },
   technology: {
     eyebrow: "Technology",
-    title: "Technologies That Power Our Software and IT Services",
+    // One headline, split where the design turns the second line coral.
+    title: "Technologies That Power Our",
+    titleAccent: "Software and IT Services",
     lead: "The right technology depends on the application, business requirements, existing environment, and long-term goals. Infoane works across established and modern technology stacks to build, maintain, integrate, and modernize business applications.",
+    // Logos are files in /public/logos (from Devicon, MIT — see
+    // LICENSE-devicon.txt there). Devicon has no ColdFusion or Lucee mark, so
+    // those two show a monogram until official logo files are supplied. The
+    // three category cards name only tools the Technology page already lists.
     items: [
-      "Adobe ColdFusion",
-      "Lucee / CFML",
-      "PHP",
-      "Python / Django",
-      ".NET",
-      "Java",
-      "Angular",
-      "Node.js",
-      "React",
-      "Flutter",
-      "Cloud Technologies",
-      "DevOps & Automation",
-      "Database Technologies",
+      { name: "Adobe ColdFusion", monogram: "CF" },
+      { name: "Lucee / CFML", monogram: "Lu" },
+      { name: "PHP", logos: ["php"] },
+      { name: "Python / Django", logos: ["python", "django"] },
+      { name: ".NET", logos: ["dotnet"] },
+      { name: "Java", logos: ["java"] },
+      { name: "Angular", logos: ["angular"] },
+      { name: "Node.js", logos: ["nodejs"] },
+      { name: "React", logos: ["react"] },
+      { name: "Flutter", logos: ["flutter"] },
+      { name: "Cloud Technologies", detail: "AWS · Azure · Google Cloud", logos: ["aws", "azure", "googlecloud"] },
+      {
+        name: "DevOps & Automation",
+        detail: "Docker · Kubernetes · Terraform · GitHub Actions",
+        logos: ["docker", "kubernetes", "terraform", "githubactions"],
+      },
+      { name: "Database Technologies", detail: "PostgreSQL · SQL Server", logos: ["postgresql", "sqlserver"] },
     ],
     cta: { label: "Explore Our Technology Expertise", href: routes.technology },
   },
