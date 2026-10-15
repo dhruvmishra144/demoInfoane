@@ -72,7 +72,7 @@ export function IndustryTabs({ items, activeLabel }: { items: Industry[]; active
         role="tablist"
         aria-label="Industries"
         onKeyDown={onKeyDown}
-        className="flex gap-1 overflow-x-auto rounded-2xl bg-[#f3f2ef] p-1"
+        className="flex gap-1 overflow-x-auto rounded-xl bg-[#f1efeb] p-1"
       >
         {items.map((item, index) => {
           const selected = index === active;
@@ -89,13 +89,13 @@ export function IndustryTabs({ items, activeLabel }: { items: Industry[]; active
               aria-controls={`${baseId}-panel`}
               tabIndex={selected ? 0 : -1}
               onClick={() => select(index)}
-              className={`shrink-0 rounded-xl px-5 py-2.5 leading-5 transition-all duration-500 ease-[var(--ease-out-expo)] ${
+              className={`shrink-0 rounded-[10px] px-5 py-2.5 text-[13px] leading-5 transition-all duration-500 ease-[var(--ease-out-expo)] ${
                 selected
-                  ? "bg-white text-[15px] font-semibold text-brand-500 shadow-sm"
-                  : "text-[13px] font-medium text-body hover:text-ink-900"
+                  ? "bg-white font-semibold text-brand-500 shadow-sm"
+                  : "font-medium text-ink-600 hover:text-ink-900"
               }`}
             >
-              {item.name}
+              {item.tab}
             </button>
           );
         })}
@@ -106,36 +106,24 @@ export function IndustryTabs({ items, activeLabel }: { items: Industry[]; active
         role="tabpanel"
         id={`${baseId}-panel`}
         aria-labelledby={`${baseId}-tab-${active}`}
-        className="mt-10 grid overflow-hidden rounded-[28px] border border-ink-200 bg-white shadow-xl shadow-ink-900/5 lg:min-h-[419px] lg:grid-cols-[420px_1fr]"
+        className="mt-10 grid overflow-hidden rounded-[20px] border border-ink-200 bg-white shadow-xl shadow-ink-900/5 lg:grid-cols-[420px_1fr]"
       >
         <div
-          className={`relative isolate flex min-h-[20rem] flex-col justify-end overflow-hidden bg-gradient-to-br p-8 lg:px-8 lg:pb-8 lg:pt-10 ${industry.gradient}`}
+          className={`relative isolate flex min-h-[20rem] flex-col justify-end overflow-hidden bg-gradient-to-br p-8 ${industry.gradient}`}
         >
           {/* Line-art diamond and arc from the mockup. */}
-          <div className="absolute right-[48px] top-[54px] h-[127px] w-[127px] rotate-45 border border-white/70" aria-hidden="true" />
-          <div className="absolute -bottom-40 -left-24 h-96 w-96 rounded-full border border-white/60" aria-hidden="true" />
-          <p className="relative inline-flex self-start rounded-full bg-white/15 px-3 py-1 text-[13px] font-bold uppercase leading-5 tracking-[0.14em] text-brand-500">
-            {industry.name}
-          </p>
-          <p className="relative mt-4 text-[21px] font-bold leading-7 text-white">
-            {industry.tagline.map((line) => (
-              <span key={line} className="block">
-                {line}
-              </span>
-            ))}
-          </p>
+          <div className="absolute right-[74px] top-[58px] h-[127px] w-[127px] rotate-45 border border-white/70" aria-hidden="true" />
+          <div className="absolute -bottom-[150px] -left-[90px] h-[360px] w-[360px] rounded-full border border-white/60" aria-hidden="true" />
+          <p className="relative max-w-[16rem] text-[26px] font-bold leading-[32px] text-white">{industry.name}</p>
         </div>
 
-        <div className="p-8 lg:px-12 lg:pb-6 lg:pt-12">
-          <p className="inline-flex rounded-full bg-brand-50 px-3 py-1 text-[13px] font-bold uppercase leading-5 tracking-[0.14em] text-brand-500">{activeLabel}</p>
-          <h3 className="mt-[26px] max-w-[22rem] text-[24px] font-bold leading-[30px] [text-wrap:wrap]">
-            {industry.headline}
-          </h3>
-          <p className="mt-[7px] max-w-[26rem] text-[15px] leading-6 text-body [text-wrap:wrap]">{industry.body}</p>
-          <ul className="mt-[22px] space-y-3">
+        <div className="p-8 lg:px-12 lg:py-14">
+          <p className="eyebrow inline-flex rounded-full bg-brand-50 px-3 py-1">{activeLabel}</p>
+          <h3 className="mt-6 max-w-[480px] text-[22px] font-bold leading-[30px]">{industry.body}</h3>
+          <ul className="mt-6 space-y-3">
             {industry.points.map((point) => (
-              <li key={point} data-tab-item className="flex items-center gap-3 text-[14px] leading-6 text-body">
-                <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-500">
+              <li key={point} data-tab-item className="flex items-start gap-3 text-[14px] leading-6 text-ink-700">
+                <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                   <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="m5 12 5 5L20 7" />
                   </svg>

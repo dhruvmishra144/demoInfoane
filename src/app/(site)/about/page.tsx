@@ -45,11 +45,8 @@ export default async function AboutPage() {
       <AboutExpertise />
       <AboutSuccess />
       <AboutLeadership />
-      <Locations
-        globe="/images/globe-dark.webp"
-        lead="Three offices across the United States and India, connected by a shared standard of engineering delivery."
-      />
-      <CenterCta {...aboutPage.cta} />
+      <Locations lead="Three offices across the United States and India, connected by a shared standard of engineering delivery." />
+      <CenterCta plain {...aboutPage.cta} />
     </>
   );
 }

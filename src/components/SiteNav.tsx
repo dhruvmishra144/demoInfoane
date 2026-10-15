@@ -88,9 +88,9 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
 
   /** Back to the current section's link, or away if the page isn't in the bar. */
   function restPill() {
-    // The design marks the current page by colour alone, so the pill only
-    // appears on hover and rests hidden.
-    setPill((prev) => ({ ...prev, visible: false, slide: false }));
+    const active = listRef.current?.querySelector<HTMLElement>("[data-nav-active]");
+    if (active) movePill(active);
+    else setPill((prev) => ({ ...prev, visible: false, slide: false }));
   }
 
   // Re-rest on navigation, and when fonts load or the window resizes (both
@@ -148,7 +148,7 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
               const target = (event.target as HTMLElement).closest<HTMLElement>("[data-nav-item]");
               if (target) movePill(target);
             }}
-            className="flex items-center gap-0"
+            className="flex items-center gap-0.5 rounded-full bg-ink-900/[0.045] p-1 ring-1 ring-inset ring-ink-900/[0.06]"
           >
             {/* The sliding pill: glides to whichever link is hovered or
                 focused, and rests behind the current section otherwise.
@@ -158,7 +158,7 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
             <li
               ref={pillRef}
               aria-hidden="true"
-              className={`pointer-events-none absolute top-1/2 h-9 -translate-y-1/2 rounded-full bg-ink-900/[0.055] ring-1 ring-inset ring-ink-900/[0.04] duration-500 ease-[var(--ease-out-expo)] ${
+              className={`pointer-events-none absolute top-1/2 h-9 -translate-y-1/2 rounded-full bg-white shadow-[0_2px_8px_-2px_rgba(18,19,26,0.18)] ring-1 ring-ink-900/[0.06] duration-500 ease-[var(--ease-out-expo)] ${
                 pill.slide ? "transition-[left,width,opacity]" : "transition-opacity"
               }`}
               style={{ left: pill.left, width: pill.width, opacity: pill.visible ? 1 : 0 }}
@@ -310,7 +310,7 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
           <Link
             href={routes.contact}
             aria-current={isActive(routes.contact) ? "page" : undefined}
-            className="inline-flex items-center rounded-full bg-white/70 px-6 py-3 text-[14px] font-semibold leading-5 text-ink-900 ring-1 ring-inset ring-ink-200 backdrop-blur transition-all duration-300 hover:-translate-y-px hover:bg-white hover:ring-ink-300"
+            className="inline-flex items-center rounded-full bg-white px-6 py-3 text-[14px] font-semibold leading-5 text-ink-900 ring-1 ring-inset ring-ink-200 transition-all duration-300 hover:-translate-y-px hover:bg-white hover:ring-ink-300"
           >
             {ctaLabel}
           </Link>
@@ -342,7 +342,7 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
       {mobileOpen && (
         <div
           id="mobile-menu"
-          className="absolute inset-x-0 top-full max-h-[calc(100dvh-6rem)] overflow-y-auto rounded-4xl border border-ink-200 bg-white p-4 shadow-2xl shadow-brand-950/10 lg:hidden"
+          className="absolute inset-x-0 top-full mt-2 max-h-[calc(100dvh-6rem)] overflow-y-auto rounded-4xl border border-ink-200 bg-white p-4 shadow-2xl shadow-brand-950/10 lg:hidden"
         >
           <nav aria-label="Mobile">
             <ul className="divide-y divide-ink-100">

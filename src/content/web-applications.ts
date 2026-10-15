@@ -4,13 +4,14 @@
  * components/web-applications; this file holds only words and links.
  */
 
-import { routes } from "@/lib/routes";
+import { routes, serviceHref } from "@/lib/routes";
 
 export const webApplications = {
+  // SEO title and description from the Web Application Development content draft.
   meta: {
-    title: "Web Application Development & ColdFusion Modernization",
+    title: "Web Application Development Services | Infoane Technologies",
     description:
-      "Scalable, secure, and resilient web applications: enterprise portals, SaaS platforms, e-commerce, APIs and PWAs, plus Adobe ColdFusion legacy modernization.",
+      "Build scalable web applications with Infoane. Get custom development, UX/UI, API integration, cloud-ready architecture, testing, and ongoing support.",
   },
 
   hero: {
@@ -134,39 +135,176 @@ export const webApplications = {
     },
   },
 
-  process: {
-    eyebrow: "Our process",
-    title: "A methodical journey from context to execution",
-    lead: "We do not jump blindly into code. We follow a highly structured delivery framework to guarantee predictable outcomes on time.",
-    steps: [
+  // The sections below are from "Infoane Service Page 1: Web Application
+  // Development, Content Draft V1" (sections 05 to 10). The draft adds no
+  // unsupported company claims.
+
+  technology: {
+    eyebrow: "Technology expertise",
+    title: "Web Application Development Across Modern and Established Technology Stacks",
+    lead: "The right technology depends on your application requirements, existing environment, integration needs, and long-term objectives. Infoane works across established and modern technologies to build, maintain, integrate, and modernize business applications.",
+    groups: [
       {
-        title: "Discovery & Planning",
-        body: "We evaluate your historical platforms, system nodes, and database realities thoroughly.",
+        label: "Technology areas include",
+        items: [
+          "Adobe ColdFusion",
+          "Lucee / CFML",
+          "PHP",
+          "Python / Django",
+          "Java",
+          ".NET",
+          "Angular",
+          "React",
+          "Node.js",
+          "Database technologies",
+          "Cloud technologies",
+          "DevOps and automation",
+        ],
+      },
+    ],
+    cta: { label: "Explore Our Technology Expertise", href: routes.technology },
+  },
+
+  why: {
+    eyebrow: "Why Infoane",
+    title: "A Practical Approach to Web Application Development",
+    lead: "Building an application is only one part of the job. The application also needs to work within your existing technology environment and remain useful after launch.",
+    items: [
+      {
+        title: "Business-First Planning",
+        body: "We start with business objectives and requirements before defining the technical approach.",
       },
       {
-        title: "Architecture & Design",
-        body: "Our architects map exact microservices, container models, and load limits before writing code.",
+        title: "Full-Cycle Development",
+        body: "Planning, design, development, integration, testing, deployment, and support can be addressed through one delivery team.",
       },
       {
-        title: "Development & QA",
-        body: "Senior engineers implement logic, backed by automated Selenium and security testing pipelines.",
+        title: "Performance and Maintainability",
+        body: "We consider application performance, maintainability, scalability, and long-term support throughout development.",
       },
       {
-        title: "Deployment & Tune",
-        body: "Your system goes live with phased cohort rollouts and continuous real-time latency audits.",
+        title: "Integration Expertise",
+        body: "We connect applications with APIs, third-party platforms, CMS systems, databases, and existing business systems.",
+      },
+      {
+        title: "Modernization Experience",
+        body: "For existing applications, we can help improve functionality, architecture, performance, and technology foundations without automatically replacing what already works.",
       },
       {
         title: "Ongoing Support",
-        body: "24/7 technical monitoring guarantees absolute stability and modular extension choices.",
+        body: "Application development does not have to end at launch. Support and optimization can continue as business requirements evolve.",
       },
+    ],
+  },
+
+  benefits: {
+    eyebrow: "Business benefits",
+    title: "What Better Web Applications Can Deliver",
+    lead: "A well-designed application should make business operations easier, not add another layer of complexity.",
+    items: [
+      "More intuitive user experiences",
+      "Reduced technical support requirements",
+      "Lower operational complexity",
+      "Faster application customization",
+      "Improved time-to-market",
+      "Better application performance",
+      "Stronger security and reliability",
+      "Lower long-term development and support costs",
+      "More consistent user experiences",
+      "Applications that can adapt as business needs change",
+    ],
+  },
+
+  approach: {
+    eyebrow: "Our development approach",
+    title: "From Requirements to a Production-Ready Application",
+    steps: [
+      {
+        title: "Understand",
+        body: "We learn about your business objectives, users, workflows, existing systems, and application requirements.",
+      },
+      {
+        title: "Plan",
+        body: "We define priorities, technical requirements, architecture, integrations, and the development approach.",
+      },
+      {
+        title: "Design & Build",
+        body: "UX/UI design and application development move forward around the agreed requirements and technical foundation.",
+      },
+      {
+        title: "Integrate & Test",
+        body: "We connect required systems and APIs while validating application functionality, performance, and security.",
+      },
+      {
+        title: "Deploy",
+        body: "The application is prepared for deployment across the required environment.",
+      },
+      {
+        title: "Support & Improve",
+        body: "Post-launch support, maintenance, monitoring, optimization, and enhancements can continue as required.",
+      },
+    ],
+  },
+
+  faq: {
+    eyebrow: "FAQ",
+    title: "Frequently Asked Questions",
+    items: [
+      {
+        question: "What is web application development?",
+        answer:
+          "Web application development involves planning, designing, building, testing, deploying, and supporting applications that users access through web browsers.",
+      },
+      {
+        question: "Does Infoane develop custom web applications?",
+        answer:
+          "Yes. Infoane's web application development approach is based on business requirements, user needs, application architecture, integrations, performance, security, and maintainability.",
+      },
+      {
+        question: "Can Infoane integrate a web application with existing systems?",
+        answer:
+          "Yes. The service includes system and API integration with CMS platforms, third-party services, custom APIs, and other business systems.",
+      },
+      {
+        question: "Can you modernize an existing web application?",
+        answer:
+          "Yes. Infoane supports application modernization and can work on existing systems to improve functionality, performance, architecture, integrations, and maintainability.",
+      },
+      {
+        question: "Do you provide ongoing application support?",
+        answer:
+          "Yes. The service includes continuous optimization and support, including application monitoring, performance optimization, issue resolution, maintenance, and technical support.",
+      },
+      {
+        question: "What technologies does Infoane use for web application development?",
+        answer:
+          "Infoane works across technologies including Adobe ColdFusion, Lucee/CFML, PHP, Python, Java, .NET, Angular, React, Node.js, databases, cloud technologies, and DevOps tools.",
+      },
+    ],
+  },
+
+  /** The draft's internal links. Pages that do not exist yet point at the services index. */
+  related: {
+    eyebrow: "Related",
+    title: "Explore related services",
+    links: [
+      { label: "Services", href: routes.services },
+      { label: "Mobile App Development", href: routes.mobileApps },
+      { label: "QA & Software Testing", href: routes.services },
+      { label: "Cloud & DevOps", href: serviceHref("cloud-migration-devops") },
+      { label: "Database & Remote DBA", href: routes.services },
+      { label: "Legacy Modernization", href: serviceHref("application-modernization") },
+      { label: "ColdFusion Development", href: "#coldfusion" },
+      { label: "Technology", href: routes.technology },
+      { label: "About Infoane", href: routes.about },
     ],
   },
 
   cta: {
     eyebrow: "Get started",
-    title: "Ready to build your next web application?",
-    body: "Connect with our principal architects to diagnose your application bottlenecks, evaluate security compliance, and plan a robust timeline.",
-    primary: { label: "Book a free consultation", href: routes.contact },
-    secondary: { label: "Learn our integration models", href: routes.technology },
+    title: "Have a Web Application to Build or Improve?",
+    body: "Whether you are starting a new application, modernizing an existing system, or connecting your software with other business platforms, Infoane can help you plan the right development approach. Tell us what you are building, what you need to improve, and where you want to go next.",
+    primary: { label: "Talk to Our Experts", href: routes.contact },
+    secondary: { label: "Contact Infoane", href: routes.contact },
   },
 } as const;

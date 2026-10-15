@@ -113,11 +113,9 @@ export function SiteHeader({
 
   return (
     <HeaderShell>
-      <div className="container-x relative">
-        <div className="flex h-[83px] items-center justify-between gap-6">
-          <Logo name={brandName} />
-          <SiteNav items={items} ctaLabel={header.ctaLabel} />
-        </div>
+      <div className="flex h-[60px] items-center justify-between gap-6 pl-5 pr-2 sm:pl-6">
+        <Logo name={brandName} />
+        <SiteNav items={items} ctaLabel={header.ctaLabel} />
       </div>
     </HeaderShell>
   );

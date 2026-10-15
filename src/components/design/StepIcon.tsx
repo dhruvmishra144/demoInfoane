@@ -1,4 +1,4 @@
-export type StepIconName = "scan" | "team" | "launch";
+export type StepIconName = "scan" | "team" | "launch" | "plan" | "build" | "support";
 
 /**
  * Duotone icons for the "three ways we show up" steps: a coral outline layer
@@ -59,6 +59,39 @@ const icons: Record<StepIconName, React.ReactNode> = {
       {/* Flame */}
       <path d="M14 21.5h4l-2 6Z" className="icon-flame fill-brand-400" stroke="none" />
     </g>
+  ),
+  plan: (
+    <>
+      {/* Board with a route and a pulsing waypoint */}
+      <rect data-fill x="3" y="4" width="24" height="22" rx="3" className={FILL_SOFT} stroke="none" />
+      <rect data-draw x="3" y="4" width="24" height="22" rx="3" />
+      <path data-draw d="M8 21c3.5 0 3-8 7-8s3.5 8 7 8" />
+      <circle data-fill cx="8" cy="21" r="2.2" className={FILL_DEEP} stroke="none" />
+      <circle data-fill cx="22" cy="21" r="2.2" className={FILL_DEEP} stroke="none" />
+      <circle className="icon-pop fill-brand-500" cx="15" cy="9.5" r="2.4" stroke="none" />
+    </>
+  ),
+  build: (
+    <>
+      {/* Code window with brackets that breathe */}
+      <rect data-fill x="3" y="5" width="24" height="20" rx="3" className={FILL_SOFT} stroke="none" />
+      <rect data-draw x="3" y="5" width="24" height="20" rx="3" />
+      <path data-draw d="M3 10.5h24" />
+      <path data-draw d="m16.6 14-3.2 7.5" className="stroke-brand-300" />
+      <path className="icon-nudge-l" d="m10.5 14.5-3 3.2 3 3.2" />
+      <path className="icon-nudge-r" d="m19.5 14.5 3 3.2-3 3.2" />
+    </>
+  ),
+  support: (
+    <>
+      {/* Two arrows chasing each other round a steady centre */}
+      <circle data-fill cx="15" cy="15" r="4.2" className={FILL} stroke="none" />
+      <circle className="icon-pop fill-brand-500" cx="15" cy="15" r="1.8" stroke="none" />
+      <g className="icon-spin">
+        <path data-draw d="M5.5 15a9.5 9.5 0 0 1 16.8-6.1M23.5 4.5v5h-5" />
+        <path data-draw d="M24.5 15a9.5 9.5 0 0 1-16.8 6.1M6.5 25.5v-5h5" />
+      </g>
+    </>
   ),
 };
 

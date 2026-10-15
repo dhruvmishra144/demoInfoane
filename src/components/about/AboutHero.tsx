@@ -1,36 +1,41 @@
 import { Intro } from "@/components/motion/Intro";
-import { Eyebrow, GlassBackdrop } from "@/components/design/blocks";
+import { Eyebrow } from "@/components/design/blocks";
+import { HeroBackdrop } from "@/components/design/HeroBackdrop";
 import { aboutPage } from "@/content/redesign";
 
 /**
- * About hero on the lavender glass backdrop, closed by the "Vision & mission"
- * marker that leads into the dark Mission panel. Headline rises line by line.
+ * About hero. It starts at the very top of the page (pulled up under the
+ * 84px header) so its background shows behind the header, and the copy,
+ * grouped and vertically centred, is padded back down by the same amount.
+ * The "Vision & mission" marker follows in its own strip before the dark
+ * Mission panel.
  */
 export function AboutHero() {
   const hero = aboutPage.hero;
 
   return (
-    <section className="relative isolate overflow-hidden">
-      <GlassBackdrop position="85% 70%" />
-      <Intro className="container-x pb-20 pt-20 sm:pt-24 lg:pb-28 lg:pt-32">
-        <div data-intro>
-          <Eyebrow dot>{hero.eyebrow}</Eyebrow>
-        </div>
-        <h1
-          data-intro="lines"
-          className="mt-6 max-w-3xl text-[2.5rem] font-bold leading-[1.04] tracking-[-0.04em] sm:text-6xl lg:text-[4rem]"
-        >
-          {hero.title}
-        </h1>
-        <p data-intro className="mt-8 max-w-xl text-base leading-relaxed text-ink-600 lg:text-lg">
-          {hero.body}
-        </p>
-      </Intro>
+    <>
+      <section className="relative isolate -mt-[84px] overflow-hidden">
+        <HeroBackdrop />
+        <Intro className="container-x flex min-h-[540px] flex-col justify-center pb-16 pt-[148px] lg:min-h-[560px] lg:pb-14 lg:pt-[84px]">
+          <div data-intro>
+            <Eyebrow dot>{hero.eyebrow}</Eyebrow>
+          </div>
+          <h1
+            data-intro="lines"
+            className="mt-6 max-w-[46rem] text-[2.5rem] font-bold leading-[1.12] tracking-[-0.03em] sm:text-[3rem] lg:text-[3.25rem]"
+          >
+            {hero.title}
+          </h1>
+          <p data-intro className="mt-6 max-w-[31rem] text-[16px] leading-[26px] text-ink-600">
+            {hero.body}
+          </p>
+        </Intro>
+      </section>
 
-      <div className="container-x relative flex items-center gap-4 pb-6">
+      <div className="container-x pb-1.5 pt-8">
         <Eyebrow dot>{aboutPage.visionMission}</Eyebrow>
-        <span className="h-px flex-1 bg-gradient-to-r from-brand-500/40 to-transparent" aria-hidden="true" />
       </div>
-    </section>
+    </>
   );
 }

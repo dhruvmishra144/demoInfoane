@@ -269,12 +269,12 @@ export const contactPage = {
 /* ----------------------------------------------------------------- Home ---- */
 
 export const homePage = {
-  metaTitle: "IT Consulting & Custom Software Development Company",
+  metaTitle: "Software Development & ColdFusion Services",
   metaDescription:
-    "Infoane is an IT consulting and custom software development company helping enterprises modernize legacy systems, move to the cloud, and ship software faster.",
-  heading: "IT consulting and custom software for modern enterprises",
+    "Custom software, ColdFusion, cloud, DevOps, data and QA services for businesses. Explore application development, modernization, database and IT support.",
+  heading: "Software Development & IT Services That Move Your Business Forward",
   intro: [
-    "We modernise the systems your business runs on, move them to the cloud, and build the software your competitors cannot buy off-the-shelf. Senior engineers, honest scoping, and a working demo every two weeks.",
+    "Build, modernize, and support the software and systems your business depends on. Infoane Technologies helps businesses develop applications, improve existing platforms, and manage the technology behind their operations.",
   ],
 };
 

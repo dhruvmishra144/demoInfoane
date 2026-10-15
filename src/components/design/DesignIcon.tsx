@@ -68,6 +68,29 @@ const paths: Record<IconName, React.ReactNode> = {
       <path d="M14 3v5h5M9 13h6M9 17h4" />
     </>
   ),
+  terminal: <path d="m5 7 5 5-5 5M12 18h7" />,
+  zap: <path d="M13 2.5 4.5 13.5H12l-1 8 8.5-11H12l1-8Z" />,
+  layers: (
+    <>
+      <path d="m12 3 9 4.5-9 4.5-9-4.5L12 3Z" />
+      <path d="m3 12 9 4.5 9-4.5M3 16.5 12 21l9-4.5" />
+    </>
+  ),
+  triangle: <path d="M12 3.5 21 19.5H3L12 3.5Z" />,
+  server: (
+    <>
+      <rect x="3.5" y="4" width="17" height="7" rx="2" />
+      <rect x="3.5" y="13" width="17" height="7" rx="2" />
+      <path d="M7.5 7.5h.01M7.5 16.5h.01" />
+    </>
+  ),
+  branch: (
+    <>
+      <circle cx="6" cy="5.5" r="2.5" />
+      <circle cx="18" cy="18.5" r="2.5" />
+      <path d="M6 8v4a6.5 6.5 0 0 0 6.5 6.5h3" />
+    </>
+  ),
 };
 
 export function DesignIcon({ name, className = "h-5 w-5" }: { name: IconName; className?: string }) {

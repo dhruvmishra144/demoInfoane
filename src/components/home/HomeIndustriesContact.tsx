@@ -1,29 +1,41 @@
+import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { Eyebrow, GlassBackdrop } from "@/components/design/blocks";
 import { ContactForm } from "@/components/design/ContactForm";
 import { IndustryTabs } from "./IndustryTabs";
 import { home, officeLine } from "@/content/redesign";
 
-/** Industry tabs: eyebrow, headline, lead, then the tab bar and its card. */
+/**
+ * Industries: a segmented tab bar over a two-panel card (gradient tagline
+ * panel, then headline, copy and points), with the CTA beneath.
+ */
 export function HomeIndustries() {
   const industries = home.industries;
   return (
-    <section id="industries" className="pb-[73px] pt-[74px]">
+    <section id="industries" className="py-20">
       <div className="container-x">
         <ScrollReveal>
           <div data-reveal-item>
             <Eyebrow>{industries.eyebrow}</Eyebrow>
           </div>
-          <h2 data-split className="mt-[17px] text-[36px] font-bold leading-[40px] [text-wrap:wrap]">
+          <h2 data-split className="mt-[17px] max-w-[760px] text-[36px] font-bold leading-[40px] [text-wrap:wrap]">
             {industries.title}
           </h2>
-          <p data-reveal-item className="mt-[17px] text-[16px] leading-[26px] text-body">
+          <p data-reveal-item className="mt-[17px] max-w-[820px] text-[16px] leading-[26px] text-body">
             {industries.lead}
           </p>
         </ScrollReveal>
+
         <ScrollReveal variant="scale" className="mt-10">
           <IndustryTabs items={industries.items} activeLabel={industries.activeLabel} />
         </ScrollReveal>
+
+        <div className="mt-10">
+          <Button href={industries.cta.href} variant="outline" withChip className="!py-3 !text-[14px] !leading-5 !ring-ink-900">
+            {industries.cta.label}
+          </Button>
+        </div>
       </div>
     </section>
   );
@@ -42,14 +54,18 @@ export function HomeContact({ email }: { email: string }) {
       <ScrollReveal
         variant="up"
         stagger={0.15}
-        className="container-x grid items-start gap-8 lg:grid-cols-[500px_652px] lg:gap-12"
+        className="container-x grid items-start gap-8 lg:grid-cols-[500px_652px] lg:justify-between"
       >
         <div data-reveal-item className="rounded-[32px] border border-ink-200/70 bg-white p-8 shadow-xl shadow-ink-900/5 sm:p-14">
-          <h2 className="text-[32px] font-bold leading-[36px] [text-wrap:wrap] lg:whitespace-nowrap">{contact.title}</h2>
-          <p className="mt-2 text-[15px] leading-6 text-body">{contact.lead}</p>
+          <h2 className="text-[32px] font-bold leading-[36px] [text-wrap:balance]">{contact.title}</h2>
+          <p className="mt-3 text-[15px] leading-6 text-body">{contact.lead}</p>
           <div className="mt-8">
-            <ContactForm contactEmail={email} />
+            <ContactForm contactEmail={email} submitLabel={contact.submitLabel} />
           </div>
+          <Link href={contact.secondaryCta.href} className="mt-5 inline-flex items-center gap-2 text-[14px] font-semibold text-brand-500 hover:text-brand-600">
+            {contact.secondaryCta.label}
+            <span aria-hidden="true">→</span>
+          </Link>
         </div>
 
         <div data-reveal-item className="rounded-[32px] border border-ink-200/70 bg-[#f9fafb] p-8 shadow-xl shadow-ink-900/5 sm:px-12 sm:pb-14 sm:pt-14">
