@@ -56,17 +56,6 @@ export function HomeHero() {
               {hero.secondaryCta.label}
             </Button>
           </div>
-          <dl
-            data-intro
-            className="mx-auto mt-9 grid max-w-xl grid-cols-3 divide-x divide-ink-200 rounded-2xl border border-ink-200 bg-white/70 text-left backdrop-blur"
-          >
-            {hero.stats.map((stat) => (
-              <div key={stat.label} className="flex flex-col-reverse justify-end px-4 py-4 sm:px-5">
-                <dt className="mt-1 text-xs leading-snug text-ink-500">{stat.label}</dt>
-                <dd className="text-lg font-bold tracking-tight text-ink-900 sm:text-xl">{stat.value}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
       </Intro>
     </section>

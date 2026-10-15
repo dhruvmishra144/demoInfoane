@@ -68,7 +68,14 @@ export function HomeServices() {
                     <ServiceIcon name={service.icon} />
                   </span>
                   <h3 className="mt-5 text-[17.5px] font-bold leading-6">{service.title}</h3>
-                  <p className="mt-3 text-[14px] leading-[22px] text-body">{service.body}</p>
+                  <ul className="mt-4 space-y-2">
+                    {service.points.map((point) => (
+                      <li key={point} className="flex gap-2.5 text-[14px] leading-5 text-body">
+                        <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" aria-hidden="true" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
                 </Link>
               </li>
             ))}
@@ -80,9 +87,8 @@ export function HomeServices() {
 }
 
 /**
- * AI technology: a dark band with three columns — the focus areas as a
- * checklist, the "technology focus" and "practical application" notes stacked,
- * and the photo.
+ * AI technology: a dark band with the two intro paragraphs, then the six
+ * areas of interest as cards beside the photo.
  */
 export function HomeAi() {
   const ai = home.ai;
@@ -98,41 +104,30 @@ export function HomeAi() {
           <h2 data-split className="mt-[17px] max-w-[580px] text-[36px] font-bold leading-[40px] text-white [text-wrap:wrap]">
             {ai.title}
           </h2>
-          <p data-reveal-item className="mt-12 max-w-[610px] text-[16px] leading-[26px] text-body-dark [text-wrap:wrap]">
+          <p data-reveal-item className="mt-8 max-w-[700px] text-[16px] leading-[26px] text-body-dark [text-wrap:wrap]">
             {ai.lead}
+          </p>
+          <p data-reveal-item className="mt-4 max-w-[700px] text-[16px] leading-[26px] text-white [text-wrap:wrap]">
+            {ai.goal}
           </p>
         </ScrollReveal>
 
-        <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-[1fr_1fr_1.56fr]">
-          <ScrollReveal variant="up" className={`${card} p-8`}>
-            <span className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-brand-500/15 text-brand-500">
-              <DesignIcon name="chip" />
-            </span>
-            <ul className="mt-6 space-y-5">
-              {ai.areas.map((area) => (
-                <li key={area} className="flex items-center gap-3 text-[14px] leading-5 text-white">
-                  <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0 text-brand-500" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="m5 12.5 4.5 4.5L19 7.5" />
-                  </svg>
-                  {area}
-                </li>
-              ))}
-            </ul>
+        {/* Six areas of interest, each with its one-line description, beside the photo. */}
+        <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_380px]">
+          <ScrollReveal as="ul" variant="up" stagger={0.08} className="grid gap-5 sm:grid-cols-2">
+            {ai.areas.map((area) => (
+              <li key={area.title} data-reveal-item className={`${card} p-6`}>
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-brand-500/15 text-brand-500">
+                  <DesignIcon name="chip" className="h-[18px] w-[18px]" />
+                </span>
+                <h3 className="mt-4 text-[17px] font-bold leading-6 text-white">{area.title}</h3>
+                <p className="mt-2 text-[14px] leading-[22px] text-body-dark">{area.body}</p>
+              </li>
+            ))}
           </ScrollReveal>
 
-          <ScrollReveal variant="up" stagger={0.12} className="grid gap-6">
-            <article data-reveal-item className={`${card} flex flex-col justify-center p-5 lg:min-h-[217px]`}>
-              <h3 className="text-[17px] font-bold leading-6 text-white">{ai.focusTitle}</h3>
-              <p className="mt-3 text-[14px] leading-[22px] text-body-dark">{ai.focusBody}</p>
-            </article>
-            <article data-reveal-item className={`${card} flex flex-col justify-center p-5 lg:min-h-[217px]`}>
-              <h3 className="text-[17px] font-bold leading-6 text-white">{ai.goalTitle}</h3>
-              <p className="mt-3 text-[14px] leading-[22px] text-body-dark">{ai.goalBody}</p>
-            </article>
-          </ScrollReveal>
-
-          <ZoomImage className="relative min-h-[22rem] overflow-hidden rounded-[14px] md:col-span-2 lg:col-span-1">
-            <Image src={ai.image} alt={ai.imageAlt} fill sizes="(min-width: 1024px) 487px, 90vw" className="object-cover" />
+          <ZoomImage className="relative min-h-[22rem] overflow-hidden rounded-[14px]">
+            <Image src={ai.image} alt={ai.imageAlt} fill sizes="(min-width: 1024px) 380px, 90vw" className="object-cover" />
           </ZoomImage>
         </div>
 

@@ -95,7 +95,7 @@ export function IndustryTabs({ items, activeLabel }: { items: Industry[]; active
                   : "font-medium text-ink-600 hover:text-ink-900"
               }`}
             >
-              {item.name}
+              {item.tab}
             </button>
           );
         })}
@@ -114,28 +114,16 @@ export function IndustryTabs({ items, activeLabel }: { items: Industry[]; active
           {/* Line-art diamond and arc from the mockup. */}
           <div className="absolute right-[74px] top-[58px] h-[127px] w-[127px] rotate-45 border border-white/70" aria-hidden="true" />
           <div className="absolute -bottom-[150px] -left-[90px] h-[360px] w-[360px] rounded-full border border-white/60" aria-hidden="true" />
-          <p className="eyebrow relative inline-flex self-start rounded-full bg-white/15 px-3 py-1 !text-brand-300">
-            {industry.name}
-          </p>
-          <p className="relative mt-3 text-[22px] font-bold leading-[28px] text-white">
-            {industry.tagline.map((line) => (
-              <span key={line} className="block">
-                {line}
-              </span>
-            ))}
-          </p>
+          <p className="relative max-w-[16rem] text-[26px] font-bold leading-[32px] text-white">{industry.name}</p>
         </div>
 
         <div className="p-8 lg:px-12 lg:py-14">
           <p className="eyebrow inline-flex rounded-full bg-brand-50 px-3 py-1">{activeLabel}</p>
-          <h3 className="mt-6 max-w-[420px] text-[24px] font-bold leading-[30px]">
-            {industry.headline}
-          </h3>
-          <p className="mt-2 max-w-[420px] text-[15px] leading-6 text-body">{industry.body}</p>
+          <h3 className="mt-6 max-w-[480px] text-[22px] font-bold leading-[30px]">{industry.body}</h3>
           <ul className="mt-6 space-y-3">
             {industry.points.map((point) => (
-              <li key={point} data-tab-item className="flex items-center gap-3 text-[14px] leading-6 text-ink-700">
-                <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
+              <li key={point} data-tab-item className="flex items-start gap-3 text-[14px] leading-6 text-ink-700">
+                <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
                   <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="m5 12 5 5L20 7" />
                   </svg>

@@ -1,15 +1,13 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
-import { CountUp, TextScrub } from "@/components/motion/effects";
 import { Eyebrow } from "@/components/design/blocks";
 import { home } from "@/content/redesign";
 
 /**
  * Technology stack: the headline's second line in coral with the CTA level
- * with the lead, then a card per technology carrying its real logo — ten
- * single cards and three wide category cards, which fill a four-column grid
- * exactly.
+ * with the lead, then the three groups of the draft as columns, each a wrap of chips
+ * carrying the technology's real logo.
  */
 export function HomeTechnology() {
   const technology = home.technology;
@@ -36,141 +34,52 @@ export function HomeTechnology() {
           </div>
         </div>
 
-        <ScrollReveal as="ul" variant="up" stagger={0.05} className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {technology.items.map((item) => (
-            <li key={item.name} data-reveal-item className={item.detail ? "col-span-2" : undefined}>
-              <div className="group flex h-full items-center gap-4 rounded-2xl border border-ink-200/80 bg-white p-4 shadow-[0_1px_3px_rgba(18,19,26,0.06)] transition-all duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-500/10 sm:p-5">
-                <TechLogos item={item} />
-                <div className="min-w-0">
-                  <h3 className="text-[15px] font-semibold leading-5 text-ink-900">{item.name}</h3>
-                  {item.detail && <p className="mt-1 text-[13px] leading-5 text-body">{item.detail}</p>}
-                </div>
-              </div>
-            </li>
+        <div className="mt-10 grid gap-8 lg:grid-cols-3">
+          {technology.groups.map((group) => (
+            <div key={group.label}>
+              <h3 className="text-[13px] font-bold uppercase tracking-[0.14em] text-ink-500">{group.label}</h3>
+              <ScrollReveal as="ul" variant="up" stagger={0.04} className="mt-4 flex flex-wrap gap-2.5">
+                {group.items.map((item: Technology) => (
+                  <li key={item.name} data-reveal-item>
+                    <span
+                      title={item.detail}
+                      className="group inline-flex items-center gap-2.5 rounded-full border border-ink-200 bg-white py-2 pl-2.5 pr-4 text-[14px] font-semibold leading-5 text-ink-900 shadow-[0_1px_2px_rgba(18,19,26,0.05)] transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md hover:shadow-brand-500/10"
+                    >
+                      <TechLogos item={item} />
+                      {item.name}
+                    </span>
+                  </li>
+                ))}
+              </ScrollReveal>
+            </div>
           ))}
-        </ScrollReveal>
+        </div>
       </div>
     </section>
   );
 }
 
-type Technology = (typeof home.technology.items)[number];
+type Technology = { name: string; monogram?: string; logos?: string[]; detail?: string };
 
 /**
- * A technology's logo tile, or an overlapping stack of tiles for a category.
- * The stack fans out on hover. The logos are decorative — the card's heading
- * names the technology.
+ * A technology's logo (or a few, for a category) at chip size. The logos are
+ * decorative — the chip's text names the technology.
  */
 function TechLogos({ item }: { item: Technology }) {
-  const tile =
-    "inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#f7f6f4] ring-2 ring-white transition-transform duration-500 ease-[var(--ease-out-expo)]";
-
   if (item.monogram) {
     return (
-      <span className={`${tile} !bg-ink-900 text-[13px] font-bold tracking-wide text-white group-hover:-rotate-6 group-hover:scale-110`} aria-hidden="true">
+      <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-md bg-ink-900 px-1 text-[10px] font-bold tracking-wide text-white" aria-hidden="true">
         {item.monogram}
       </span>
     );
   }
 
   return (
-    <span className="flex shrink-0 -space-x-2 transition-all duration-500 group-hover:space-x-1" aria-hidden="true">
-      {item.logos?.map((logo, index) => (
-        <span
-          key={logo}
-          className={`${tile} group-hover:-translate-y-0.5 group-hover:scale-105`}
-          style={{ zIndex: 10 - index, transitionDelay: `${index * 40}ms` }}
-        >
-          <Image src={`/logos/${logo}.svg`} alt="" width={26} height={26} className="h-[26px] w-[26px] object-contain" />
-        </span>
+    <span className="flex shrink-0 items-center gap-1" aria-hidden="true">
+      {item.logos?.map((logo) => (
+        <Image key={logo} src={`/logos/${logo}.svg`} alt="" width={22} height={22} className="h-[22px] w-[22px] object-contain" />
       ))}
     </span>
-  );
-}
-
-/** Trust and credibility: four proof points and the client testimonial. */
-export function HomeTrust() {
-  const trust = home.trust;
-
-  return (
-    <section id="trust" className="bg-[#f9fafb] py-24">
-      <div className="container-x">
-        <ScrollReveal>
-          <div data-reveal-item>
-            <Eyebrow>{trust.eyebrow}</Eyebrow>
-          </div>
-          <h2 data-split className="mt-[17px] max-w-[760px] text-[36px] font-bold leading-[40px] [text-wrap:wrap]">
-            {trust.title}
-          </h2>
-          <p data-reveal-item className="mt-[17px] max-w-[820px] text-[16px] leading-[26px] text-body">
-            {trust.lead}
-          </p>
-        </ScrollReveal>
-
-        <ScrollReveal as="ul" variant="up" stagger={0.08} className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {trust.items.map((item) => (
-            <li key={item.title} data-reveal-item className="rounded-2xl border border-ink-200 bg-white p-6">
-              <h3 className="text-[24px] font-bold leading-8 text-ink-900">
-                {/* "12+ Years" counts up from 0; titles without a number stay as they are. */}
-                <CountUp value={item.title} />
-              </h3>
-              <p className="mt-2 text-[14px] leading-[22px] text-body">{item.body}</p>
-            </li>
-          ))}
-        </ScrollReveal>
-
-        <ScrollReveal variant="up" className="mt-8">
-          <figure className="rounded-[28px] border border-ink-200 bg-white p-8 sm:p-12">
-            <p className="eyebrow">{trust.testimonialLabel}</p>
-            <blockquote className="mt-5 max-w-[860px]">
-              <TextScrub className="text-[22px] font-medium leading-[34px] text-ink-900">“{trust.quote}”</TextScrub>
-            </blockquote>
-            <figcaption className="mt-6 text-[14px] leading-5">
-              <span className="block font-semibold text-ink-900">{trust.author}</span>
-              <span className="block text-ink-500">{trust.authorRole}</span>
-            </figcaption>
-          </figure>
-        </ScrollReveal>
-      </div>
-    </section>
-  );
-}
-
-/** Careers band: a dark card with the draft's three paragraphs and both CTAs. */
-export function HomeCareers() {
-  const careers = home.careers;
-
-  return (
-    <section id="careers" className="py-24">
-      <div className="container-x">
-        <ScrollReveal variant="scale">
-          <div className="rounded-[32px] bg-night p-8 sm:p-12 lg:grid lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-16">
-            <div>
-              <p className="eyebrow">{careers.eyebrow}</p>
-              <h2 data-split className="mt-4 text-[36px] font-bold leading-[40px] text-white [text-wrap:wrap]">
-                {careers.title}
-              </h2>
-              <div className="mt-4 space-y-3">
-                {careers.paragraphs.map((paragraph) => (
-                  <p key={paragraph} className="text-[16px] leading-[26px] text-[#d1d5db]">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
-            {/* One column of equal-width pills, pinned to the card's right edge. */}
-            <div className="mt-8 flex flex-wrap gap-4 lg:mt-0 lg:w-[260px] lg:flex-col lg:justify-self-end">
-              <Button href={careers.primaryCta.href} variant="coral" withChip className="lg:w-full">
-                {careers.primaryCta.label}
-              </Button>
-              <Button href={careers.secondaryCta.href} variant="onDark" withChip className="lg:w-full">
-                {careers.secondaryCta.label}
-              </Button>
-            </div>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
   );
 }
 

@@ -271,10 +271,10 @@ export const contactPage = {
 export const homePage = {
   metaTitle: "Software Development & ColdFusion Services",
   metaDescription:
-    "Custom software, ColdFusion, cloud, DevOps, data and QA services for startups, SMBs and enterprises. 12+ years and 100+ clients worldwide. Talk to Infoane.",
+    "Custom software, ColdFusion, cloud, DevOps, data and QA services for businesses. Explore application development, modernization, database and IT support.",
   heading: "Software Development & IT Services That Move Your Business Forward",
   intro: [
-    "Build, modernize, and support the software and systems your business depends on. Infoane Technologies helps startups, growing businesses, and enterprises with custom software development, web and mobile applications, cloud, DevOps, data engineering, quality assurance, database services, and legacy modernization.",
+    "Build, modernize, and support the software and systems your business depends on. Infoane Technologies helps businesses develop applications, improve existing platforms, and manage the technology behind their operations.",
   ],
 };
 

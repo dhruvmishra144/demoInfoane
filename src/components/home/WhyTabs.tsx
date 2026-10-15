@@ -103,7 +103,16 @@ export function WhyTabs({ items }: { items: Strength[] }) {
         aria-labelledby={`${baseId}-tab-${active}`}
       >
         <h3 className="text-[28px] font-bold leading-[34px] text-ink-900">{item.title}</h3>
-        <p className="mt-5 max-w-[880px] text-[16px] leading-[26px] text-body">{item.body}</p>
+        <ul className="mt-5 max-w-[880px] space-y-2.5">
+          {item.points.map((point) => (
+            <li key={point} className="flex items-start gap-3 text-[16px] leading-[26px] text-body">
+              <svg viewBox="0 0 24 24" className="mt-[5px] h-[18px] w-[18px] shrink-0 text-brand-500" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="m5 12.5 4.5 4.5L19 7.5" />
+              </svg>
+              {point}
+            </li>
+          ))}
+        </ul>
         <div className="relative mt-6 aspect-[872/318] min-h-[200px] overflow-hidden rounded-2xl bg-ink-100">
           <div data-why-image className="absolute inset-0">
             <Image

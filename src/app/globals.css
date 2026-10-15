@@ -422,7 +422,8 @@
 .icon-bars > *,
 .icon-nudge-l,
 .icon-nudge-r,
-.icon-beat {
+.icon-beat,
+.icon-spin {
   transform-box: fill-box;
   transform-origin: center;
 }
@@ -468,6 +469,13 @@
   animation: icon-beat 2.6s ease-in-out infinite;
 }
 
+.is-live .icon-spin {
+  animation: icon-spin 6s linear infinite;
+}
+
+@keyframes icon-spin {
+  to { transform: rotate(360deg); }
+}
 @keyframes icon-type {
   0% { transform: scaleX(0); }
   30%, 85% { transform: scaleX(1); }

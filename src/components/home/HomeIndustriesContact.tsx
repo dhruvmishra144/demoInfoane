@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { Eyebrow, GlassBackdrop } from "@/components/design/blocks";
@@ -59,8 +60,12 @@ export function HomeContact({ email }: { email: string }) {
           <h2 className="text-[32px] font-bold leading-[36px] [text-wrap:balance]">{contact.title}</h2>
           <p className="mt-3 text-[15px] leading-6 text-body">{contact.lead}</p>
           <div className="mt-8">
-            <ContactForm contactEmail={email} />
+            <ContactForm contactEmail={email} submitLabel={contact.submitLabel} />
           </div>
+          <Link href={contact.secondaryCta.href} className="mt-5 inline-flex items-center gap-2 text-[14px] font-semibold text-brand-500 hover:text-brand-600">
+            {contact.secondaryCta.label}
+            <span aria-hidden="true">→</span>
+          </Link>
         </div>
 
         <div data-reveal-item className="rounded-[32px] border border-ink-200/70 bg-[#f9fafb] p-8 shadow-xl shadow-ink-900/5 sm:px-12 sm:pb-14 sm:pt-14">

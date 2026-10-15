@@ -386,21 +386,19 @@ export function StepFocus({
       if (fills.length) {
         gsap.set(fills, { opacity: 0, scale: 0.6, transformOrigin: "50% 50%" });
       }
-      gsap
-        .timeline({ scrollTrigger: { trigger: step, start: "top 70%", once: true } })
-        .to(strokes, { drawSVG: "100%", duration: 0.9, stagger: 0.12, ease: "power2.inOut" })
-        .to(
-          fills,
-          { opacity: 1, scale: 1, duration: 0.7, stagger: 0.08, ease: "back.out(2)" },
-          0.45,
-        )
-        .fromTo(
-          ping,
-          { scale: 1, opacity: 0.6 },
-          { scale: 1.9, opacity: 0, duration: 0.9, ease: "power2.out" },
-          0.2,
-        )
-        .call(() => step.classList.add("is-live"));
+      // Each tween is added only when it has targets, so a step missing one
+      // part (no badge, no fills) never tweens an empty set.
+      const arrival = gsap.timeline({ scrollTrigger: { trigger: step, start: "top 70%", once: true } });
+      if (strokes.length) {
+        arrival.to(strokes, { drawSVG: "100%", duration: 0.9, stagger: 0.12, ease: "power2.inOut" });
+      }
+      if (fills.length) {
+        arrival.to(fills, { opacity: 1, scale: 1, duration: 0.7, stagger: 0.08, ease: "back.out(2)" }, 0.45);
+      }
+      if (ping) {
+        arrival.fromTo(ping, { scale: 1, opacity: 0.6 }, { scale: 1.9, opacity: 0, duration: 0.9, ease: "power2.out" }, 0.2);
+      }
+      arrival.call(() => step.classList.add("is-live"));
     });
 
     const rail = root.querySelector("[data-rail-fill]");

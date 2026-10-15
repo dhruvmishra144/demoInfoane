@@ -90,7 +90,7 @@ export default function RootLayout({
   return (
     // `lang` is required for screen readers to pick the right voice and for
     // search engines to target the right locale.
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} data-scroll-behavior="smooth">
       {/* Deliberately bare: the public site's header, footer and JSON-LD live in
           the (site) group's layout, and the admin panel has its own chrome in
           (admin). A single root layout carrying the marketing header would either

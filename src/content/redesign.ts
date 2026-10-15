@@ -84,106 +84,129 @@ export const home = {
     eyebrow: "Software Development & IT Services",
     headline: "Software Development & IT Services That Move Your Business Forward",
     subhead:
-      "Build, modernize, and support the software and systems your business depends on. Infoane Technologies helps startups, growing businesses, and enterprises with custom software development, web and mobile applications, cloud, DevOps, data engineering, quality assurance, database services, and legacy modernization.",
+      "Build, modernize, and support the software and systems your business depends on. Infoane Technologies helps businesses develop applications, improve existing platforms, and manage the technology behind their operations.",
     primaryCta: { label: "Talk to Our Experts", href: routes.contact },
     secondaryCta: { label: "Explore Our Services", href: routes.services },
-    stats: [
-      { value: "12+", label: "Years of Experience" },
-      { value: "100+", label: "Clients Worldwide" },
-      { value: "End-to-End", label: "Software & IT Capabilities" },
-    ],
   },
   about: {
     eyebrow: "About us",
     title: "A Software Development Company Built Around Your Business Needs",
     entity:
-      "Infoane Technologies is a software development and IT services company with 12+ years of experience, serving businesses worldwide from locations in the United States and India.",
+      "Infoane Technologies is a software development and IT services company serving businesses in the United States, India, and other markets.",
     paragraphs: [
-      "Technology decisions have a direct impact on how your business operates, grows, and serves its customers. Infoane helps organizations build new software, improve existing applications, modernize legacy systems, and manage the infrastructure and data behind them.",
-      "Our capabilities span custom software development, web and mobile applications, cloud and DevOps, data engineering, database administration, quality assurance, cybersecurity, and legacy modernization.",
-      "From project planning and development to deployment and ongoing support, we work with business and technology teams to turn requirements into practical, maintainable solutions.",
+      "Technology decisions affect how a business operates, grows, and serves its customers. Infoane helps organizations build new software, improve existing applications, modernize legacy systems, and manage the infrastructure and data behind them.",
+      "Our capabilities span custom software development, web and mobile applications, cloud and DevOps, data engineering, database administration, quality assurance, cybersecurity, and legacy modernization. From planning and development to deployment and ongoing support, we help teams turn requirements into practical, maintainable solutions.",
     ],
     link: { label: "Learn More About Infoane", href: routes.about },
     cards: [
       {
-        label: "Engineering",
-        caption: "Modernizing legacy systems with a practical, hands-on approach.",
+        label: "Embedded Delivery",
+        caption: "Engineers work alongside your product and operations teams to plan, build, and improve business systems.",
         image: "/images/inside-whiteboard.webp",
         alt: "Three Infoane engineers sketching a system architecture on a glass whiteboard",
       },
       {
-        label: "Performance",
-        caption: "Improving reliability and speed across critical applications.",
+        label: "Always-On Operations",
+        caption: "Infrastructure, databases, and monitoring help keep critical systems running reliably.",
         image: "/images/impact-datacenter.webp",
         alt: "A long aisle of server racks lit in blue",
       },
       {
-        label: "Operations",
-        caption: "Keeping systems running smoothly around the clock.",
+        label: "Practical Engineering",
+        caption: "Maintainable code and considered technical choices across modern stacks and legacy platforms.",
         image: "/images/ai-globe-hands.webp",
         alt: "Gloved hands holding a glowing globe in front of a server rack",
       },
     ],
     numbersLabel: "By the numbers",
+    // Keep the figures only while the company-approved source confirms them.
     numbers: [
-      { value: "12+", label: "Years delivering software" },
-      { value: "100+", label: "Clients across industries" },
-      { value: "3", label: "Offices in the US and India" },
-      { value: "24×7", label: "Monitoring and support coverage" },
+      { value: "12+", title: "Years", label: "Experience in software development and IT services." },
+      { value: "100+", title: "Clients", label: "Clients served across multiple markets." },
+      { value: "3", title: "Offices", label: "Locations in the United States and India." },
+      { value: "24×7", title: "Support", label: "Monitoring and support coverage, where applicable." },
     ],
   },
   services: {
     eyebrow: "Software development & IT services",
     title: "Software Development and IT Services for Every Stage of Your Business",
-    lead: "Whether you are building a new application, improving an existing platform, or modernizing a legacy environment, Infoane brings together software engineering and IT capabilities across the technology lifecycle.",
+    lead: "From new applications to legacy modernization, Infoane brings software engineering and IT capabilities together across the technology lifecycle.",
     cta: { label: "View All Services", href: routes.services },
     items: [
       {
         icon: "monitor" as IconName,
         title: "Web Application Development",
-        body: "Build custom web applications around business requirements, users, integrations, performance needs, security considerations, and long-term maintainability.",
+        points: [
+          "Custom web applications",
+          "Business requirements, users, and integrations",
+          "Performance, security, and maintainability",
+        ],
         href: routes.webApplications,
       },
       {
         icon: "phone" as IconName,
         title: "Mobile App Development",
-        body: "Develop native and cross-platform mobile applications with a focus on usability, performance, quality, and ongoing application support.",
+        points: ["Native and cross-platform apps", "Usability and performance", "Quality and ongoing application support"],
         href: routes.mobileApps,
       },
       {
         icon: "check" as IconName,
         title: "QA & Software Testing",
-        body: "Validate applications through manual, automation, functional, performance, and other testing practices designed to improve quality and reduce release risk.",
+        points: [
+          "Manual and automated testing",
+          "Functional and performance validation",
+          "Quality improvement and release-risk reduction",
+        ],
         href: routes.services,
       },
       {
         icon: "database" as IconName,
         title: "Database & Remote DBA Services",
-        body: "Keep critical databases running with administration, monitoring, performance tuning, backup, security, migration, upgrades, and production support.",
+        points: [
+          "Database administration and monitoring",
+          "Performance tuning, backup, and security",
+          "Migration, upgrades, and production support",
+        ],
         href: routes.services,
       },
       {
         icon: "cloud" as IconName,
         title: "Cloud & DevOps",
-        body: "Modernize infrastructure, automate software delivery, improve observability, and manage cloud and hybrid environments across the application lifecycle.",
+        points: [
+          "Cloud and hybrid infrastructure",
+          "Software delivery automation and observability",
+          "Deployment and application-lifecycle support",
+        ],
         href: serviceHref("cloud-migration-devops"),
       },
       {
         icon: "chart" as IconName,
         title: "Data Engineering & Analytics",
-        body: "Build data pipelines, integrations, warehouses, lakes, and analytics-ready environments that support reporting, business intelligence, advanced analytics, and AI-ready data initiatives.",
+        points: [
+          "Data pipelines and integrations",
+          "Warehouses, lakes, and analytics-ready environments",
+          "Reporting, business intelligence, and AI-ready data initiatives",
+        ],
         href: serviceHref("data-engineering-analytics"),
       },
       {
         icon: "code" as IconName,
         title: "Legacy Application Modernization",
-        body: "Modernize existing applications and technology environments while preserving the business processes and investments that continue to deliver value.",
+        points: [
+          "Modernize existing applications and technology environments",
+          "Preserve useful business processes and technology investments",
+          "Improve maintainability and support ongoing change",
+        ],
         href: serviceHref("application-modernization"),
       },
       {
         icon: "shield" as IconName,
         title: "Cybersecurity",
-        body: "Strengthen applications, infrastructure, identity, access, and data protection with security practices aligned to business and operational requirements.",
+        points: [
+          "Application and infrastructure security",
+          "Identity, access, and data protection",
+          "Security practices aligned with business and operational requirements",
+        ],
         href: routes.services,
       },
     ],
@@ -191,48 +214,70 @@ export const home = {
   why: {
     eyebrow: "Why Infoane",
     title: "Engineering Expertise Backed by Practical Delivery",
-    lead: "Technology projects need more than development skills. They need an understanding of business requirements, existing systems, technical constraints, and what it takes to keep applications running after deployment. Infoane brings software development and IT capabilities together to support projects from planning and development through modernization and ongoing support.",
+    lead: "Infoane brings software development and IT capabilities together to build, modernize, and support business-critical systems.",
     // `tab` is the shorter label the design's tab list uses.
     items: [
       {
         tab: "Established Technology",
         title: "Established Technology Expertise",
-        body: "Work across established and modern technologies including Adobe ColdFusion, PHP, Python, Java, Angular, React, Node.js, cloud platforms, and DevOps technologies.",
+        points: [
+          "Adobe ColdFusion, PHP, Python, Java, Angular, React, and Node.js",
+          "Cloud platforms and DevOps technologies",
+        ],
         image: "/images/openings-team.webp",
         alt: "Engineers gathered around two monitors of code in an open-plan office",
       },
       {
         tab: "ColdFusion Expertise",
         title: "ColdFusion Expertise",
-        body: "Support and modernize business-critical ColdFusion applications with capabilities spanning development, maintenance, upgrades, migration, optimization, integrations, and cloud environments.",
+        points: [
+          "Application development and maintenance",
+          "Upgrades, migration, optimization, and integrations",
+          "Cloud environments where applicable",
+        ],
         image: "/images/expertise-orb.webp",
         alt: "A glass orb ringed by ColdFusion, Flutter and Selenium logos",
       },
       {
         tab: "End-to-End Delivery",
         title: "End-to-End Delivery",
-        body: "Bring development, testing, deployment, infrastructure, databases, modernization, and ongoing technical support together across the application lifecycle.",
+        points: [
+          "Development, testing, and deployment",
+          "Infrastructure and database support",
+          "Modernization and ongoing technical support",
+        ],
         image: "/images/wa-architecture.webp",
         alt: "An isometric diagram of a scalable cloud configuration",
       },
       {
         tab: "Business-Focused",
         title: "Business-Focused Engineering",
-        body: "Build solutions around practical requirements such as application performance, maintainability, operational efficiency, scalability, and long-term support.",
+        points: [
+          "Application performance and maintainability",
+          "Operational efficiency and scalability",
+          "Long-term support requirements",
+        ],
         image: "/images/mission-team.webp",
         alt: "Colleagues talking around a meeting table beneath a sign reading Good Ideas Better Together",
       },
       {
         tab: "Flexible Engagement",
         title: "Flexible Engagement",
-        body: "Choose an engagement approach that fits your project, including project-based development, dedicated teams, staff augmentation, and ongoing managed support where applicable.",
+        points: [
+          "Project-based development",
+          "Dedicated teams and staff augmentation",
+          "Managed support where applicable",
+        ],
         image: "/images/benefit-remote.webp",
         alt: "A team working through documents together at a long table",
       },
       {
         tab: "Global Client Experience",
         title: "Global Client Experience",
-        body: "Support businesses across different industries and geographies with software development and IT services designed around their technology and operational requirements.",
+        points: [
+          "Support for businesses across industries and geographies",
+          "Software and IT services aligned with technology and operational requirements",
+        ],
         image: "/images/globe.webp",
         alt: "A glowing globe with light trails connecting the Americas to India",
       },
@@ -242,9 +287,7 @@ export const home = {
     eyebrow: "ColdFusion spotlight",
     title: "ColdFusion Development and Modernization for Business-Critical Applications",
     paragraphs: [
-      "Many organizations continue to rely on ColdFusion applications that support important business processes. Replacing these systems is not always the right first step.",
-      "Infoane provides ColdFusion development and support for organizations that need to maintain, improve, modernize, or migrate existing applications.",
-      "Whether you need ongoing application support or are planning a move to a modern platform, our ColdFusion capabilities cover the application lifecycle.",
+      "Infoane provides ColdFusion development and support to help businesses maintain, improve, and modernize existing applications. From ongoing maintenance and performance improvements to platform migration, we help organizations keep business-critical systems reliable and aligned with changing needs.",
     ],
     capabilitiesLabel: "What we do",
     progressLabel: "ColdFusion capabilities",
@@ -257,12 +300,12 @@ export const home = {
       {
         icon: "shield" as IconName,
         title: "Legacy ColdFusion Support",
-        body: "Maintain and support existing applications while addressing technical issues and evolving business requirements.",
+        body: "Maintain existing applications and address technical issues and changing requirements.",
       },
       {
         icon: "layers" as IconName,
         title: "ColdFusion Upgrades & Migration",
-        body: "Upgrade ColdFusion environments or plan migration paths for applications that need a more modern foundation.",
+        body: "Upgrade environments or plan migration paths for applications that need a more modern foundation.",
       },
       {
         icon: "branch" as IconName,
@@ -277,12 +320,12 @@ export const home = {
       {
         icon: "server" as IconName,
         title: "API & System Integration",
-        body: "Connect ColdFusion applications with APIs, third-party systems, and other enterprise applications.",
+        body: "Connect ColdFusion applications with APIs, third-party systems, and enterprise applications.",
       },
       {
         icon: "cloud" as IconName,
         title: "Cloud Migration & Hosting",
-        body: "Move ColdFusion workloads toward cloud environments, including AWS and Azure-based infrastructure where applicable.",
+        body: "Move ColdFusion workloads toward cloud environments, including AWS- and Azure-based infrastructure where applicable.",
       },
     ],
     // The design's coral button opens the conversation; the draft's link to the
@@ -299,20 +342,25 @@ export const home = {
     eyebrow: "AI technology",
     title: "AI Technology for the Next Generation of Software and Data",
     lead: "AI is becoming part of modern software, data environments, and technology operations. Infoane explores practical ways to apply AI alongside its established capabilities in software development, data engineering, cloud, automation, and modernization.",
-    focusTitle: "Our technology focus",
-    focusBody:
-      "Our technology focus includes areas such as AI-assisted development, AI-ready data, intelligent automation, generative AI, and AI-enabled applications.",
+    // Describes areas of technology interest, not standalone AI services.
+    goal: "The focus is on practical application: using the right data, software architecture, and technology foundation to identify where AI may add value.",
     areas: [
-      "AI-Assisted Development",
-      "AI-Ready Data",
-      "Generative AI",
-      "Intelligent Automation",
-      "AI + Cloud",
-      "AI-Enabled Applications",
+      { title: "AI-Assisted Development", body: "Explore ways AI tools may support software development workflows." },
+      { title: "AI-Ready Data", body: "Prepare and connect data environments that can support AI-related initiatives." },
+      {
+        title: "Generative AI",
+        body: "Consider relevant generative AI use cases within broader software and data contexts.",
+      },
+      {
+        title: "Intelligent Automation",
+        body: "Identify workflows where automation may reduce repetitive work.",
+      },
+      { title: "AI + Cloud", body: "Consider AI-related needs alongside cloud infrastructure and application architecture." },
+      {
+        title: "AI-Enabled Applications",
+        body: "Explore where AI capabilities may fit into software applications when requirements support them.",
+      },
     ],
-    goalTitle: "The goal is practical application",
-    goalBody:
-      "Using the right data, software architecture, and technology foundation to identify where AI can add meaningful value.",
     image: "/images/ai-team.webp",
     imageAlt: "Engineers working together at laptops in a bright office",
     cta: { label: "Explore AI Technology", href: routes.ai },
@@ -323,73 +371,77 @@ export const home = {
     lead: "Industry workflows, data needs, security considerations, and technology environments differ. Infoane applies its software development and IT capabilities to the needs of each business environment.",
     cta: { label: "Explore Industries", href: routes.industries },
     activeLabel: "Active industry",
-    // Name, body and points are from the separate Industries section draft,
-    // whose note asks that industry-specific experience be confirmed with
-    // Infoane before publication. `headline` and `tagline` fill the design's
-    // panel and are not in the draft: they restate the draft's own points and
-    // need the same sign-off.
+    // Capability-led descriptions from the V3 draft; refine with client-approved
+    // industry examples or case studies when available.
     items: [
       {
-        name: "Retail",
-        headline: "Applications that keep retail operations moving.",
-        tagline: ["Retail applications.", "Connected systems.", "Evolving platforms."],
-        body: "Retail businesses rely on applications and systems that support daily operations, customer interactions, and changing business requirements.",
+        tab: "Healthcare",
+        name: "Healthcare",
+        body: "Healthcare systems need dependable applications, secure data handling, and connected workflows.",
         points: [
-          "Develop and maintain applications that support retail operations.",
+          "Support healthcare applications and digital operations.",
           "Connect systems and data where integration is required.",
-          "Improve existing platforms as workflows and business needs evolve.",
+          "Consider privacy, security, reliability, and continuity requirements.",
         ],
         gradient: "from-[#d9584a] via-[#9e2f3a] to-[#3d1a2a]",
       },
       {
-        name: "E-commerce",
-        headline: "Dependable platforms for online business.",
-        tagline: ["Commerce platforms.", "System integrations.", "Ongoing performance."],
-        body: "E-commerce businesses need dependable digital platforms to support online transactions, customer journeys, and ongoing operations.",
+        tab: "Fintech",
+        name: "Fintech / Banking & Financial Services",
+        body: "Financial environments depend on reliable software, controlled access, and consistent data processing.",
         points: [
-          "Build and maintain e-commerce applications and platforms.",
-          "Support integrations across relevant systems and databases.",
-          "Address application performance, maintainability, and changing requirements.",
+          "Develop and maintain applications supporting financial and business operations.",
+          "Support database, integration, and infrastructure needs.",
+          "Account for security, availability, and operational requirements.",
         ],
         gradient: "from-[#5b6cf0] via-[#3b3fa8] to-[#1a1c45]",
       },
       {
-        name: "Telecommunications",
-        headline: "Reliable applications for connected operations.",
-        tagline: ["Business applications.", "System integration.", "Reliable operations."],
-        body: "Telecommunications environments depend on connected systems, reliable applications, and technology that supports complex operations.",
+        tab: "Manufacturing",
+        name: "Manufacturing",
+        body: "Manufacturing operations rely on systems that support business processes, data, and day-to-day coordination.",
         points: [
-          "Develop and maintain applications for business operations.",
-          "Support system integration, databases, and infrastructure needs.",
-          "Improve existing applications with attention to reliability and maintainability.",
+          "Build and maintain applications used in operational environments.",
+          "Connect systems and data to support visibility across workflows.",
+          "Modernize legacy applications while preserving essential business processes.",
+        ],
+        gradient: "from-[#f08a4b] via-[#b8552e] to-[#3f1f14]",
+      },
+      {
+        tab: "Logistics",
+        name: "Logistics",
+        body: "Logistics teams need systems and data that support coordination, operational visibility, and changing requirements.",
+        points: [
+          "Support applications and data capabilities for logistics operations.",
+          "Integrate relevant systems and databases.",
+          "Maintain and improve software as workflows evolve.",
         ],
         gradient: "from-[#2fb3a0] via-[#1c6f6a] to-[#0f2a2c]",
       },
       {
-        name: "IT Services",
-        headline: "Technology that supports service delivery.",
-        tagline: ["Client-facing applications.", "Cloud and DevOps.", "Legacy modernization."],
-        body: "IT services organizations need software and technology environments that support service delivery, client requirements, and ongoing change.",
+        tab: "Energy",
+        name: "Energy & Utilities",
+        body: "Energy and utilities environments depend on reliable technology and operational systems.",
         points: [
-          "Build and maintain business and client-facing applications.",
-          "Support cloud, DevOps, database, and integration requirements.",
-          "Modernize legacy systems and provide ongoing technical support where required.",
+          "Support business applications and operational technology environments.",
+          "Maintain databases, infrastructure, and integrations.",
+          "Improve existing applications with attention to reliability and maintainability.",
         ],
-        gradient: "from-[#f08a4b] via-[#b8552e] to-[#3f1f14]",
+        gradient: "from-[#e8b43c] via-[#b0722a] to-[#3b2410]",
       },
     ],
   },
   approach: {
     eyebrow: "How we work",
     title: "From Business Requirements to Ongoing Support",
-    lead: "Every project starts with understanding what the business needs, what already exists, and what success looks like. Our delivery approach connects planning, engineering, testing, deployment, and ongoing support.",
+    lead: "We begin by understanding what the business needs, what already exists, and what success looks like. Our approach connects planning, engineering, testing, deployment, and ongoing support.",
     leadLabel: "Our approach",
     image: "/images/vision-engineer.webp",
     imageAlt: "An Infoane engineer working at a laptop in the office",
     steps: [
       {
         title: "Understand",
-        body: "Learn about your business, users, existing systems, challenges, requirements, and goals.",
+        body: "Review business goals, users, existing systems, challenges, and requirements.",
       },
       {
         title: "Plan",
@@ -397,7 +449,7 @@ export const home = {
       },
       {
         title: "Build",
-        body: "Design, develop, integrate, and test the solution with quality, performance, and security in mind.",
+        body: "Design, develop, integrate, and test with quality, performance, and security in mind.",
       },
       {
         title: "Deploy",
@@ -405,73 +457,55 @@ export const home = {
       },
       {
         title: "Support & Improve",
-        body: "Provide ongoing maintenance, monitoring, technical support, optimization, and improvements as required.",
+        body: "Provide maintenance, monitoring, technical support, optimization, and improvements as required.",
       },
     ],
   },
   technology: {
-    eyebrow: "Technology",
+    eyebrow: "Technology stack",
     // One headline, split where the design turns the second line coral.
     title: "Technologies That Power Our",
     titleAccent: "Software and IT Services",
     lead: "The right technology depends on the application, business requirements, existing environment, and long-term goals. Infoane works across established and modern technology stacks to build, maintain, integrate, and modernize business applications.",
+    cta: { label: "Explore Our Technology Expertise", href: routes.technology },
     // Logos are files in /public/logos (from Devicon, MIT — see
     // LICENSE-devicon.txt there). Devicon has no ColdFusion or Lucee mark, so
     // those two show a monogram until official logo files are supplied. The
-    // three category cards name only tools the Technology page already lists.
-    items: [
-      { name: "Adobe ColdFusion", monogram: "CF" },
-      { name: "Lucee / CFML", monogram: "Lu" },
-      { name: "PHP", logos: ["php"] },
-      { name: "Python / Django", logos: ["python", "django"] },
-      { name: ".NET", logos: ["dotnet"] },
-      { name: "Java", logos: ["java"] },
-      { name: "Angular", logos: ["angular"] },
-      { name: "Node.js", logos: ["nodejs"] },
-      { name: "React", logos: ["react"] },
-      { name: "Flutter", logos: ["flutter"] },
-      { name: "Cloud Technologies", detail: "AWS · Azure · Google Cloud", logos: ["aws", "azure", "googlecloud"] },
+    // category cards' tool lines name only tools the Technology page lists.
+    groups: [
       {
-        name: "DevOps & Automation",
-        detail: "Docker · Kubernetes · Terraform · GitHub Actions",
-        logos: ["docker", "kubernetes", "terraform", "githubactions"],
-      },
-      { name: "Database Technologies", detail: "PostgreSQL · SQL Server", logos: ["postgresql", "sqlserver"] },
-    ],
-    cta: { label: "Explore Our Technology Expertise", href: routes.technology },
-  },
-  trust: {
-    eyebrow: "Trust & credibility",
-    title: "Experience You Can Build On",
-    lead: "For technology projects, credibility comes from experience, delivery capability, and the ability to support applications beyond the initial implementation.",
-    items: [
-      { title: "12+ Years", body: "Experience in software development and IT services." },
-      { title: "100+ Clients", body: "Businesses served across global markets." },
-      {
-        title: "Global Delivery",
-        body: "Technology services supporting businesses across different industries and geographies.",
+        label: "Languages & Frameworks",
+        items: [
+          { name: "Adobe ColdFusion", monogram: "CF" },
+          { name: "Lucee / CFML", monogram: "Lu" },
+          { name: "PHP", logos: ["php"] },
+          { name: "Python / Django", logos: ["python", "django"] },
+          { name: ".NET", logos: ["dotnet"] },
+          { name: "Java", logos: ["java"] },
+        ],
       },
       {
-        title: "Established Expertise",
-        body: "Application development, ColdFusion, cloud, DevOps, databases, data engineering, QA, and modernization.",
+        label: "Frontend & Mobile",
+        items: [
+          { name: "Angular", logos: ["angular"] },
+          { name: "Node.js", logos: ["nodejs"] },
+          { name: "React", logos: ["react"] },
+          { name: "Flutter", logos: ["flutter"] },
+        ],
+      },
+      {
+        label: "Infrastructure & Delivery",
+        items: [
+          { name: "Cloud technologies", detail: "AWS · Azure · Google Cloud", logos: ["aws", "azure", "googlecloud"] },
+          {
+            name: "DevOps and automation",
+            detail: "Docker · Kubernetes · Terraform · GitHub Actions",
+            logos: ["docker", "kubernetes", "terraform", "githubactions"],
+          },
+          { name: "Database technologies", detail: "PostgreSQL · SQL Server", logos: ["postgresql", "sqlserver"] },
+        ],
       },
     ],
-    testimonialLabel: "Client testimonial",
-    quote: "Infoane has been a great partner for almost four years now. Their team provides excellent technical service and expertise.",
-    // Replace with the client's name once written permission to publish is confirmed.
-    author: "[CLIENT NAME]",
-    authorRole: "VP Technology, Trimble",
-  },
-  careers: {
-    eyebrow: "Careers",
-    title: "Build Technology. Build Your Career.",
-    paragraphs: [
-      "Great software is built by people who are curious, willing to learn, and ready to solve real business problems.",
-      "At Infoane, opportunities span software development, cloud, data, QA, DevOps, modernization, databases, and emerging technologies.",
-      "Whether you are starting your career or bringing years of experience, explore opportunities to work on technology that supports real businesses.",
-    ],
-    primaryCta: { label: "Explore Careers", href: routes.careers },
-    secondaryCta: { label: "View Current Openings", href: routes.openings },
   },
   faq: {
     eyebrow: "FAQ",
@@ -485,32 +519,34 @@ export const home = {
       {
         question: "Does Infoane support and maintain legacy ColdFusion applications?",
         answer:
-          "Yes. Infoane's ColdFusion capabilities include application development, legacy application support and maintenance, upgrades, migration, performance optimization, integrations, security, and cloud migration.",
+          "Yes. Infoane's ColdFusion capabilities include application development, legacy application support and maintenance, upgrades, migration, performance optimization, integrations, and cloud migration.",
       },
       {
         question: "Can Infoane migrate Adobe ColdFusion applications to Lucee?",
         answer:
-          "Yes. Infoane's ColdFusion capabilities include Adobe ColdFusion-to-Lucee migration and support across the CFML ecosystem.",
+          "Infoane supports Adobe ColdFusion-to-Lucee migration and work across the CFML ecosystem.",
       },
       {
         question: "What engagement models does Infoane offer?",
         answer:
-          "Depending on the service and project requirements, Infoane supports project-based services, staff augmentation, dedicated teams, and ongoing managed support.",
+          "Depending on service and project requirements, Infoane supports project-based services, staff augmentation, dedicated teams, and ongoing managed support.",
       },
       {
         question: "Which industries does Infoane serve?",
         answer:
-          "Infoane works across industries including IT and technology, banking and financial services, healthcare, travel and hospitality, telecommunications, retail and e-commerce, manufacturing, logistics, and energy and utilities.",
+          "Infoane's capabilities can support organizations in healthcare, fintech and financial services, manufacturing, logistics, energy and utilities, and other technology-dependent sectors.",
       },
       {
         question: "Where is Infoane based?",
-        answer: "Infoane has locations in Frisco, Texas, and in Hyderabad and Kovilpatti, India, and serves clients globally.",
+        answer: "Infoane has locations in the United States and India, and serves businesses in other markets.",
       },
     ],
   },
   contact: {
     title: "Have a Software or Technology Challenge to Solve?",
-    lead: "Whether you are building a new application, modernizing a legacy system, moving to the cloud, improving your data environment, or looking for ongoing technology support, let's discuss what you need. Tell us about your goals, current environment, and challenges. We'll start with the right conversation.",
+    lead: "Whether you are building a new application, modernizing a legacy system, moving to the cloud, improving your data environment, or looking for ongoing technology support, let's discuss what you need. Tell us about your goals, current environment, and challenges. We'll start with a conversation about the right next step.",
+    submitLabel: "Start a Conversation",
+    secondaryCta: { label: "Contact Infoane", href: routes.contact },
     nextLabel: "What happens next",
     steps: [
       {

@@ -13,7 +13,6 @@ import { home } from "@/content/redesign";
  */
 export function HomeAbout() {
   const about = home.about;
-  const [intro, detail, closing] = about.paragraphs;
 
   return (
     <section id="about" className="pb-20 pt-24">
@@ -26,7 +25,7 @@ export function HomeAbout() {
             {about.title}
           </h2>
           <p data-reveal-item className="mt-[25px] text-[16px] leading-[26px] text-body">
-            {about.entity} {intro} {detail}
+            {about.entity} {about.paragraphs.join(" ")}
           </p>
         </ScrollReveal>
 
@@ -58,9 +57,9 @@ export function HomeAbout() {
               />
               {/* The caption sits in a dark box that fades out to the right, as
                   the mockup draws it, rather than under a full-width scrim. */}
-              <div className="absolute bottom-0 left-0 rounded-tr-xl bg-gradient-to-r from-[#0c0d18]/85 via-[#0c0d18]/60 to-[#0c0d18]/0 py-5 pl-8 pr-14">
+              <div className="absolute bottom-0 left-0 rounded-tr-xl bg-gradient-to-r from-[#0c0d18]/85 via-[#0c0d18]/60 to-[#0c0d18]/0 py-5 pl-6 pr-10">
                 <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-[#3b82f6]">{card.label}</p>
-                <p className="mt-1.5 max-w-[15rem] text-[13px] leading-5 text-white">{card.caption}</p>
+                <p className="mt-1.5 max-w-[19rem] text-[13px] leading-5 text-white">{card.caption}</p>
               </div>
             </li>
           ))}
@@ -72,11 +71,11 @@ export function HomeAbout() {
             {about.numbers.map((item) => (
               <li key={item.label} data-reveal-item>
                 <CountUp value={item.value} className="block text-[36px] font-bold leading-[40px] text-ink-900" />
-                <p className="mt-2 max-w-[13rem] text-[13px] leading-5 text-body">{item.label}</p>
+                <p className="mt-1 text-[15px] font-semibold leading-5 text-ink-900">{item.title}</p>
+                <p className="mt-1.5 max-w-[15rem] text-[13px] leading-5 text-body">{item.label}</p>
               </li>
             ))}
           </ScrollReveal>
-          <p className="mt-6 text-[15px] leading-[25px] text-body">{closing}</p>
         </div>
       </div>
     </section>

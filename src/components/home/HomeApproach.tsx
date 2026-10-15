@@ -2,7 +2,11 @@ import Image from "next/image";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { StepFocus, ZoomImage } from "@/components/motion/effects";
 import { Eyebrow } from "@/components/design/blocks";
+import { StepIcon, type StepIconName } from "@/components/design/StepIcon";
 import { home } from "@/content/redesign";
+
+/** One animated icon per delivery step, in order: Understand to Support & Improve. */
+const stepIcons: StepIconName[] = ["scan", "plan", "build", "launch", "support"];
 
 /**
  * "How we work": heading across the top, then three columns — a photo, the
@@ -28,15 +32,17 @@ export function HomeApproach() {
             the step nearest the middle of the screen is in focus and the rail
             beside them fills as you go. */}
         <div className="mt-14 grid items-start gap-10 md:grid-cols-2 lg:grid-cols-[320px_320px_464px] lg:justify-between lg:gap-12">
-          <ZoomImage className="relative aspect-square overflow-hidden rounded-2xl lg:sticky lg:top-32">
-            <Image
-              src={approach.image}
-              alt={approach.imageAlt}
-              fill
-              sizes="(min-width: 1024px) 320px, (min-width: 768px) 45vw, 90vw"
-              className="object-cover"
-            />
-          </ZoomImage>
+          <div className="lg:sticky lg:top-32">
+            <ZoomImage className="relative aspect-square overflow-hidden rounded-2xl">
+              <Image
+                src={approach.image}
+                alt={approach.imageAlt}
+                fill
+                sizes="(min-width: 1024px) 320px, (min-width: 768px) 45vw, 90vw"
+                className="object-cover"
+              />
+            </ZoomImage>
+          </div>
 
           <ScrollReveal variant="blur" stagger={0.1} className="lg:sticky lg:top-32">
             <p data-reveal-item className="eyebrow">
@@ -58,10 +64,10 @@ export function HomeApproach() {
                 data-step
                 className="flex gap-5 rounded-2xl border border-ink-200 bg-white px-6 py-[22px] transition-colors duration-300 hover:border-brand-200"
               >
-                <span className="relative mt-0.5 inline-flex h-10 w-10 shrink-0" aria-hidden="true">
-                  <span data-ping className="absolute inset-0 rounded-full bg-brand-500 opacity-0" />
-                  <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand-500 text-[14px] font-bold text-white">
-                    {String(index + 1).padStart(2, "0")}
+                <span className="relative mt-0.5 inline-flex h-14 w-14 shrink-0" aria-hidden="true">
+                  <span data-ping className="absolute inset-0 rounded-2xl bg-brand-500 opacity-0" />
+                  <span className="relative inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-50 ring-1 ring-inset ring-brand-100">
+                    <StepIcon name={stepIcons[index]} />
                   </span>
                 </span>
                 <div>

@@ -2,9 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
-import { ChecklistProgress, ZoomImage } from "@/components/motion/effects";
+import { ZoomImage } from "@/components/motion/effects";
 import { Eyebrow } from "@/components/design/blocks";
-import { DesignIcon } from "@/components/design/DesignIcon";
 import { WhyTabs } from "./WhyTabs";
 import { home } from "@/content/redesign";
 
@@ -97,58 +96,24 @@ export function HomeColdFusion() {
               </ZoomImage>
             </div>
 
-            {/* The capabilities tick themselves off as they scroll through:
-                icon lights up and redraws, badge pops, counter and bar advance. */}
-            <ChecklistProgress className="border-t border-white/10 p-6 sm:px-12 sm:pb-14 sm:pt-12">
+            <div className="border-t border-white/10 p-6 sm:px-12 sm:pb-14 sm:pt-12">
               <p className="eyebrow">{cf.capabilitiesLabel}</p>
-              <div className="mt-5 flex items-center gap-4" aria-hidden="true">
-                <span data-check-count className="w-9 text-[15px] font-semibold tabular-nums text-brand-500">
-                  {cf.capabilities.length}/{cf.capabilities.length}
-                </span>
-                <div className="w-56">
-                  <p className="text-[12px] leading-4 text-body-dark">{cf.progressLabel}</p>
-                  <div className="mt-2 h-0.5 overflow-hidden rounded-full bg-white/10">
-                    <div data-check-bar className="h-full origin-left rounded-full bg-brand-500" />
-                  </div>
-                </div>
-              </div>
-
-              <ul className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-                {cf.capabilities.map((capability, index) => (
-                  <li key={capability.title} data-check-item data-checked="" className="group">
-                    <div className="flex items-start justify-between">
-                      <span
-                        data-check-icon
-                        className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.04] text-white/30 ring-1 ring-inset ring-white/10 transition-all duration-500 group-data-[checked]:bg-brand-500/15 group-data-[checked]:text-brand-500 group-data-[checked]:ring-brand-500/30"
-                      >
-                        <DesignIcon name={capability.icon} className="h-6 w-6" />
-                      </span>
-                      <span
-                        className="inline-flex h-6 w-6 scale-0 items-center justify-center rounded-full bg-brand-500 text-white opacity-0 shadow-lg shadow-brand-500/30 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] group-data-[checked]:scale-100 group-data-[checked]:opacity-100"
-                        aria-hidden="true"
-                      >
-                        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
+              <ul className="mt-8 grid gap-x-8 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+                {cf.capabilities.map((capability) => (
+                  <li key={capability.title}>
+                    <h3 className="flex items-center gap-2.5 text-[16px] font-bold leading-6 text-white">
+                      <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-500 text-white" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round">
                           <path d="m6 12.5 4 4 8-9" />
                         </svg>
                       </span>
-                    </div>
-                    <p className="mt-5 text-[12px] font-semibold tabular-nums leading-4 text-brand-500/50 transition-colors duration-500 group-data-[checked]:text-brand-500">
-                      {String(index + 1).padStart(2, "0")}
-                    </p>
-                    <h3 className="mt-1.5 text-[16px] font-bold leading-6 text-white/45 transition-colors duration-500 group-data-[checked]:text-white">
                       {capability.title}
                     </h3>
-                    <p className="mt-2 max-w-[22rem] text-[14px] leading-[22px] text-body-dark/50 transition-colors duration-500 group-data-[checked]:text-body-dark">
-                      {capability.body}
-                    </p>
-                    <span
-                      className="mt-6 block h-px bg-gradient-to-r from-brand-500/0 via-brand-500/40 to-brand-500/0 opacity-0 transition-opacity duration-700 group-data-[checked]:opacity-100"
-                      aria-hidden="true"
-                    />
+                    <p className="mt-2 max-w-[22rem] text-[14px] leading-[22px] text-body-dark">{capability.body}</p>
                   </li>
                 ))}
               </ul>
-            </ChecklistProgress>
+            </div>
           </div>
         </ScrollReveal>
       </div>

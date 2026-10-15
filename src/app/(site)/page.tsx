@@ -6,7 +6,7 @@ import { HomeAi, HomeServices } from "@/components/home/HomeServices";
 import { HomeApproach } from "@/components/home/HomeApproach";
 import { HomeContact, HomeIndustries } from "@/components/home/HomeIndustriesContact";
 import { HomeColdFusion, HomeWhy } from "@/components/home/HomeWhyColdFusion";
-import { HomeCareers, HomeFaq, HomeTechnology, HomeTrust } from "@/components/home/HomeMore";
+import { HomeFaq, HomeTechnology } from "@/components/home/HomeMore";
 import { home as homeCopy } from "@/content/redesign";
 import { pageSchema } from "@/lib/schema";
 import { getItemOrFallback, getSettingsOrFallback } from "@/server/content/with-fallback";
@@ -30,9 +30,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * Homepage. Section order and copy follow "Home Page Content Draft V2": hero,
- * company introduction, services, why Infoane, ColdFusion, AI, industries, how
- * we work, technology, trust, careers, FAQ and the closing contact form.
+ * Homepage. Section order follows the approved page mockup: hero, About,
+ * ColdFusion spotlight, services, technology, AI, how we work, why Infoane,
+ * industries, FAQ and the closing contact form. Copy is "Home Page Content
+ * Draft V3": no hero metrics, and no Trust or Careers sections.
  *
  * The FAQ is visible on the page, so its FAQPage structured data is valid —
  * that markup must only ever describe questions a visitor can actually see.
@@ -55,15 +56,13 @@ export default async function HomePage() {
       />
       <HomeHero />
       <HomeAbout />
-      <HomeServices />
-      <HomeWhy />
       <HomeColdFusion />
-      <HomeAi />
-      <HomeIndustries />
-      <HomeApproach />
+      <HomeServices />
       <HomeTechnology />
-      <HomeTrust />
-      <HomeCareers />
+      <HomeAi />
+      <HomeApproach />
+      <HomeWhy />
+      <HomeIndustries />
       <HomeFaq />
       <HomeContact email={settings.contact.email} />
     </>
