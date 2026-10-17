@@ -428,6 +428,53 @@ export const home = {
         ],
         gradient: "from-[#e8b43c] via-[#b0722a] to-[#3b2410]",
       },
+      // The four additional industries from the separate Industries draft,
+      // whose note asks that experience and examples be confirmed with Infoane
+      // before publication.
+      {
+        tab: "Retail",
+        name: "Retail",
+        body: "Retail businesses rely on applications and systems that support daily operations, customer interactions, and changing business requirements.",
+        points: [
+          "Develop and maintain applications that support retail operations.",
+          "Connect systems and data where integration is required.",
+          "Improve existing platforms as workflows and business needs evolve.",
+        ],
+        gradient: "from-[#e0607e] via-[#a03a62] to-[#3a1830]",
+      },
+      {
+        tab: "E-commerce",
+        name: "E-commerce",
+        body: "E-commerce businesses need dependable digital platforms to support online transactions, customer journeys, and ongoing operations.",
+        points: [
+          "Build and maintain e-commerce applications and platforms.",
+          "Support integrations across relevant systems and databases.",
+          "Address application performance, maintainability, and changing requirements.",
+        ],
+        gradient: "from-[#8b5cf6] via-[#5b3bb0] to-[#201447]",
+      },
+      {
+        tab: "Telecom",
+        name: "Telecommunications",
+        body: "Telecommunications environments depend on connected systems, reliable applications, and technology that supports complex operations.",
+        points: [
+          "Develop and maintain applications for business operations.",
+          "Support system integration, databases, and infrastructure needs.",
+          "Improve existing applications with attention to reliability and maintainability.",
+        ],
+        gradient: "from-[#38a3d9] via-[#1f6c9c] to-[#0e2a40]",
+      },
+      {
+        tab: "IT Services",
+        name: "IT Services",
+        body: "IT services organizations need software and technology environments that support service delivery, client requirements, and ongoing change.",
+        points: [
+          "Build and maintain business and client-facing applications.",
+          "Support cloud, DevOps, database, and integration requirements.",
+          "Modernize legacy systems and provide ongoing technical support where required.",
+        ],
+        gradient: "from-[#64748b] via-[#3d4a5e] to-[#151b26]",
+      },
     ],
   },
   approach: {
@@ -560,7 +607,7 @@ export const home = {
       {
         question: "Which industries does Infoane serve?",
         answer:
-          "Infoane's capabilities can support organizations in healthcare, fintech and financial services, manufacturing, logistics, energy and utilities, and other technology-dependent sectors.",
+          "Infoane's capabilities can support organizations in healthcare, fintech and financial services, manufacturing, logistics, energy and utilities, retail, e-commerce, telecommunications, IT services, and other technology-dependent sectors.",
       },
       {
         question: "Where is Infoane based?",
