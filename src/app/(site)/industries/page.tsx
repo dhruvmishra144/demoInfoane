@@ -45,7 +45,7 @@ export default async function IndustriesPage() {
         id="sectors"
         eyebrow="Sector experience"
         title="Where we have delivered"
-        lead="Each of these carries constraints that shape architecture rather than decorate it — regulatory scope, uptime expectations, and the systems you cannot replace."
+        lead="Each of these carries constraints that shape architecture rather than decorate it, regulatory scope, uptime expectations, and the systems you cannot replace."
       >
         <div className="grid gap-6 lg:grid-cols-2">
           {industries.map((industry) => (
@@ -71,7 +71,7 @@ export default async function IndustriesPage() {
 
       <CtaBand
         heading="Your sector not listed?"
-        body="Domain knowledge transfers further than most agencies admit — the constraints that matter are usually regulatory, data-shaped or uptime-driven rather than industry-specific. Describe yours and we will tell you honestly whether we are a fit."
+        body="Domain knowledge transfers further than most agencies admit: the constraints that matter are usually regulatory, data-shaped or uptime-driven rather than industry-specific. Describe yours and we will tell you honestly whether we are a fit."
         settings={settings}
       />
     </>

@@ -40,7 +40,7 @@ export const pillars = [
   {
     step: "01",
     title: "Scope it properly",
-    body: "A short paid discovery ends with a written scope, architecture options and a costed plan — yours to keep even if you build it elsewhere.",
+    body: "A short paid discovery ends with a written scope, architecture options and a costed plan, yours to keep even if you build it elsewhere.",
   },
   {
     step: "02",
@@ -144,7 +144,7 @@ export const process: ProcessStep[] = [
   {
     step: "01",
     title: "Discover",
-    body: "A short paid discovery: we interview your stakeholders, audit the current system and leave you with a written scope, architecture options and a cost range — yours to keep either way.",
+    body: "A short paid discovery: we interview your stakeholders, audit the current system and leave you with a written scope, architecture options and a cost range, yours to keep either way.",
   },
   {
     step: "02",
@@ -159,7 +159,7 @@ export const process: ProcessStep[] = [
   {
     step: "04",
     title: "Operate & Scale",
-    body: "Monitoring, on-call runbooks and a documented handover. We can hand the system to your team, or keep running it under an SLA — your call.",
+    body: "Monitoring, on-call runbooks and a documented handover. We can hand the system to your team, or keep running it under an SLA, your call.",
   },
 ];
 
@@ -183,7 +183,7 @@ export const caseStudies: CaseStudy[] = [
     client: "[CLIENT_NAME or 'A national insurance provider']",
     industry: "Financial Services",
     challenge:
-      "[One sentence on the problem — the system, the constraint, the business cost of leaving it alone.]",
+      "[One sentence on the problem: the system, the constraint, the business cost of leaving it alone.]",
     outcome:
       "[One sentence on what was delivered and the measurable business result.]",
     metric: "[XX]%",
@@ -267,7 +267,7 @@ export const faqs: Faq[] = [
   {
     question: "Who owns the code and the intellectual property?",
     answer:
-      "You do. Our contracts assign all IP, source code and documentation to you on payment, and everything lives in your repositories and cloud accounts from the first commit — not ours. You are never dependent on us to keep the system running.",
+      "You do. Our contracts assign all IP, source code and documentation to you on payment, and everything lives in your repositories and cloud accounts from the first commit, not ours. You are never dependent on us to keep the system running.",
   },
   {
     question: "How do you handle security and compliance?",
@@ -277,6 +277,6 @@ export const faqs: Faq[] = [
   {
     question: "Do you work with our existing in-house engineers?",
     answer:
-      "Yes, and that is most of what we do. Our teams join your sprint rituals, your repository and your code standards. We are also happy to be measured on how well your team can maintain the system after we leave — documentation and handover are part of every engagement.",
+      "Yes, and that is most of what we do. Our teams join your sprint rituals, your repository and your code standards. We are also happy to be measured on how well your team can maintain the system after we leave, documentation and handover are part of every engagement.",
   },
 ];

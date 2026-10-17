@@ -33,7 +33,7 @@ export function ContactForm({
     const message = String(data.get("message") ?? "").trim();
 
     const subject = `Enquiry from ${name}${company ? `, ${company}` : ""}`;
-    const body = `${message}\n\n—\n${name}\n${email}${company ? `\n${company}` : ""}`;
+    const body = `${message}\n\n--\n${name}\n${email}${company ? `\n${company}` : ""}`;
     window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(body)}`;
@@ -96,9 +96,10 @@ export function ContactForm({
           {submitLabel}
         </button>
         <p className={sent ? "mt-4 text-xs text-ink-500" : "sr-only"} role={sent ? "status" : undefined}>
+          {/* Draft wording: confirm the final caption with the technical writer. */}
           {sent
-            ? "Your email client should have opened with the message ready to send."
-            : "Opens your email client with the details filled in."}
+            ? "Thank you. Your message is ready in your email app. Press Send there and we will reply within one business day."
+            : "Opens your email app with your details filled in, addressed to our team."}
         </p>
       </div>
     </form>

@@ -76,24 +76,30 @@ export function HomeColdFusion() {
                 </div>
               </div>
 
-              <ZoomImage className="relative mt-10 aspect-[976/756] overflow-hidden rounded-3xl lg:mt-0">
-                {/* Photo and caption scale together (one `data-zoom-media`
-                    layer), so the live caption stays locked over the one baked
-                    into the source image throughout the zoom. */}
-                <div data-zoom-media className="absolute inset-0">
-                  <Image
-                    src={cf.image}
-                    alt={cf.imageAlt}
-                    fill
-                    sizes="(min-width: 1024px) 496px, 90vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute bottom-6 left-6 flex w-80 max-w-[calc(100%-3rem)] flex-col justify-center rounded-2xl bg-[#151733]/95 p-6 ring-1 ring-white/10">
-                    <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-brand-500">{cf.badgeTitle}</p>
-                    <p className="mt-2 text-[13px] leading-5 text-white">{cf.badgeBody}</p>
+              <div className="mt-10 lg:mt-0">
+                <ZoomImage className="relative aspect-[976/756] overflow-hidden rounded-3xl">
+                  {/* Photo and caption scale together (one zoom layer) so the caption stays locked to the photo through the
+                      zoom. From sm up the caption sits over the photo; on a phone
+                      it would cover most of it, so it moves below (see next block). */}
+                  <div data-zoom-media className="absolute inset-0">
+                    <Image
+                      src={cf.image}
+                      alt={cf.imageAlt}
+                      fill
+                      sizes="(min-width: 1024px) 496px, 90vw"
+                      className="object-cover object-[50%_28%]"
+                    />
+                    <div className="absolute bottom-6 left-6 hidden w-80 max-w-[calc(100%-3rem)] flex-col justify-center rounded-2xl bg-[#151733]/95 p-6 ring-1 ring-white/10 sm:flex">
+                      <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-brand-500">{cf.badgeTitle}</p>
+                      <p className="mt-2 text-[13px] leading-5 text-white">{cf.badgeBody}</p>
+                    </div>
                   </div>
+                </ZoomImage>
+                <div className="mt-4 rounded-2xl bg-[#151733] p-5 ring-1 ring-white/10 sm:hidden">
+                  <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-brand-500">{cf.badgeTitle}</p>
+                  <p className="mt-2 text-[13px] leading-5 text-white">{cf.badgeBody}</p>
                 </div>
-              </ZoomImage>
+              </div>
             </div>
 
             <div className="border-t border-white/10 p-6 sm:px-12 sm:pb-14 sm:pt-12">

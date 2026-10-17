@@ -93,11 +93,10 @@ export const site = {
    * every page is worse than no link. Order here is the order in the footer.
    */
   social: {
-    x: "https://x.com/infoanetech",
+    x: "https://twitter.com/infoanetech",
     facebook: "https://www.facebook.com/infoanetech/",
-    linkedin: "https://www.linkedin.com/company/infoane-technologies-pvt--ltd/",
+    linkedin: "https://www.linkedin.com/company/infoane-technologies-pvt--ltd",
     instagram: "https://www.instagram.com/infoanetech/",
-    telegram: "https://t.me/infoane",
   },
 
   /**

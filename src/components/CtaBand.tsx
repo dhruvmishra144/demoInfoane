@@ -42,7 +42,7 @@ export function CtaBand({
               </h2>
               <p className="mt-5 leading-relaxed text-ink-300 lg:text-lg">
                 {body ??
-                  `Book a free ${promises.consultationLength} consultation. You will talk to an engineer, not an account manager, and you will leave with a concrete opinion on your options — whether or not you hire us.`}
+                  `Book a free ${promises.consultationLength} consultation. You will talk to an engineer, not an account manager, and you will leave with a concrete opinion on your options | whether or not you hire us.`}
               </p>
               <div className="mt-9 flex flex-wrap gap-3">
                 <Button href={routes.contact} variant="light">

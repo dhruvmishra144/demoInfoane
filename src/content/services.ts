@@ -62,7 +62,7 @@ export const servicePages: ServicePage[] = [
     ],
     intro: [
       "Off-the-shelf software is cheaper right up to the point where your process has to bend to fit it. When the workaround spreadsheets start multiplying, or when the thing that makes you competitive is the thing no vendor sells, custom software stops being a luxury.",
-      "We build web applications, mobile apps and the back-office systems behind them — starting with a discovery phase that establishes what is actually worth building before anyone writes production code.",
+      "We build web applications, mobile apps and the back-office systems behind them, starting with a discovery phase that establishes what is actually worth building before anyone writes production code.",
     ],
     signals: [
       "Your team maintains spreadsheets to work around the software you bought",
@@ -73,7 +73,7 @@ export const servicePages: ServicePage[] = [
     sections: [
       {
         title: "Discovery before code",
-        body: "We interview the people who will use the system, watch the current process, and write down what we found. You get a scope, an architecture with options and trade-offs, and a costed plan — a document that is useful even if you build it with someone else.",
+        body: "We interview the people who will use the system, watch the current process, and write down what we found. You get a scope, an architecture with options and trade-offs, and a costed plan: a document that is useful even if you build it with someone else.",
       },
       {
         title: "Web and mobile applications",
@@ -81,7 +81,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         title: "APIs and integration",
-        body: "Most enterprise software is mostly integration. We design the API layer first, document it, and treat every third-party system as something that will eventually be slow or down — so your application degrades instead of failing.",
+        body: "Most enterprise software is mostly integration. We design the API layer first, document it, and treat every third-party system as something that will eventually be slow or down, so your application degrades instead of failing.",
       },
       {
         title: "Handover you can maintain",
@@ -115,7 +115,7 @@ export const servicePages: ServicePage[] = [
       {
         question: "Can you take over an existing project?",
         answer:
-          "Yes. We start with a short technical audit — code quality, test coverage, deployment process and the risks nobody has written down — and give you an honest read on whether to continue, refactor or restart before we quote the work.",
+          "Yes. We start with a short technical audit, code quality, test coverage, deployment process and the risks nobody has written down, and give you an honest read on whether to continue, refactor or restart before we quote the work.",
       },
       {
         question: "What happens if requirements change mid-project?",
@@ -143,7 +143,7 @@ export const servicePages: ServicePage[] = [
     ],
     intro: [
       "Most disappointing cloud migrations were lift-and-shift projects: the same architecture, now billed by the hour. The bill goes up, nothing gets faster, and the team concludes the cloud was oversold.",
-      "We assess what should move, what should be re-architected first, and what should stay where it is — then migrate in stages, each with a rollback path.",
+      "We assess what should move, what should be re-architected first, and what should stay where it is, then migrate in stages, each with a rollback path.",
     ],
     signals: [
       "Cloud spend is growing faster than usage and nobody can explain the invoice",
@@ -162,7 +162,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         title: "CI/CD and Kubernetes",
-        body: "Pipelines that build, test and deploy on merge, with environments that match production. Kubernetes where the workload justifies it — and managed services where it does not, because a cluster nobody wants to operate is a liability.",
+        body: "Pipelines that build, test and deploy on merge, with environments that match production. Kubernetes where the workload justifies it, and managed services where it does not, because a cluster nobody wants to operate is a liability.",
       },
       {
         title: "Cost and performance optimization",
@@ -197,7 +197,7 @@ export const servicePages: ServicePage[] = [
       {
         question: "Which cloud provider should we choose?",
         answer:
-          "Whichever your team can operate and your existing agreements favour. We work across AWS, Azure and Google Cloud, and we will say when a multi-cloud setup adds cost and complexity without adding resilience — which is most of the time.",
+          "Whichever your team can operate and your existing agreements favour. We work across AWS, Azure and Google Cloud, and we will say when a multi-cloud setup adds cost and complexity without adding resilience, which is most of the time.",
       },
       {
         question: "Can you reduce our existing cloud bill without migrating?",
@@ -214,7 +214,7 @@ export const servicePages: ServicePage[] = [
     heading: "Legacy application modernization services",
     metaTitle: "Legacy Application Modernization Services",
     metaDescription:
-      "Modernize legacy applications incrementally — monolith decomposition, framework and database upgrades, phased cutover with rollback. No big-bang rewrites.",
+      "Modernize legacy applications incrementally, monolith decomposition, framework and database upgrades, phased cutover with rollback. No big-bang rewrites.",
     navDescription: "Refactor and re-platform legacy systems",
     summary:
       "Refactor or re-platform the systems your business depends on, incrementally, so you retire technical debt without a risky big-bang rewrite.",
@@ -236,7 +236,7 @@ export const servicePages: ServicePage[] = [
     sections: [
       {
         title: "Audit and risk map",
-        body: "We map the codebase, its dependencies, its data and its actual usage — which features are used, and by whom. Plenty of modernization budget gets spent rebuilding functionality nobody has opened in two years.",
+        body: "We map the codebase, its dependencies, its data and its actual usage, which features are used, and by whom. Plenty of modernization budget gets spent rebuilding functionality nobody has opened in two years.",
       },
       {
         title: "Incremental decomposition",
@@ -274,7 +274,7 @@ export const servicePages: ServicePage[] = [
       {
         question: "Should we rewrite or refactor?",
         answer:
-          "Refactor unless the platform itself is the constraint — an unsupported runtime, a language you cannot hire for, or a data model that blocks every roadmap item. Even then we replace it in slices rather than all at once. The audit gives you the evidence to make that call rather than an opinion.",
+          "Refactor unless the platform itself is the constraint: an unsupported runtime, a language you cannot hire for, or a data model that blocks every roadmap item. Even then we replace it in slices rather than all at once. The audit gives you the evidence to make that call rather than an opinion.",
       },
       {
         question: "Can you work on a system with no documentation and no tests?",
@@ -306,7 +306,7 @@ export const servicePages: ServicePage[] = [
       "Data quality and governance",
     ],
     intro: [
-      "Two departments bring different revenue numbers to the same meeting, and the meeting becomes about whose spreadsheet is right. The data exists — it is spread across a CRM, an ERP, a payment processor and a folder of exports, with no agreed definition of a customer.",
+      "Two departments bring different revenue numbers to the same meeting, and the meeting becomes about whose spreadsheet is right. The data exists: it is spread across a CRM, an ERP, a payment processor and a folder of exports, with no agreed definition of a customer.",
       "We build the pipelines, the model and the definitions that make one number the number, then put it in front of the people who need it without a ticket queue in between.",
     ],
     signals: [
@@ -330,7 +330,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         title: "Governance and quality",
-        body: "Freshness and volume tests, documented ownership per dataset, access control by role, and PII handled deliberately — masked or tokenised, with retention rules that match your obligations.",
+        body: "Freshness and volume tests, documented ownership per dataset, access control by role, and PII handled deliberately, masked or tokenised, with retention rules that match your obligations.",
       },
     ],
     deliverables: [
@@ -356,7 +356,7 @@ export const servicePages: ServicePage[] = [
       {
         question: "Do we need a data warehouse, or is a database enough?",
         answer:
-          "If reporting queries are slowing your production database, or you need to join data from several systems, you need a warehouse. Below that, a well-modelled read replica is often enough — and we will tell you when that is the answer.",
+          "If reporting queries are slowing your production database, or you need to join data from several systems, you need a warehouse. Below that, a well-modelled read replica is often enough, and we will tell you when that is the answer.",
       },
       {
         question: "How long before we see the first dashboard?",
@@ -378,10 +378,10 @@ export const servicePages: ServicePage[] = [
     heading: "AI and intelligent automation services",
     metaTitle: "AI Consulting & Intelligent Automation Services",
     metaDescription:
-      "AI consulting and automation services: LLM assistants, RAG over your own content, document processing and workflow automation — with evaluation built in.",
+      "AI consulting and automation services: LLM assistants, RAG over your own content, document processing and workflow automation, with evaluation built in.",
     navDescription: "LLM assistants, RAG and automation",
     summary:
-      "Put AI where it pays for itself — document processing, support triage, forecasting and internal copilots — with evaluation built in from day one.",
+      "Put AI where it pays for itself, document processing, support triage, forecasting and internal copilots, with evaluation built in from day one.",
     bullets: [
       "LLM assistants and RAG over your own content",
       "Workflow and back-office automation",
@@ -408,7 +408,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         title: "Document and workflow automation",
-        body: "Extraction from invoices, claims, contracts and forms, wired into the systems that consume them — with confidence thresholds that route uncertain cases to a person instead of guessing.",
+        body: "Extraction from invoices, claims, contracts and forms, wired into the systems that consume them, with confidence thresholds that route uncertain cases to a person instead of guessing.",
       },
       {
         title: "Evaluation and guardrails",
@@ -485,7 +485,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         title: "Managed pods",
-        body: "A self-sufficient unit — engineers, QA, and a lead — that owns a slice of the roadmap end to end. Best when you want an outcome delivered without adding management load to your own leads.",
+        body: "A self-sufficient unit, engineers, QA, and a lead, that owns a slice of the roadmap end to end. Best when you want an outcome delivered without adding management load to your own leads.",
       },
       {
         title: "How we staff",
@@ -493,7 +493,7 @@ export const servicePages: ServicePage[] = [
       },
       {
         title: "Continuity and knowledge transfer",
-        body: "Documentation and pairing are part of the engagement, not a phase at the end. If someone rotates off, the context does not leave with them — and neither does your ability to run the system without us.",
+        body: "Documentation and pairing are part of the engagement, not a phase at the end. If someone rotates off, the context does not leave with them, and neither does your ability to run the system without us.",
       },
     ],
     deliverables: [
@@ -520,12 +520,12 @@ export const servicePages: ServicePage[] = [
       {
         question: "How is this different from hiring a contractor?",
         answer:
-          "Continuity and bench depth. If someone is unavailable we cover the role, and their context is already documented and shared. You also get access to specialists — DevOps, QA automation, data — for part of a role rather than having to hire a whole one.",
+          "Continuity and bench depth. If someone is unavailable we cover the role, and their context is already documented and shared. You also get access to specialists, DevOps, QA automation, data, for part of a role rather than having to hire a whole one.",
       },
       {
         question: "Which time zones do you work in?",
         answer:
-          "We staff for a minimum overlap with your working day — [4] hours or more by default — because standups and code review need real-time conversation. Full time-zone alignment is available where the work demands it.",
+          "We staff for a minimum overlap with your working day, [4] hours or more by default, because standups and code review need real-time conversation. Full time-zone alignment is available where the work demands it.",
       },
       {
         question: "What is the minimum engagement?",

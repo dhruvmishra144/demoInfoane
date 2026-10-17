@@ -153,7 +153,7 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
             {/* The sliding pill: glides to whichever link is hovered or
                 focused, and rests behind the current section otherwise.
                 Positioned against the header container (the list is left
-                static on purpose — a positioned list would also become the
+                static on purpose: a positioned list would also become the
                 mega panels' containing block and shrink them to its width). */}
             <li
               ref={pillRef}

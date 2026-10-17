@@ -132,7 +132,7 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
       label: "Services grid",
       eyebrow: "What we do",
       title: "Software and cloud services, end to end",
-      lead: "Six practices covering the whole lifecycle — from the first architecture decision to running the system at scale. Most clients start with one and expand.",
+      lead: "Six practices covering the whole lifecycle, from the first architecture decision to running the system at scale. Most clients start with one and expand.",
       ctaLabel: "All services",
     },
     {
@@ -154,7 +154,7 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
       label: "Tech stack",
       eyebrow: "Technology",
       title: "We work in the stack you already run",
-      lead: "We pick the boring, proven tool unless there is a specific reason not to — a stack you can still hire for in five years matters more than one that is exciting this quarter. You inherit the maintenance, not us.",
+      lead: "We pick the boring, proven tool unless there is a specific reason not to: a stack you can still hire for in five years matters more than one that is exciting this quarter. You inherit the maintenance, not us.",
       ctaLabel: "See our full stack",
       bullets: [
         "Managed services over self-hosted, unless there is a reason",
@@ -162,7 +162,7 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
         "Nothing load-bearing without a maintained release history",
       ],
       footnote:
-        "This reflects what our clients run, not the limit of what we will work on — and we would rather tell you we are not a fit than learn your platform on your budget.",
+        "This reflects what our clients run, not the limit of what we will work on, and we would rather tell you we are not a fit than learn your platform on your budget.",
     },
     {
       key: "work",
@@ -192,7 +192,7 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
       label: "FAQ",
       eyebrow: "FAQ",
       title: "Your questions, answered",
-      lead: "If yours is not here, ask it on the call — we would rather answer it before you sign than after.",
+      lead: "If yours is not here, ask it on the call: we would rather answer it before you sign than after.",
       ctaLabel: "Contact us",
     },
     {
@@ -200,7 +200,7 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
       label: "Closing CTA",
       eyebrow: "Start your journey",
       title: "Let’s start building something great together",
-      lead: "Book a free {consultationLength} consultation. You will talk to an engineer, not an account manager, and you will leave with a concrete opinion on your options — whether or not you hire us.",
+      lead: "Book a free {consultationLength} consultation. You will talk to an engineer, not an account manager, and you will leave with a concrete opinion on your options, whether or not you hire us.",
     },
   ],
 
@@ -210,7 +210,7 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
       label: "Principles",
       eyebrow: "How we operate",
       title: "Six things we hold to",
-      lead: "These are commitments, not values on a wall. Hold us to them — and tell us when we slip.",
+      lead: "These are commitments, not values on a wall. Hold us to them, and tell us when we slip.",
     },
     {
       key: "leadership",
@@ -231,7 +231,7 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
       label: "Offices",
       eyebrow: "Where we are",
       title: "Our offices",
-      lead: "Delivery teams work with an overlap to your business hours — the location matters less than the overlap, and we staff for the overlap.",
+      lead: "Delivery teams work with an overlap to your business hours: the location matters less than the overlap, and we staff for the overlap.",
     },
   ],
 
@@ -299,7 +299,7 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
       label: "Sector list",
       eyebrow: "Sector experience",
       title: "Where we have delivered",
-      lead: "Each of these carries constraints that shape architecture rather than decorate it — regulatory scope, uptime expectations, and the systems you cannot replace.",
+      lead: "Each of these carries constraints that shape architecture rather than decorate it, regulatory scope, uptime expectations, and the systems you cannot replace.",
     },
   ],
 
@@ -395,7 +395,7 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
       label: "Start with a service",
       eyebrow: "Or start with a service",
       title: "Know what you need already?",
-      lead: "Go straight to the relevant service page — each one lists what the engagement involves and what you receive.",
+      lead: "Go straight to the relevant service page: each one lists what the engagement involves and what you receive.",
     },
   ],
 
@@ -436,13 +436,13 @@ export const pageSectionDefaults: Record<PageSlug, SectionDefault[]> = {
  */
 export const sharedCtaBand = {
   heading: "Tell us what is slowing your systems down",
-  body: "Book a free {consultationLength} consultation. You will talk to an engineer, not an account manager, and you will leave with a concrete opinion on your options — whether or not you hire us.",
+  body: "Book a free {consultationLength} consultation. You will talk to an engineer, not an account manager, and you will leave with a concrete opinion on your options, whether or not you hire us.",
 };
 
 export const pageCtaBandDefaults: Partial<Record<PageSlug, { heading: string; body: string }>> = {
   services: {
     heading: "Not sure which service you need?",
-    body: "Describe the problem rather than the solution. We will tell you which of these applies — or that configuration solves it and you should keep your budget.",
+    body: "Describe the problem rather than the solution. We will tell you which of these applies, or that configuration solves it and you should keep your budget.",
   },
   careers: {
     heading: "Not seeing your role?",
@@ -450,15 +450,15 @@ export const pageCtaBandDefaults: Partial<Record<PageSlug, { heading: string; bo
   },
   industries: {
     heading: "Your sector not listed?",
-    body: "Domain knowledge transfers further than most agencies admit — the constraints that matter are usually regulatory, data-shaped or uptime-driven rather than industry-specific. Describe yours and we will tell you honestly whether we are a fit.",
+    body: "Domain knowledge transfers further than most agencies admit: the constraints that matter are usually regulatory, data-shaped or uptime-driven rather than industry-specific. Describe yours and we will tell you honestly whether we are a fit.",
   },
   technology: {
     heading: "Working in a stack we have not listed?",
-    body: "Ask. The list reflects what our clients run, not the limit of what we will work on — and we would rather tell you we are not the right fit than learn your platform on your budget.",
+    body: "Ask. The list reflects what our clients run, not the limit of what we will work on, and we would rather tell you we are not the right fit than learn your platform on your budget.",
   },
   "case-studies": {
     heading: "Want to talk to one of these clients?",
-    body: "We will put you in touch with a reference whose problem resembled yours. Ask them what happened when something went wrong — that is the answer worth having.",
+    body: "We will put you in touch with a reference whose problem resembled yours. Ask them what happened when something went wrong: that is the answer worth having.",
   },
 };
 
@@ -476,7 +476,7 @@ export const homeHeroDefaults = {
     "Stakeholder interviews and system audit",
     "Target architecture, with trade-offs",
     "Written scope, timeline and costed plan",
-    "Yours to keep — even if you stop there",
+    "Yours to keep, even if you stop there",
   ],
 };
 
@@ -552,7 +552,7 @@ export const pageLabelDefaults: Partial<Record<PageSlug, LabelDefault[]>> = {
       key: "testimonials.extraBody",
       label: "Extra card — body",
       value:
-        "Documentation, tests and a recorded walkthrough are part of every engagement — not an upsell at the end.",
+        "Documentation, tests and a recorded walkthrough are part of every engagement, not an upsell at the end.",
       group: "Testimonials",
     },
 
@@ -585,7 +585,7 @@ export const pageLabelDefaults: Partial<Record<PageSlug, LabelDefault[]>> = {
       key: "testimonials.extraBody",
       label: "Extra card — body",
       value:
-        "Documentation, tests and a recorded walkthrough are part of every engagement — not an upsell at the end.",
+        "Documentation, tests and a recorded walkthrough are part of every engagement, not an upsell at the end.",
       group: "Testimonials",
     },
   ],
@@ -701,6 +701,7 @@ export const navMenuDefaults: Record<
     items: [
       { label: "Privacy", href: "/privacy-policy", description: "", parent: "", group: "" },
       { label: "Terms", href: "/terms", description: "", parent: "", group: "" },
+      { label: "Sitemap", href: "/site-map", description: "", parent: "", group: "" },
     ],
   },
 };
@@ -710,7 +711,7 @@ export const headerDefaults = {
   ctaLabel: "Contact",
   promoHeading: "Not sure where to start?",
   promoBody:
-    "Describe the problem rather than the solution. We will tell you which service applies — or that you do not need us.",
+    "Describe the problem rather than the solution. We will tell you which service applies, or that you do not need us.",
   promoCtaLabel: "Book a free consultation",
   promoCtaHref: "/contact",
   serviceGroupPrimary: "Build & modernise",
@@ -720,10 +721,10 @@ export const headerDefaults = {
 };
 
 export const footerDefaults = {
-  blurb: "Engineering partner for companies who've outgrown their own roadmap.",
+  blurb: "Software development and IT services for businesses in the United States, India, and other markets.",
   newsletterHeading: "Sign up for our newsletter",
   newsletterBody:
-    "Occasional notes on modernisation, cloud cost and delivery — no more than once a month.",
+    "Occasional notes on modernisation, cloud cost and delivery: no more than once a month.",
   newsletterPlaceholder: "you@company.com",
   newsletterCtaLabel: "Subscribe",
   pagesHeading: "Quick Links",

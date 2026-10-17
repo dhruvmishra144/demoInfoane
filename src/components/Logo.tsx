@@ -21,7 +21,7 @@ export function Logo({
     <Link
       href="/"
       className="group inline-flex items-center gap-3"
-      aria-label={`${name} — home`}
+      aria-label={`${name} home`}
     >
       <svg
         viewBox="0 0 84 84"

@@ -132,7 +132,7 @@ export default async function CaseStudiesPage() {
 
       <CtaBand
         heading="Want to talk to one of these clients?"
-        body="We will put you in touch with a reference whose problem resembled yours. Ask them what happened when something went wrong — that is the answer worth having."
+        body="We will put you in touch with a reference whose problem resembled yours. Ask them what happened when something went wrong: that is the answer worth having."
         settings={settings}
       />
     </>

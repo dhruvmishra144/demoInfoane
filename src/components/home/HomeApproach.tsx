@@ -28,41 +28,41 @@ export function HomeApproach() {
           </h2>
         </ScrollReveal>
 
-        {/* Photo and approach copy stay pinned while the steps scroll past;
-            the step nearest the middle of the screen is in focus and the rail
-            beside them fills as you go. */}
-        <div className="mt-14 grid items-start gap-10 md:grid-cols-2 lg:grid-cols-[320px_320px_464px] lg:justify-between lg:gap-12">
+        {/* Two balanced columns: photo over the approach copy on the left (it
+            stays pinned while the steps scroll past), the five steps on the
+            right. The step nearest the middle of the screen is in focus and the
+            rail beside them fills as you go. */}
+        <div className="mt-14 grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
           <div className="lg:sticky lg:top-32">
-            <ZoomImage className="relative aspect-square overflow-hidden rounded-2xl">
+            <ZoomImage className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
                 src={approach.image}
                 alt={approach.imageAlt}
                 fill
-                sizes="(min-width: 1024px) 320px, (min-width: 768px) 45vw, 90vw"
-                className="object-cover"
+                sizes="(min-width: 1024px) 560px, 90vw"
+                className="object-cover object-[50%_30%]"
               />
             </ZoomImage>
+            <ScrollReveal variant="blur" stagger={0.1} className="mt-6">
+              <p data-reveal-item className="eyebrow">
+                {approach.leadLabel}
+              </p>
+              <p data-reveal-item className="mt-3 max-w-[34rem] text-[15px] leading-6 text-body [text-wrap:wrap]">
+                {approach.lead}
+              </p>
+            </ScrollReveal>
           </div>
 
-          <ScrollReveal variant="blur" stagger={0.1} className="lg:sticky lg:top-32">
-            <p data-reveal-item className="eyebrow">
-              {approach.leadLabel}
-            </p>
-            <p data-reveal-item className="mt-4 text-[15px] leading-6 text-body [text-wrap:wrap]">
-              {approach.lead}
-            </p>
-          </ScrollReveal>
-
-          <StepFocus as="div" className="relative pl-7 md:col-span-2 lg:col-span-1">
+          <StepFocus as="div" className="relative pl-7">
             <span className="absolute inset-y-6 left-0 w-0.5 overflow-hidden rounded-full bg-ink-200" aria-hidden="true">
               <span data-rail-fill className="block h-full w-full origin-top rounded-full bg-brand-500" />
             </span>
-            <ol className="space-y-5">
+            <ol className="space-y-4">
             {approach.steps.map((step, index) => (
               <li
                 key={step.title}
                 data-step
-                className="flex gap-5 rounded-2xl border border-ink-200 bg-white px-6 py-[22px] transition-colors duration-300 hover:border-brand-200"
+                className="flex gap-5 rounded-2xl border border-ink-200 bg-white px-5 py-4 transition-colors duration-300 hover:border-brand-200"
               >
                 <span className="relative mt-0.5 inline-flex h-14 w-14 shrink-0" aria-hidden="true">
                   <span data-ping className="absolute inset-0 rounded-2xl bg-brand-500 opacity-0" />

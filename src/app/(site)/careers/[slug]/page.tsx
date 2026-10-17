@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const job = findJob(slug);
   if (!job) return {};
   return {
-    title: `${job.title} — Careers`,
+    title: `${job.title} | Careers`,
     description: metaDescription(job),
     alternates: { canonical: jobHref(job.slug) },
   };

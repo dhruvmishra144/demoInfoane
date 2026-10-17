@@ -65,7 +65,7 @@ export function Showcase() {
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
                       <p className="text-base font-semibold text-ink-900">
-                        Sprint 14 — Payments modernisation
+                        Sprint 14, Payments modernisation
                       </p>
                       <p className="mt-1 text-xs text-ink-400">
                         6 of 9 stories accepted · demo Friday
