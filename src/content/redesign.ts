@@ -81,7 +81,6 @@ export const foundedYear = "2011";
 
 export const home = {
   hero: {
-    eyebrow: "Software Development & IT Services",
     headline: "Software Development & IT Services That Move Your Business Forward",
     subhead:
       "Build, modernize, and support the software and systems your business depends on. Infoane Technologies helps businesses develop applications, improve existing platforms, and manage the technology behind their operations.",
