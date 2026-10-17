@@ -507,6 +507,33 @@ export const home = {
       },
     ],
   },
+  // Three client reviews supplied by the client. Names, companies and the
+  // leader's name are placeholders here: fill them from the approved review
+  // document, with each reviewer's written permission to publish.
+  reviews: {
+    eyebrow: "Client reviews",
+    title: "What Our Clients Say",
+    items: [
+      {
+        quote:
+          "Infoane has earned our complete trust. In five years of partnership with [COMPANY], they have never let us down. They consistently deliver quality results, stand behind their work, and follow through on their commitments. When the work matters and we need a team we can count on, Infoane is who we trust. We wouldn't put that responsibility in anyone else's hands. They are an invaluable partner, and they have our strongest recommendation.",
+        author: "[CLIENT NAME]",
+        role: "[TITLE], [COMPANY]",
+      },
+      {
+        quote:
+          "I have used Infoane for Oracle/SQL Database and Production application support for over six years as the Director of IT at [COMPANY]. Infoane continuously went above and beyond my expectations, delivering top-of-the-notch 24/7 support to our Production environment. [LEADER NAME] and his team made us feel as if we were their most important customer. I am happy to see that they have expanded their services and would leverage Infoane's services if the need arises.",
+        author: "[CLIENT NAME]",
+        role: "[TITLE], [COMPANY]",
+      },
+      {
+        quote:
+          "Infoane has been a great partner for almost four years now. Their team provides excellent technical service and expertise and a great business relationship, with the flexibility we need and consistency in our contact points. Regularly, they go beyond their support hours and weekends to continue to provide excellent service. I would certainly recommend them to anyone.",
+        author: "[CLIENT NAME]",
+        role: "[TITLE], [COMPANY]",
+      },
+    ],
+  },
   faq: {
     eyebrow: "FAQ",
     title: "Frequently Asked Questions",
@@ -574,13 +601,13 @@ export const aboutPage = {
   hero: {
     eyebrow: "About us",
     title: "We build systems that keep engineering teams moving.",
-    body: `Founded in ${foundedYear} on a simple premise — companies shouldn't have to choose between speed and stability. We embed directly into product teams, clearing roadblocks and scaling architectures so the work never stops.`,
+    body: `Founded in ${foundedYear} on a simple premise: companies shouldn't have to choose between speed and stability. We embed directly into product teams, clearing roadblocks and scaling architectures so the work never stops.`,
   },
   visionMission: "Vision & mission",
   mission: {
     eyebrow: "Our mission",
     title: "To turn technical debt into operational leverage.",
-    body: "We believe the best systems are invisible. Our mission is to embed senior engineers who solve the hardest bottlenecks — so that internal product roadmaps are driven by choice, not by technical limitations.",
+    body: "We believe the best systems are invisible. Our mission is to embed senior engineers who solve the hardest bottlenecks, so that internal product roadmaps are driven by choice, not by technical limitations.",
     image: "/images/mission-team.webp",
     imageAlt: "Infoane engineers talking around a meeting table",
   },
@@ -594,7 +621,7 @@ export const aboutPage = {
   trusted: {
     eyebrow: "Trusted by",
     title: "Engineering partners to world-class teams.",
-    lead: "From healthcare platforms to fintech infrastructure — we've shipped alongside the best.",
+    lead: "From healthcare platforms to fintech infrastructure: we've shipped alongside the best.",
     // Naming a client publicly needs their written permission. Confirm each
     // one before launch, and remove any that has not agreed.
     clients: [
@@ -643,7 +670,7 @@ export const aboutPage = {
     quotes: [
       {
         quote:
-          "Infoane didn't just rebuild our claims platform — they taught our team how to think about it differently. Latency dropped 90% and our roadmap opened up overnight.",
+          "Infoane didn't just rebuild our claims platform: they taught our team how to think about it differently. Latency dropped 90% and our roadmap opened up overnight.",
         role: "VP of Engineering",
         company: "[Client company]",
       },
@@ -655,7 +682,7 @@ export const aboutPage = {
       },
       {
         quote:
-          "What sets Infoane apart is their willingness to own the outcome. They don't just consult — they ship. Our database architecture is unrecognizable, in the best way.",
+          "What sets Infoane apart is their willingness to own the outcome. They don't just consult: they ship. Our database architecture is unrecognizable, in the best way.",
         role: "Director of Platform Engineering",
         company: "[Client company]",
       },
@@ -664,8 +691,8 @@ export const aboutPage = {
   },
   leadership: {
     eyebrow: "Leadership",
-    title: "Accountable for your engineering outcome.",
-    lead: "Our leaders are hands-on architects who have shipped major platforms. Direct engineering accountability, no intermediaries.",
+    title: "Technical leadership behind our delivery.",
+    lead: "Technical expertise across databases, legacy systems, infrastructure, and delivery.",
     groups: ["Operations", "Delivery"],
     // Names, roles and photos as supplied with the design.
     people: [
@@ -673,28 +700,28 @@ export const aboutPage = {
         group: 0,
         name: "Mohan Duggi",
         role: "CEO",
-        bio: "Ph.D. in distributed databases. Directly manages our 24/7 monitoring and core delivery squads across Hyderabad.",
+        bio: "Ph.D. in distributed databases. Oversees 24/7 monitoring and core delivery teams in Hyderabad.",
         photo: "/images/leader-mohan-duggi.webp",
       },
       {
         group: 0,
         name: "Steve Goldner",
         role: "Head of USA Operations",
-        bio: "Legacy systems expert who has guided 50+ CF and database transitions without a single minute of unexpected downtime.",
+        bio: "Legacy systems expertise across ColdFusion and database transitions.",
         photo: "/images/leader-steve-goldner.webp",
       },
       {
         group: 1,
         name: "Rohit Uppaluri",
         role: "Delivery",
-        bio: "Former platform lead with 18+ years in systems infrastructure. Built Infoane from an independent consultancy to a global partner.",
+        bio: "18+ years of experience in systems infrastructure and platform engineering.",
         photo: "/images/leader-rohit-uppaluri.webp",
       },
       {
         group: 1,
         name: "Archana Nagarajan",
         role: "Delivery",
-        bio: "Delivery specialist with deep expertise in cross-functional team coordination and on-time engineering execution across global programs.",
+        bio: "Delivery expertise in cross-functional team coordination and engineering execution across global programs.",
         photo: "/images/leader-archana-nagarajan.webp",
       },
     ],
@@ -713,7 +740,7 @@ export const aboutPage = {
 export const aiPage = {
   metaTitle: "AI Engineering & Safety",
   metaDescription:
-    "Custom retrieval architectures, predictive models and AI-assisted testing — built into your production systems with data isolation and human oversight.",
+    "Custom retrieval architectures, predictive models and AI-assisted testing, built into your production systems with data isolation and human oversight.",
   hero: {
     eyebrow: "Capabilities",
     title: "Where AI transforms real-world production",
@@ -839,7 +866,7 @@ export const careersRedesign = {
   hero: {
     eyebrow: "Careers at Infoane",
     title: "Join our team of builders, architects, and systems engineers.",
-    body: "We embed directly with world-class product teams to turn technical debt into operational leverage. No fluff, no endless decks — just clean systems that ship on time.",
+    body: "We embed directly with world-class product teams to turn technical debt into operational leverage. No fluff, no endless decks, just clean systems that ship on time.",
     primary: { label: "Explore Openings", href: routes.openings },
     secondary: { label: "Our Philosophy", href: routes.about },
   },

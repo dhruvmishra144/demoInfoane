@@ -69,7 +69,7 @@ export function ApplicationForm(props: Props) {
     let subject: string;
     let body: string;
     if (variant === "job") {
-      subject = `Application: ${props.jobTitle} — ${name}`;
+      subject = `Application: ${props.jobTitle} | ${name}`;
       body = [
         `Position: ${props.jobTitle}`,
         "",
@@ -84,7 +84,7 @@ export function ApplicationForm(props: Props) {
       ].join("\n");
     } else {
       const area = get("area");
-      subject = `General application: ${area} — ${name}`;
+      subject = `General application: ${area} | ${name}`;
       body = [
         "General application",
         "",

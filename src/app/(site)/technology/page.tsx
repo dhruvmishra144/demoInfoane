@@ -129,7 +129,7 @@ export default async function TechnologyPage() {
 
       <CtaBand
         heading="Working in a stack we have not listed?"
-        body="Ask. The list reflects what our clients run, not the limit of what we will work on — and we would rather tell you we are not the right fit than learn your platform on your budget."
+        body="Ask. The list reflects what our clients run, not the limit of what we will work on, and we would rather tell you we are not the right fit than learn your platform on your budget."
         settings={settings}
       />
     </>

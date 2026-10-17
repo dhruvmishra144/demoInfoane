@@ -11,7 +11,7 @@ import { site } from "@/config/site";
  * Swap in a designed 1200×630 asset later if marketing prefers one — replace
  * this file with `opengraph-image.png` and delete the component.
  */
-export const alt = `${site.name} — ${site.tagline}`;
+export const alt = `${site.name} | ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

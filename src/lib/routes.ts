@@ -26,6 +26,7 @@ export const routes = {
   contact: "/contact",
   privacy: "/privacy-policy",
   terms: "/terms",
+  siteMap: "/site-map",
 } as const;
 
 export function serviceHref(slug: string): string {
@@ -80,7 +81,7 @@ export const primaryNav: NavItem[] = [
     columns: [], // filled from content/services.ts
     feature: {
       heading: "Not sure where to start?",
-      body: "Describe the problem rather than the solution. We will tell you which service applies — or that you do not need us.",
+      body: "Describe the problem rather than the solution. We will tell you which service applies, or that you do not need us.",
       href: routes.contact,
       cta: "Book a free consultation",
     },

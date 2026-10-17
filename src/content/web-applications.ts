@@ -120,7 +120,7 @@ export const webApplications = {
     title: "Adobe ColdFusion partner & legacy modernization specialists",
     lead: "Legacy infrastructure shouldn't choke modern progress. We bridge the gap between historic platforms and modern runtime environments safely.",
     body: "For over a decade, we have remained at the absolute forefront of ColdFusion CFML development. We audit, refactor, and migrate complex CF platforms into modern cloud environments with zero operational downtime.",
-    note: "Proud attendees and speakers at Adobe ColdFusion Summit — staying at the forefront of ColdFusion innovation to bring the absolute best capabilities directly to your application suite.",
+    note: "Proud attendees and speakers at Adobe ColdFusion Summit, staying at the forefront of ColdFusion innovation to bring the absolute best capabilities directly to your application suite.",
     primaryCta: { label: "Book a CF Modernization Call", href: routes.contact },
     secondaryCta: { label: "See modernization case stories", href: routes.caseStudies },
     from: {

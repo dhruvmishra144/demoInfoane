@@ -83,7 +83,7 @@ export const industriesPage = {
   metaTitle: "Industries We Serve",
   // 156 characters — long enough to be useful, short enough not to be truncated.
   metaDescription:
-    "IT consulting and software development for financial services, healthcare, manufacturing, logistics, retail, SaaS and energy — with the compliance context.",
+    "IT consulting and software development for financial services, healthcare, manufacturing, logistics, retail, SaaS and energy, with the compliance context.",
   heading: "Industries we serve",
   intro: [
     "Regulated industries do not need engineers who learn the domain on the client's budget. These are the sectors where we have shipped repeatedly and already know which constraints are real.",
@@ -133,10 +133,10 @@ export const industriesPage = {
 export const technologyPage = {
   metaTitle: "Our Technology Stack",
   metaDescription:
-    "The technologies we build with: React, Next.js, .NET, Node.js, Python, AWS, Azure, Kubernetes, Snowflake, dbt and more — and how we choose between them.",
+    "The technologies we build with: React, Next.js, .NET, Node.js, Python, AWS, Azure, Kubernetes, Snowflake, dbt and more, and how we choose between them.",
   heading: "Technology we build with",
   intro: [
-    "We pick the boring, proven tool unless there is a specific reason not to. A stack you can still hire for in five years matters more than one that is exciting this quarter — you inherit the maintenance, not us.",
+    "We pick the boring, proven tool unless there is a specific reason not to. A stack you can still hire for in five years matters more than one that is exciting this quarter: you inherit the maintenance, not us.",
     "Below is what we work in most. If your stack is not listed, ask: the list reflects what clients run, not the limit of what we will work on.",
   ],
   groups: [
@@ -192,7 +192,7 @@ export const technologyPage = {
 export const caseStudiesPage = {
   metaTitle: "Case Studies & Client Results",
   metaDescription:
-    "How we helped clients modernize legacy systems, migrate to the cloud and ship faster — the problem, the approach and the measurable outcome in each case.",
+    "How we helped clients modernize legacy systems, migrate to the cloud and ship faster: the problem, the approach and the measurable outcome in each case.",
   heading: "Case studies",
   intro: [
     "Each of these is described the way we would describe it to your board: what was broken, what we did, and what changed as a result. Where a client cannot be named, the sector and the numbers are still real.",
@@ -218,7 +218,7 @@ export const careersPage = {
   hiringProcess: [
     { step: "01", title: "Application review", body: "A person reads it. You hear back either way within [one week]." },
     { step: "02", title: "Intro conversation", body: "[30] minutes on your background and what you want next." },
-    { step: "03", title: "Technical conversation", body: "A discussion of real problems — no whiteboard algorithm puzzles." },
+    { step: "03", title: "Technical conversation", body: "A discussion of real problems: no whiteboard algorithm puzzles." },
     { step: "04", title: "Offer", body: "Written offer with the salary band stated up front." },
   ],
   /**
@@ -286,7 +286,7 @@ export const servicesPage = {
     "Our services: custom software development, cloud migration and DevOps, legacy modernization, data engineering, AI automation and dedicated development teams.",
   heading: "What we do",
   intro: [
-    "Six practices covering the full lifecycle of a system — from the first architecture decision to running it at scale in production.",
+    "Six practices covering the full lifecycle of a system, from the first architecture decision to running it at scale in production.",
     "Most clients start with one and expand. If you are not sure which applies, describe the problem and we will tell you, including when the answer is that you do not need us.",
   ],
 };
@@ -313,15 +313,15 @@ export const privacyPage = {
     },
     {
       title: "What information we collect",
-      body: "[List each category: information submitted through forms or email, information collected automatically such as IP address and browser type, and anything collected via cookies or analytics. Be specific — vague categories are the most common weakness in a policy.]",
+      body: "[List each category: information submitted through forms or email, information collected automatically such as IP address and browser type, and anything collected via cookies or analytics. Be specific, vague categories are the most common weakness in a policy.]",
     },
     {
       title: "Why we collect it and our lawful basis",
-      body: "[For each purpose — answering enquiries, delivering services, recruitment, marketing — state the purpose and the lawful basis you rely on (consent, contract, legitimate interests, legal obligation).]",
+      body: "[For each purpose (answering enquiries, delivering services, recruitment, marketing), state the purpose and the lawful basis you rely on (consent, contract, legitimate interests, legal obligation).]",
     },
     {
       title: "Cookies and analytics",
-      body: "[Which cookies you set, which are strictly necessary, and which require consent. Name your analytics provider and link its policy. If you deploy anything beyond strictly necessary cookies, you need a consent banner before it loads — the site does not have one yet.]",
+      body: "[Which cookies you set, which are strictly necessary, and which require consent. Name your analytics provider and link its policy. If you deploy anything beyond strictly necessary cookies, you need a consent banner before it loads: the site does not have one yet.]",
     },
     {
       title: "Who we share information with",
@@ -333,7 +333,7 @@ export const privacyPage = {
     },
     {
       title: "Your rights",
-      body: "[Access, correction, deletion, portability, objection, and withdrawal of consent — plus how to exercise them, how quickly you will respond, and which regulator a visitor can complain to.]",
+      body: "[Access, correction, deletion, portability, objection, and withdrawal of consent, plus how to exercise them, how quickly you will respond, and which regulator a visitor can complain to.]",
     },
     {
       title: "Security",

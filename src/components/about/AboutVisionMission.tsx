@@ -13,12 +13,6 @@ export function AboutMission() {
   return (
     <ExpandPanel id="mission" className="relative isolate overflow-hidden bg-night py-14 lg:py-[60px]">
       <div className="accent-glow absolute inset-0 -z-10 opacity-60" aria-hidden="true" />
-      {/* Oversized ghost word, drifting slower than the page. */}
-      <Parallax speed={0.25} className="pointer-events-none absolute -right-10 top-4 -z-10 select-none">
-        <span className="block text-[12rem] font-bold leading-none tracking-tighter text-white/[0.03] lg:text-[22rem]" aria-hidden="true">
-          Mission
-        </span>
-      </Parallax>
 
       <div className="container-x grid items-center gap-10 lg:grid-cols-[1fr_440px] lg:gap-12">
         <ScrollReveal stagger={0.12} className="border-l border-brand-500/80 pl-5 lg:min-h-[318px] lg:pb-[78px] lg:pt-1">

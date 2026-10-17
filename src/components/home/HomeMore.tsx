@@ -83,6 +83,41 @@ function TechLogos({ item }: { item: Technology }) {
   );
 }
 
+/** Client reviews: three quotes in cards, with the reviewer's name and role beneath. */
+export function HomeReviews() {
+  const reviews = home.reviews;
+
+  return (
+    <section id="reviews" className="border-t border-ink-200/70 bg-[#f9fafb] py-24">
+      <div className="container-x">
+        <ScrollReveal>
+          <div data-reveal-item>
+            <Eyebrow>{reviews.eyebrow}</Eyebrow>
+          </div>
+          <h2 data-split className="mt-[17px] max-w-[760px] text-[36px] font-bold leading-[40px] [text-wrap:wrap]">
+            {reviews.title}
+          </h2>
+        </ScrollReveal>
+
+        <ScrollReveal as="ul" variant="up" stagger={0.1} className="mt-10 grid gap-6 lg:grid-cols-3">
+          {reviews.items.map((review, index) => (
+            <li key={index} data-reveal-item>
+              <figure className="flex h-full flex-col rounded-2xl border border-ink-200 bg-white p-7 shadow-[0_1px_3px_rgba(18,19,26,0.06)]">
+                <span className="block h-1 w-8 rounded-full bg-brand-500" aria-hidden="true" />
+                <blockquote className="mt-5 flex-1 text-[15px] leading-[26px] text-ink-700">“{review.quote}”</blockquote>
+                <figcaption className="mt-6 border-t border-ink-200 pt-5 text-[14px] leading-5">
+                  <span className="block font-semibold text-ink-900">{review.author}</span>
+                  <span className="mt-0.5 block text-ink-500">{review.role}</span>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
 /**
  * FAQ. Built on <details>/<summary>: keyboard accessible with no JavaScript,
  * and every answer is in the HTML whether or not its panel is open — which is

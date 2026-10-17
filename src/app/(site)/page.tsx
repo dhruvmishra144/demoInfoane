@@ -6,7 +6,7 @@ import { HomeAi, HomeServices } from "@/components/home/HomeServices";
 import { HomeApproach } from "@/components/home/HomeApproach";
 import { HomeContact, HomeIndustries } from "@/components/home/HomeIndustriesContact";
 import { HomeColdFusion, HomeWhy } from "@/components/home/HomeWhyColdFusion";
-import { HomeFaq, HomeTechnology } from "@/components/home/HomeMore";
+import { HomeFaq, HomeReviews, HomeTechnology } from "@/components/home/HomeMore";
 import { home as homeCopy } from "@/content/redesign";
 import { pageSchema } from "@/lib/schema";
 import { getItemOrFallback, getSettingsOrFallback } from "@/server/content/with-fallback";
@@ -32,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
 /**
  * Homepage. Section order follows the approved page mockup: hero, About,
  * ColdFusion spotlight, services, technology, AI, how we work, why Infoane,
- * industries, FAQ and the closing contact form. Copy is "Home Page Content
+ * industries, client reviews, FAQ and the closing contact form. Copy is "Home Page Content
  * Draft V3": no hero metrics, and no Trust or Careers sections.
  *
  * The FAQ is visible on the page, so its FAQPage structured data is valid —
@@ -49,7 +49,7 @@ export default async function HomePage() {
       <JsonLd
         data={pageSchema({
           path: "/",
-          name: `${settings.name} — ${settings.tagline}`,
+          name: `${settings.name} | ${settings.tagline}`,
           description: home.metaDescription,
           faqs: homeCopy.faq.items,
         })}
@@ -63,6 +63,7 @@ export default async function HomePage() {
       <HomeApproach />
       <HomeWhy />
       <HomeIndustries />
+      <HomeReviews />
       <HomeFaq />
       <HomeContact email={settings.contact.email} />
     </>

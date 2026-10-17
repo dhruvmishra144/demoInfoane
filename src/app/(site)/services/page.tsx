@@ -48,7 +48,7 @@ export default async function ServicesIndexPage() {
         eyebrow="Services"
         heading="What we do"
         intro={[
-          "Six practices covering the full lifecycle of a system — from the first architecture decision to running it at scale in production.",
+          "Six practices covering the full lifecycle of a system, from the first architecture decision to running it at scale in production.",
           "Most clients start with one and expand. If you are not sure which applies, describe the problem and we will tell you, including when the answer is that you do not need us.",
         ]}
         breadcrumbs={[]}
@@ -106,7 +106,7 @@ export default async function ServicesIndexPage() {
 
       <CtaBand
         heading="Not sure which service you need?"
-        body="Describe the problem rather than the solution. We will tell you which of these applies — or that configuration solves it and you should keep your budget."
+        body="Describe the problem rather than the solution. We will tell you which of these applies, or that configuration solves it and you should keep your budget."
         settings={settings}
       />
     </>

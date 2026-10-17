@@ -16,6 +16,14 @@ const SOCIAL_LABELS: Record<SocialNetwork, string> = {
   telegram: "Telegram",
 };
 
+/**
+ * DRAFT wording: have the technical writer, and legal, approve this before
+ * launch. It is a general website disclaimer, not a statement about any
+ * particular engagement.
+ */
+const DISCLAIMER =
+  "The information on this website is provided for general purposes only and does not constitute an offer, a contract, or a warranty. Services, technologies, and availability vary by engagement and are confirmed in a written agreement. Product, company, and technology names are trademarks of their respective owners and are used for identification only; their use does not imply endorsement or affiliation.";
+
 /** The four links the design's Company column carries. */
 const companyLinks = [
   { label: "About", href: routes.about },
@@ -133,7 +141,7 @@ export function SiteFooter({
           {/* Not a reveal item: it sits at the very bottom of the page, where a
               scroll trigger would never be reached. */}
           <p className="text-ink-500">
-            © {year} {settings.name}. Built for teams who ship.
+            © {year} {settings.name}. All rights reserved.
           </p>
           <ul className="flex flex-wrap gap-7 text-ink-500">
             {legalMenu.items.map((item) => (
@@ -145,6 +153,8 @@ export function SiteFooter({
             ))}
           </ul>
         </div>
+        {/* Draft wording: have the technical writer (and legal) approve before launch. */}
+        <p className="mt-6 max-w-4xl text-xs leading-5 text-ink-500">{DISCLAIMER}</p>
       </ScrollReveal>
     </footer>
   );

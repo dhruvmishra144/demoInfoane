@@ -34,7 +34,7 @@ export function EnquiryForm({
     const message = String(data.get("message") ?? "");
 
     const subject = `Enquiry from ${name}`;
-    const body = `${message}\n\n—\n${name}\n${email}`;
+    const body = `${message}\n\n--\n${name}\n${email}`;
 
     window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
       subject,
