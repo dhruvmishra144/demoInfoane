@@ -107,13 +107,18 @@ whatever you have:
 
 ## 7. Decisions I need from you
 
-1. **How should leads reach you?** There are now working forms on the homepage and
-   `/contact`, plus newsletter signup in the footer. None posts to a server: they
-   compose a prefilled email in the visitor's own mail client, so no lead is ever
-   silently dropped and no personal data passes through us before a privacy policy
-   exists. That is a stopgap — pick one: embed Calendly/HubSpot, or give me an
-   email/CRM provider and API key and I will point `EnquiryForm` at a real
-   endpoint.
+1. **Enquiry emails (Brevo): needs three values from you.** The contact, enquiry
+   and careers forms now post to `/api/enquiry`, which emails the team through
+   Brevo (the careers CV goes along as an attachment). Until these are set the
+   forms fall back to opening the visitor's email app, so nothing breaks:
+   - `BREVO_API_KEY`: a secret. Run `npx wrangler secret put BREVO_API_KEY`.
+   - `ENQUIRY_FROM_EMAIL`: a secret. A sender verified in Brevo, ideally on
+     `infoane.com` with SPF/DKIM/DMARC set up (a Gmail sender works for testing but
+     often lands in spam). Run `npx wrangler secret put ENQUIRY_FROM_EMAIL`.
+   - `ENQUIRY_TO_EMAIL`: the inbox that receives enquiries (`wrangler.jsonc` vars,
+     currently info@infoane.com).
+   For local testing copy `.dev.vars.example` to `.dev.vars`. Not built yet: bot
+   protection beyond a honeypot field (Cloudflare Turnstile) and rate limiting.
 2. **A blog / insights section?** It is the main SEO surface still missing. Service
    pages capture people ready to buy; articles capture the much larger group
    researching the problem, and they are what earns links.

@@ -62,7 +62,20 @@
 	// `npx wrangler secret put IMAGEKIT_PRIVATE_KEY`, never commit it here.
 	"vars": {
 		"IMAGEKIT_PUBLIC_KEY": "REPLACE_WITH_IMAGEKIT_PUBLIC_KEY",
-		"IMAGEKIT_URL_ENDPOINT": "REPLACE_WITH_IMAGEKIT_URL_ENDPOINT"
+		"IMAGEKIT_URL_ENDPOINT": "REPLACE_WITH_IMAGEKIT_URL_ENDPOINT",
+		// Enquiry emails (src/app/api/enquiry). Until the receiving address, the
+		// sender and the Brevo key are all set, the forms fall back to opening the
+		// visitor's email app.
+		//   ENQUIRY_TO_EMAIL    the inbox that receives enquiries and applications
+		//   ENQUIRY_FROM_NAME   display name on those emails
+		// Two settings are secrets, not vars, so they stay out of git:
+		//   BREVO_API_KEY       `npx wrangler secret put BREVO_API_KEY`
+		//   ENQUIRY_FROM_EMAIL  the sender address verified in Brevo (SPF/DKIM set up)
+		//                       `npx wrangler secret put ENQUIRY_FROM_EMAIL`
+		// Do not add either of them back here: a var and a secret with the same
+		// name conflict on deploy.
+		"ENQUIRY_TO_EMAIL": "info@infoane.com",
+		"ENQUIRY_FROM_NAME": "Infoane Website"
 	},
 	// Required by the incremental cache so the Worker can call back into itself
 	// when regenerating a page.

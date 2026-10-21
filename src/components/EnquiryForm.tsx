@@ -2,20 +2,19 @@
 
 import { useState } from "react";
 import { icons } from "./ui/Icons";
+import { submitEnquiry } from "@/lib/submit-enquiry";
+import { EnquiryError, EnquiryThanks } from "./design/EnquiryThanks";
 
 /**
  * Enquiry form.
  *
- * There is no backend yet, and a form that silently posts nowhere loses leads —
- * so this one composes a prefilled email and hands it to the visitor's own mail
- * client. Nothing is transmitted anywhere by this component: the values never
- * leave the browser except into the visitor's outbox, which also means no
- * personal data passes through us before a privacy policy exists.
- *
- * Replace `handleSubmit` with a POST to your CRM or email provider when you have
- * one — the markup and validation can stay exactly as they are. See
- * CONTENT-TODO.md.
+ * Posts to /api/enquiry, which emails the team through Brevo. Until the server
+ * has its email settings (it answers 503 "not_configured"), it falls back to
+ * composing a prefilled email and handing it to the visitor's own mail client,
+ * so a lead is never silently lost.
  */
+type Phase = "idle" | "sending" | "sent" | "mail" | "error";
+
 export function EnquiryForm({
   tone = "dark",
   contactEmail,
@@ -23,23 +22,39 @@ export function EnquiryForm({
   tone?: "dark" | "light";
   contactEmail: string;
 }) {
-  const [sent, setSent] = useState(false);
+  const [phase, setPhase] = useState<Phase>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const dark = tone === "dark";
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const name = String(data.get("name") ?? "");
-    const email = String(data.get("email") ?? "");
-    const message = String(data.get("message") ?? "");
+    if (phase === "sending") return;
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    data.set("kind", "contact");
+    setPhase("sending");
+    setErrorMessage("");
 
-    const subject = `Enquiry from ${name}`;
-    const body = `${message}\n\n--\n${name}\n${email}`;
-
-    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    const result = await submitEnquiry(data);
+    if (result.status === "sent") {
+      form.reset();
+      setPhase("sent");
+      return;
+    }
+    if (result.status === "mail") {
+      const name = String(data.get("name") ?? "");
+      const email = String(data.get("email") ?? "");
+      const message = String(data.get("message") ?? "");
+      const subject = `Enquiry from ${name}`;
+      const body = `${message}\n\n--\n${name}\n${email}`;
+      window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
+        subject,
+      )}&body=${encodeURIComponent(body)}`;
+      setPhase("mail");
+      return;
+    }
+    setErrorMessage(result.message);
+    setPhase("error");
   }
 
   const fieldClass = dark
@@ -51,7 +66,16 @@ export function EnquiryForm({
     : "block text-xs font-semibold text-ink-600";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="relative space-y-4">
+      {/* Honeypot: invisible to people, filled in by bots. Never remove or label it. */}
+      <input
+        name="website"
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-0 w-0 opacity-0"
+      />
       <div>
         <label htmlFor="enquiry-name" className={labelClass}>
           Name
@@ -99,13 +123,14 @@ export function EnquiryForm({
       <div className="flex flex-wrap items-center gap-4 pt-1">
         <button
           type="submit"
-          className={`group inline-flex items-center gap-2.5 rounded-full py-2 pl-5 pr-2 text-sm font-semibold transition-colors duration-300 ${
+          disabled={phase === "sending"}
+          className={`group inline-flex items-center gap-2.5 rounded-full py-2 pl-5 pr-2 text-sm font-semibold transition-colors duration-300 disabled:cursor-wait disabled:opacity-70 ${
             dark
               ? "bg-white text-brand-950 hover:bg-brand-50"
               : "bg-brand-950 text-white hover:bg-brand-900"
           }`}
         >
-          Submit
+          {phase === "sending" ? "Sending..." : "Submit"}
           <span
             className={`inline-flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-300 group-hover:translate-x-0.5 ${
               dark ? "bg-brand-600 text-white" : "bg-white/15 text-white"
@@ -116,15 +141,12 @@ export function EnquiryForm({
           </span>
         </button>
 
-        {/* Told up front, so the mail-client hand-off is never a surprise. */}
-        <p
-          className={`text-xs ${dark ? "text-ink-400" : "text-ink-500"}`}
-          role={sent ? "status" : undefined}
-        >
-          {sent
-            ? "Your email client should have opened with the message ready to send."
-            : "Opens your email client with the details filled in."}
-        </p>
+      </div>
+
+      {/* A live region, so the result is announced when it appears. */}
+      <div role="status" aria-live="polite">
+        {(phase === "sent" || phase === "mail") && <EnquiryThanks tone={tone} mode={phase} />}
+        {phase === "error" && <EnquiryError message={errorMessage} contactEmail={contactEmail} tone={tone} />}
       </div>
     </form>
   );

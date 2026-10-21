@@ -3,20 +3,22 @@
 import Link from "next/link";
 import { useId, useState } from "react";
 import { routes } from "@/lib/routes";
+import { MAX_CV_BYTES, submitEnquiry } from "@/lib/submit-enquiry";
+import { EnquiryError, EnquiryThanks } from "@/components/design/EnquiryThanks";
 
 /**
  * Application form for both careers flows: the general (speculative)
  * application and the per-job "Apply for this position" form.
  *
- * Same contract as ContactForm and EnquiryForm: there is no backend yet, so
- * submitting composes a prefilled email in the visitor's own mail client.
- * Nothing is transmitted by this component. A browser cannot attach a file to
- * a mailto: link, so the CV is validated here (type and size) but must be
- * attached by the applicant in the email that opens — the helper text says so.
- * Swap `handleSubmit` for a POST (with the file) when a real endpoint exists.
+ * Same contract as ContactForm and EnquiryForm: it posts to /api/enquiry, which
+ * emails the team through Brevo with the CV attached. Until the server has its
+ * email settings (503 "not_configured"), it falls back to a prefilled email in
+ * the visitor's own mail client. A mailto: link cannot carry a file, so in that
+ * fallback the applicant is told to attach the CV themselves.
  */
 
-const MAX_BYTES = 10 * 1024 * 1024;
+type Phase = "idle" | "sending" | "sent" | "mail" | "error";
+const MAX_BYTES = MAX_CV_BYTES;
 const ALLOWED_EXT = [".pdf", ".doc", ".docx"];
 
 type Props = {
@@ -34,21 +36,23 @@ function cvError(file: File | undefined): string {
   if (!ALLOWED_EXT.some((ext) => lower.endsWith(ext))) {
     return "Your CV must be a .pdf, .doc or .docx file.";
   }
-  if (file.size > MAX_BYTES) return "Your CV must be 10MB or smaller.";
+  if (file.size > MAX_BYTES) return "Your CV must be 4MB or smaller.";
   return "";
 }
 
 export function ApplicationForm(props: Props) {
   const { contactEmail, title, lead, variant } = props;
   const uid = useId();
-  const [sent, setSent] = useState(false);
+  const [phase, setPhase] = useState<Phase>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const [fileError, setFileError] = useState("");
   const [consentError, setConsentError] = useState("");
 
   const id = (name: string) => `${uid}-${name}`;
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (phase === "sending") return;
     const form = event.currentTarget;
     const data = new FormData(form);
 
@@ -59,6 +63,23 @@ export function ApplicationForm(props: Props) {
     setConsentError(consent ? "" : "Please accept the Terms & Conditions and Privacy Policy.");
     if (fileProblem || !consent) return;
 
+    data.set("kind", variant === "job" ? "application-job" : "application-general");
+    if (variant === "job") data.set("jobTitle", props.jobTitle);
+    setPhase("sending");
+    setErrorMessage("");
+    const result = await submitEnquiry(data);
+    if (result.status === "sent") {
+      form.reset();
+      setPhase("sent");
+      return;
+    }
+    if (result.status === "error") {
+      setErrorMessage(result.message);
+      setPhase("error");
+      return;
+    }
+
+    // Not configured: fall back to the visitor's email app.
     const get = (key: string) => String(data.get(key) ?? "").trim();
     const name = get("name");
     const email = get("email");
@@ -103,7 +124,7 @@ export function ApplicationForm(props: Props) {
     window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    setPhase("mail");
   }
 
   const label = "block text-sm font-semibold text-ink-900";
@@ -120,8 +141,17 @@ export function ApplicationForm(props: Props) {
     <form
       onSubmit={handleSubmit}
       aria-labelledby={id("title")}
-      className="rounded-[2rem] border border-ink-200/80 bg-white p-7 shadow-xl shadow-ink-900/5 sm:p-8"
+      className="relative rounded-[2rem] border border-ink-200/80 bg-white p-7 shadow-xl shadow-ink-900/5 sm:p-8"
     >
+      {/* Honeypot: invisible to people, filled in by bots. Never remove or label it. */}
+      <input
+        name="website"
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-0 w-0 opacity-0"
+      />
       <h2 id={id("title")} className="text-2xl font-bold">
         {title}
       </h2>
@@ -236,8 +266,7 @@ export function ApplicationForm(props: Props) {
             />
           </div>
           <p id={id("cv-help")} className="mt-2 text-xs text-ink-500">
-            Allowed types: .pdf, .doc, .docx (max 10MB). Your browser can&rsquo;t attach files to an
-            email for us, so attach your CV in the email that opens.
+            Allowed types: .pdf, .doc, .docx (max 4MB).
           </p>
           {fileError && (
             <p id={id("cv-error")} role="alert" className="mt-1 text-xs font-medium text-red-600">
@@ -279,15 +308,27 @@ export function ApplicationForm(props: Props) {
 
       <button
         type="submit"
-        className="mt-8 w-full rounded-full bg-brand-500 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-brand-500/25 transition-all duration-300 hover:-translate-y-px hover:bg-brand-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500"
+        disabled={phase === "sending"}
+        className="mt-8 w-full rounded-full bg-brand-500 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-brand-500/25 transition-all duration-300 hover:-translate-y-px hover:bg-brand-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500 disabled:cursor-wait disabled:opacity-70 disabled:hover:translate-y-0"
       >
-        Submit Application
+        {phase === "sending" ? "Sending..." : "Submit Application"}
       </button>
-      <p className="mt-4 text-xs text-ink-500" role={sent ? "status" : undefined}>
-        {sent
-          ? "Your email client should have opened with your application ready to send. Remember to attach your CV."
-          : "Opens your email client with your details filled in. Nothing is sent until you send the email."}
-      </p>
+      {/* A live region, so the result is announced when it appears. */}
+      <div role="status" aria-live="polite" className={phase === "idle" || phase === "sending" ? undefined : "mt-5"}>
+        {phase === "sent" && (
+          <EnquiryThanks
+            mode="sent"
+            body="We've received your application and CV. Our team will review it and get back to you."
+          />
+        )}
+        {phase === "mail" && (
+          <EnquiryThanks
+            mode="mail"
+            body="Your email app will open with your application ready to send. Please attach your CV, then click Send to complete your submission. Once we receive your email, our team will get back to you."
+          />
+        )}
+        {phase === "error" && <EnquiryError message={errorMessage} contactEmail={contactEmail} />}
+      </div>
     </form>
   );
 }
