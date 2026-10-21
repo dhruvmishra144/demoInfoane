@@ -1,6 +1,9 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
+
+/** Next 16 asks for a cache profile; expire 0 keeps the old behaviour: an admin edit shows immediately. */
+const EXPIRE_NOW = { expire: 0 };
 import { redirect } from "next/navigation";
 import { and, asc, eq } from "drizzle-orm";
 import { getDb, schema, type Db } from "@/server/db";
@@ -446,8 +449,8 @@ export async function publish(itemId: string): Promise<{ error: string } | void>
     })
     .where(eq(schema.contentItems.id, itemId));
 
-  revalidateTag(collectionTag(item.collection));
-  revalidateTag(itemTag(item.collection, item.slug));
+  revalidateTag(collectionTag(item.collection), EXPIRE_NOW);
+  revalidateTag(itemTag(item.collection, item.slug), EXPIRE_NOW);
 
   await writeAudit({
     actorId: user.id,
@@ -495,8 +498,8 @@ export async function unpublish(itemId: string): Promise<{ error: string } | voi
     .set({ publishedRevisionId: null, status: "draft", updatedAt: Date.now() })
     .where(eq(schema.contentItems.id, itemId));
 
-  revalidateTag(collectionTag(item.collection));
-  revalidateTag(itemTag(item.collection, item.slug));
+  revalidateTag(collectionTag(item.collection), EXPIRE_NOW);
+  revalidateTag(itemTag(item.collection, item.slug), EXPIRE_NOW);
 
   await writeAudit({
     actorId: user.id,
@@ -539,7 +542,7 @@ export async function reorder(
     .set({ sortOrder: current.sortOrder })
     .where(eq(schema.contentItems.id, neighbor.id));
 
-  revalidateTag(collectionTag(collection));
+  revalidateTag(collectionTag(collection), EXPIRE_NOW);
 
   await writeAudit({
     actorId: user.id,
