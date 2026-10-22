@@ -3,7 +3,7 @@
 	"name": "demoinfoane",
 	// Pinned so every wrangler command (deploy, d1, dev) targets this account
 	// no matter which Cloudflare login is active on the machine.
-	"account_id": "841951e126f9ba2f9c80f388a66d3dff",
+	"account_id": "192221afb7b8561a9760a79748e6f27e",
 	"main": ".open-next/worker.js",
 	// nodejs_compat is mandatory for the OpenNext adapter; the date must be
 	// 2024-09-23 or later for it to take effect.
@@ -23,7 +23,7 @@
 			// Site content, users, sessions and the audit log.
 			"binding": "DB",
 			"database_name": "infoane-content",
-			"database_id": "9fcaa490-8c0f-479e-9c2e-718b1ed54d17",
+			"database_id": "c8b534ff-c795-4d21-a4bc-fe9a34524aec",
 			"migrations_dir": "drizzle/migrations",
 			// Required, not cosmetic: pages read content during `next build`
 			// (generateStaticParams, sitemap.ts, every prerendered page). Without
@@ -41,7 +41,7 @@
 			// they should not sit next to application tables.
 			"binding": "NEXT_TAG_CACHE_D1",
 			"database_name": "infoane-next-cache",
-			"database_id": "83b78977-65c9-4a4c-a515-1650516ff209"
+			"database_id": "d35729ff-de68-4c86-95e9-08a7c92c3c69"
 		}
 	],
 	"kv_namespaces": [
@@ -50,7 +50,7 @@
 			// KV ships enabled on every account, unlike R2 — no product to enable.
 			// Create with `npx wrangler kv namespace create NEXT_INC_CACHE_KV`.
 			"binding": "NEXT_INC_CACHE_KV",
-			"id": "c2241b9e44d544aa9aaf96e6cc149c76",
+			"id": "e7050920e6fa4fe59ea9e54dae69e6b0",
 			"remote": true
 		}
 	],
