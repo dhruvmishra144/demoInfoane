@@ -681,7 +681,7 @@ export const aboutPage = {
     ],
   },
   success: {
-    eyebrow: "Client reviews",
+    eyebrow: "Client success",
     title: "What Our Clients Say",
     stat: { value: "40+", label: "Success Stories" },
     // Three client reviews supplied by the client. Quotes, companies and job
@@ -693,21 +693,21 @@ export const aboutPage = {
       {
         quote:
           "Infoane has earned our complete trust. In five years of partnership with Ratio Exchange, they have never let us down. They consistently deliver quality results, stand behind their work, and follow through on their commitments. When the work matters and we need a team we can count on, Infoane is who we trust. We wouldn't put that responsibility in anyone else's hands. They are an invaluable partner, and they have our strongest recommendation.",
-        author: "",
+        author: "Jim Benson",
         role: "Founder & CEO",
         company: "Ratio Exchange",
       },
       {
         quote:
           "I have used Infoane for Oracle/SQL Database and Production application support for over six years as the Director of IT at Selectica. Infoane continuously went above and beyond my expectations, delivering top-of-the-notch 24/7 support to our Production environment. Mohan and his team made us feel as if we were their most important customer. I am happy to see that they have expanded their services and would leverage Infoane's services if the need arises.",
-        author: "",
+        author: "Man Wong",
         role: "Director of IT",
         company: "Selectica",
       },
       {
         quote:
           "Infoane has been a great partner for almost four years now. Their team provides excellent technical service and expertise and a great business relationship, with the flexibility we need and consistency in our contact points. Regularly, they go beyond their support hours and weekends to continue to provide excellent service. I would certainly recommend them to anyone.",
-        author: "",
+        author: "Jaseem Masood",
         role: "VP, Technology",
         company: "Trimble",
       },

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { CountUp, ExpandPanel } from "@/components/motion/effects";
-import { Eyebrow } from "@/components/design/blocks";
 import { aboutPage } from "@/content/redesign";
 import { routes } from "@/lib/routes";
 
@@ -19,7 +18,11 @@ export function AboutSuccess() {
         <div className="flex flex-wrap items-end justify-between gap-8">
           <ScrollReveal stagger={0.12}>
             <div data-reveal-item>
-              <Eyebrow dot className="!text-white">{s.eyebrow}</Eyebrow>
+              {/* Highlighted: a solid coral tag so "Client success" stands out on the dark panel. */}
+              <p className="inline-flex items-center gap-2 rounded-full bg-brand-500 px-4 py-1.5 text-[12px] font-bold uppercase leading-4 tracking-[0.16em] text-white shadow-lg shadow-brand-500/30">
+                <span className="h-1.5 w-1.5 rounded-full bg-white" aria-hidden="true" />
+                {s.eyebrow}
+              </p>
             </div>
             <h2 data-split className="mt-5 max-w-[32rem] text-3xl font-bold leading-[1.2] text-white sm:text-4xl lg:text-[40px] lg:leading-[48px]">
               {s.title}
