@@ -553,30 +553,32 @@ export const home = {
       },
     ],
   },
-  // Three client reviews supplied by the client. Names, companies and the
-  // leader's name are placeholders here: fill them from the approved review
-  // document, with each reviewer's written permission to publish.
+  // Three client reviews supplied by the client. Quotes, companies and job
+  // titles are from the approved review document. `author` is the reviewer's
+  // name: it is left empty on purpose (the card then shows the title and
+  // company only). Fill it in once each reviewer has given written permission
+  // to be named.
   reviews: {
     eyebrow: "Client reviews",
     title: "What Our Clients Say",
     items: [
       {
         quote:
-          "Infoane has earned our complete trust. In five years of partnership with [COMPANY], they have never let us down. They consistently deliver quality results, stand behind their work, and follow through on their commitments. When the work matters and we need a team we can count on, Infoane is who we trust. We wouldn't put that responsibility in anyone else's hands. They are an invaluable partner, and they have our strongest recommendation.",
-        author: "[CLIENT NAME]",
-        role: "[TITLE], [COMPANY]",
+          "Infoane has earned our complete trust. In five years of partnership with Ratio Exchange, they have never let us down. They consistently deliver quality results, stand behind their work, and follow through on their commitments. When the work matters and we need a team we can count on, Infoane is who we trust. We wouldn't put that responsibility in anyone else's hands. They are an invaluable partner, and they have our strongest recommendation.",
+        author: "",
+        role: "Founder & CEO, Ratio Exchange",
       },
       {
         quote:
-          "I have used Infoane for Oracle/SQL Database and Production application support for over six years as the Director of IT at [COMPANY]. Infoane continuously went above and beyond my expectations, delivering top-of-the-notch 24/7 support to our Production environment. [LEADER NAME] and his team made us feel as if we were their most important customer. I am happy to see that they have expanded their services and would leverage Infoane's services if the need arises.",
-        author: "[CLIENT NAME]",
-        role: "[TITLE], [COMPANY]",
+          "I have used Infoane for Oracle/SQL Database and Production application support for over six years as the Director of IT at Selectica. Infoane continuously went above and beyond my expectations, delivering top-of-the-notch 24/7 support to our Production environment. Mohan and his team made us feel as if we were their most important customer. I am happy to see that they have expanded their services and would leverage Infoane's services if the need arises.",
+        author: "",
+        role: "Director of IT, Selectica",
       },
       {
         quote:
           "Infoane has been a great partner for almost four years now. Their team provides excellent technical service and expertise and a great business relationship, with the flexibility we need and consistency in our contact points. Regularly, they go beyond their support hours and weekends to continue to provide excellent service. I would certainly recommend them to anyone.",
-        author: "[CLIENT NAME]",
-        role: "[TITLE], [COMPANY]",
+        author: "",
+        role: "VP, Technology, Trimble",
       },
     ],
   },
@@ -711,26 +713,26 @@ export const aboutPage = {
     eyebrow: "Client success",
     title: "What engineering teams say about us.",
     stat: { value: "40+", label: "Success Stories" },
-    // Quotes are attributed by role and company only. Confirm each client is
-    // happy to be quoted before launch — the same consent rule as case studies.
+    // The same three approved reviews as the homepage. Attributed by job title
+    // and company only; the reviewers' names are not shown (see `home.reviews`).
     quotes: [
       {
         quote:
-          "Infoane didn't just rebuild our claims platform: they taught our team how to think about it differently. Latency dropped 90% and our roadmap opened up overnight.",
-        role: "VP of Engineering",
-        company: "[Client company]",
+          "Infoane has earned our complete trust. In five years of partnership with Ratio Exchange, they have never let us down. They consistently deliver quality results, stand behind their work, and follow through on their commitments. When the work matters and we need a team we can count on, Infoane is who we trust. We wouldn't put that responsibility in anyone else's hands. They are an invaluable partner, and they have our strongest recommendation.",
+        role: "Founder & CEO",
+        company: "Ratio Exchange",
       },
       {
         quote:
-          "Our legacy ColdFusion system was a complete bottleneck for Series B scaling. Infoane modernized the platform gracefully, migrating users in cohorts with zero down-time.",
-        role: "CTO",
-        company: "[Client company]",
+          "I have used Infoane for Oracle/SQL Database and Production application support for over six years as the Director of IT at Selectica. Infoane continuously went above and beyond my expectations, delivering top-of-the-notch 24/7 support to our Production environment. Mohan and his team made us feel as if we were their most important customer. I am happy to see that they have expanded their services and would leverage Infoane's services if the need arises.",
+        role: "Director of IT",
+        company: "Selectica",
       },
       {
         quote:
-          "What sets Infoane apart is their willingness to own the outcome. They don't just consult: they ship. Our database architecture is unrecognizable, in the best way.",
-        role: "Director of Platform Engineering",
-        company: "[Client company]",
+          "Infoane has been a great partner for almost four years now. Their team provides excellent technical service and expertise and a great business relationship, with the flexibility we need and consistency in our contact points. Regularly, they go beyond their support hours and weekends to continue to provide excellent service. I would certainly recommend them to anyone.",
+        role: "VP, Technology",
+        company: "Trimble",
       },
     ],
     storyLabel: "Read the full story",

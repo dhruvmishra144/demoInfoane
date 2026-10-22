@@ -83,7 +83,7 @@ function TechLogos({ item }: { item: Technology }) {
   );
 }
 
-/** Client reviews: three quotes in cards, with the reviewer's name and role beneath. */
+/** Client reviews: three quotes in cards, with the reviewer's name (when given) and role beneath. */
 export function HomeReviews() {
   const reviews = home.reviews;
 
@@ -106,8 +106,10 @@ export function HomeReviews() {
                 <span className="block h-1 w-8 rounded-full bg-brand-500" aria-hidden="true" />
                 <blockquote className="mt-5 flex-1 text-[15px] leading-[26px] text-ink-700">“{review.quote}”</blockquote>
                 <figcaption className="mt-6 border-t border-ink-200 pt-5 text-[14px] leading-5">
-                  <span className="block font-semibold text-ink-900">{review.author}</span>
-                  <span className="mt-0.5 block text-ink-500">{review.role}</span>
+                  {review.author && <span className="block font-semibold text-ink-900">{review.author}</span>}
+                  <span className={review.author ? "mt-0.5 block text-ink-500" : "block font-semibold text-ink-900"}>
+                    {review.role}
+                  </span>
                 </figcaption>
               </figure>
             </li>
