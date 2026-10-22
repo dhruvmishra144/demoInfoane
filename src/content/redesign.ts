@@ -223,8 +223,8 @@ export const home = {
           "Adobe ColdFusion, PHP, Python, Java, Angular, React, and Node.js",
           "Cloud platforms and DevOps technologies",
         ],
-        image: "/images/openings-team.webp",
-        alt: "Engineers gathered around two monitors of code in an open-plan office",
+        image: "/images/why-established-technology.webp",
+        alt: "Translucent glass blocks linked by glowing pipes on a reflective surface",
       },
       {
         tab: "ColdFusion Expertise",
@@ -234,8 +234,8 @@ export const home = {
           "Upgrades, migration, optimization, and integrations",
           "Cloud environments where applicable",
         ],
-        image: "/images/expertise-orb.webp",
-        alt: "A glass orb ringed by ColdFusion, Flutter and Selenium logos",
+        image: "/images/why-coldfusion-expertise.webp",
+        alt: "A glass and amber connector joining a bundle of cables",
       },
       {
         tab: "End-to-End Delivery",
@@ -256,8 +256,8 @@ export const home = {
           "Operational efficiency and scalability",
           "Long-term support requirements",
         ],
-        image: "/images/mission-team.webp",
-        alt: "Colleagues talking around a meeting table beneath a sign reading Good Ideas Better Together",
+        image: "/images/why-business-focused.webp",
+        alt: "Professionals climbing a sculptural staircase toward a glowing archway",
       },
       {
         tab: "Flexible Engagement",
