@@ -428,6 +428,53 @@ export const home = {
         ],
         gradient: "from-[#e8b43c] via-[#b0722a] to-[#3b2410]",
       },
+      // The four additional industries from the separate Industries draft,
+      // whose note asks that experience and examples be confirmed with Infoane
+      // before publication.
+      {
+        tab: "Retail",
+        name: "Retail",
+        body: "Retail businesses rely on applications and systems that support daily operations, customer interactions, and changing business requirements.",
+        points: [
+          "Develop and maintain applications that support retail operations.",
+          "Connect systems and data where integration is required.",
+          "Improve existing platforms as workflows and business needs evolve.",
+        ],
+        gradient: "from-[#e0607e] via-[#a03a62] to-[#3a1830]",
+      },
+      {
+        tab: "E-commerce",
+        name: "E-commerce",
+        body: "E-commerce businesses need dependable digital platforms to support online transactions, customer journeys, and ongoing operations.",
+        points: [
+          "Build and maintain e-commerce applications and platforms.",
+          "Support integrations across relevant systems and databases.",
+          "Address application performance, maintainability, and changing requirements.",
+        ],
+        gradient: "from-[#8b5cf6] via-[#5b3bb0] to-[#201447]",
+      },
+      {
+        tab: "Telecom",
+        name: "Telecommunications",
+        body: "Telecommunications environments depend on connected systems, reliable applications, and technology that supports complex operations.",
+        points: [
+          "Develop and maintain applications for business operations.",
+          "Support system integration, databases, and infrastructure needs.",
+          "Improve existing applications with attention to reliability and maintainability.",
+        ],
+        gradient: "from-[#38a3d9] via-[#1f6c9c] to-[#0e2a40]",
+      },
+      {
+        tab: "IT Services",
+        name: "IT Services",
+        body: "IT services organizations need software and technology environments that support service delivery, client requirements, and ongoing change.",
+        points: [
+          "Build and maintain business and client-facing applications.",
+          "Support cloud, DevOps, database, and integration requirements.",
+          "Modernize legacy systems and provide ongoing technical support where required.",
+        ],
+        gradient: "from-[#64748b] via-[#3d4a5e] to-[#151b26]",
+      },
     ],
   },
   approach: {
@@ -506,33 +553,6 @@ export const home = {
       },
     ],
   },
-  // Three client reviews supplied by the client. Names, companies and the
-  // leader's name are placeholders here: fill them from the approved review
-  // document, with each reviewer's written permission to publish.
-  reviews: {
-    eyebrow: "Client reviews",
-    title: "What Our Clients Say",
-    items: [
-      {
-        quote:
-          "Infoane has earned our complete trust. In five years of partnership with [COMPANY], they have never let us down. They consistently deliver quality results, stand behind their work, and follow through on their commitments. When the work matters and we need a team we can count on, Infoane is who we trust. We wouldn't put that responsibility in anyone else's hands. They are an invaluable partner, and they have our strongest recommendation.",
-        author: "[CLIENT NAME]",
-        role: "[TITLE], [COMPANY]",
-      },
-      {
-        quote:
-          "I have used Infoane for Oracle/SQL Database and Production application support for over six years as the Director of IT at [COMPANY]. Infoane continuously went above and beyond my expectations, delivering top-of-the-notch 24/7 support to our Production environment. [LEADER NAME] and his team made us feel as if we were their most important customer. I am happy to see that they have expanded their services and would leverage Infoane's services if the need arises.",
-        author: "[CLIENT NAME]",
-        role: "[TITLE], [COMPANY]",
-      },
-      {
-        quote:
-          "Infoane has been a great partner for almost four years now. Their team provides excellent technical service and expertise and a great business relationship, with the flexibility we need and consistency in our contact points. Regularly, they go beyond their support hours and weekends to continue to provide excellent service. I would certainly recommend them to anyone.",
-        author: "[CLIENT NAME]",
-        role: "[TITLE], [COMPANY]",
-      },
-    ],
-  },
   faq: {
     eyebrow: "FAQ",
     title: "Frequently Asked Questions",
@@ -560,7 +580,7 @@ export const home = {
       {
         question: "Which industries does Infoane serve?",
         answer:
-          "Infoane's capabilities can support organizations in healthcare, fintech and financial services, manufacturing, logistics, energy and utilities, and other technology-dependent sectors.",
+          "Infoane's capabilities can support organizations in healthcare, fintech and financial services, manufacturing, logistics, energy and utilities, retail, e-commerce, telecommunications, IT services, and other technology-dependent sectors.",
       },
       {
         question: "Where is Infoane based?",
@@ -661,29 +681,35 @@ export const aboutPage = {
     ],
   },
   success: {
-    eyebrow: "Client success",
-    title: "What engineering teams say about us.",
+    eyebrow: "Client reviews",
+    title: "What Our Clients Say",
     stat: { value: "40+", label: "Success Stories" },
-    // Quotes are attributed by role and company only. Confirm each client is
-    // happy to be quoted before launch — the same consent rule as case studies.
+    // Three client reviews supplied by the client. Quotes, companies and job
+    // titles are from the approved review document. `author` is the reviewer's
+    // name and is left empty on purpose (the card then shows the title and
+    // company only). Fill it in once each reviewer has given written permission
+    // to be named.
     quotes: [
       {
         quote:
-          "Infoane didn't just rebuild our claims platform: they taught our team how to think about it differently. Latency dropped 90% and our roadmap opened up overnight.",
-        role: "VP of Engineering",
-        company: "[Client company]",
+          "Infoane has earned our complete trust. In five years of partnership with Ratio Exchange, they have never let us down. They consistently deliver quality results, stand behind their work, and follow through on their commitments. When the work matters and we need a team we can count on, Infoane is who we trust. We wouldn't put that responsibility in anyone else's hands. They are an invaluable partner, and they have our strongest recommendation.",
+        author: "",
+        role: "Founder & CEO",
+        company: "Ratio Exchange",
       },
       {
         quote:
-          "Our legacy ColdFusion system was a complete bottleneck for Series B scaling. Infoane modernized the platform gracefully, migrating users in cohorts with zero down-time.",
-        role: "CTO",
-        company: "[Client company]",
+          "I have used Infoane for Oracle/SQL Database and Production application support for over six years as the Director of IT at Selectica. Infoane continuously went above and beyond my expectations, delivering top-of-the-notch 24/7 support to our Production environment. Mohan and his team made us feel as if we were their most important customer. I am happy to see that they have expanded their services and would leverage Infoane's services if the need arises.",
+        author: "",
+        role: "Director of IT",
+        company: "Selectica",
       },
       {
         quote:
-          "What sets Infoane apart is their willingness to own the outcome. They don't just consult: they ship. Our database architecture is unrecognizable, in the best way.",
-        role: "Director of Platform Engineering",
-        company: "[Client company]",
+          "Infoane has been a great partner for almost four years now. Their team provides excellent technical service and expertise and a great business relationship, with the flexibility we need and consistency in our contact points. Regularly, they go beyond their support hours and weekends to continue to provide excellent service. I would certainly recommend them to anyone.",
+        author: "",
+        role: "VP, Technology",
+        company: "Trimble",
       },
     ],
     storyLabel: "Read the full story",

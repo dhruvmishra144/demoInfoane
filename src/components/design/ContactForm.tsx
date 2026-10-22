@@ -1,16 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { submitEnquiry } from "@/lib/submit-enquiry";
+import { EnquiryError, EnquiryThanks } from "./EnquiryThanks";
 
 /**
  * The redesign's "Tell us what you need built" form.
  *
- * Same contract as EnquiryForm: there is no backend yet, so submitting composes
- * a prefilled email in the visitor's own mail client. Nothing is transmitted
- * by this component, and no personal data passes through us. Swap
- * `handleSubmit` for a POST to your CRM when you have one — see
- * CONTENT-TODO.md.
+ * Posts to /api/enquiry, which emails the team through Brevo. Until the server
+ * has its email settings (it answers 503 "not_configured"), it falls back to
+ * composing a prefilled email in the visitor's own mail app, as it did before.
  */
+type Phase = "idle" | "sending" | "sent" | "mail" | "error";
+
 export function ContactForm({
   contactEmail,
   submitLabel = "Book a consultation",
@@ -22,22 +24,39 @@ export function ContactForm({
   helpPlaceholder?: string;
   fullWidthButton?: boolean;
 }) {
-  const [sent, setSent] = useState(false);
+  const [phase, setPhase] = useState<Phase>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const name = String(data.get("name") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
-    const company = String(data.get("company") ?? "").trim();
-    const message = String(data.get("message") ?? "").trim();
+    if (phase === "sending") return;
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    data.set("kind", "contact");
+    setPhase("sending");
+    setErrorMessage("");
 
-    const subject = `Enquiry from ${name}${company ? `, ${company}` : ""}`;
-    const body = `${message}\n\n--\n${name}\n${email}${company ? `\n${company}` : ""}`;
-    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    const result = await submitEnquiry(data);
+    if (result.status === "sent") {
+      form.reset();
+      setPhase("sent");
+      return;
+    }
+    if (result.status === "mail") {
+      const name = String(data.get("name") ?? "").trim();
+      const email = String(data.get("email") ?? "").trim();
+      const company = String(data.get("company") ?? "").trim();
+      const message = String(data.get("message") ?? "").trim();
+      const subject = `Enquiry from ${name}${company ? `, ${company}` : ""}`;
+      const body = `${message}\n\n--\n${name}\n${email}${company ? `\n${company}` : ""}`;
+      window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(
+        subject,
+      )}&body=${encodeURIComponent(body)}`;
+      setPhase("mail");
+      return;
+    }
+    setErrorMessage(result.message);
+    setPhase("error");
   }
 
   const field =
@@ -45,7 +64,16 @@ export function ContactForm({
   const label = "block text-[12px] font-semibold uppercase leading-4 tracking-[0.14em] text-ink-600";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="relative space-y-5">
+      {/* Honeypot: invisible to people, filled in by bots. Never remove or label it. */}
+      <input
+        name="website"
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-0 w-0 opacity-0"
+      />
       <div>
         <label htmlFor="cf-name" className={label}>
           First name
@@ -89,18 +117,18 @@ export function ContactForm({
       <div className="pt-3">
         <button
           type="submit"
-          className={`rounded-full bg-brand-500 text-[14px] font-semibold leading-6 text-white shadow-lg shadow-brand-500/25 transition-all duration-300 hover:-translate-y-px hover:bg-brand-600 ${
+          disabled={phase === "sending"}
+          className={`rounded-full bg-brand-500 text-[14px] font-semibold leading-6 text-white shadow-lg shadow-brand-500/25 transition-all duration-300 hover:-translate-y-px hover:bg-brand-600 disabled:cursor-wait disabled:opacity-70 disabled:hover:translate-y-0 ${
             fullWidthButton ? "w-full px-8 py-4" : "px-6 py-3"
           }`}
         >
-          {submitLabel}
+          {phase === "sending" ? "Sending..." : submitLabel}
         </button>
-        <p className={sent ? "mt-4 text-xs text-ink-500" : "sr-only"} role={sent ? "status" : undefined}>
-          {/* Draft wording: confirm the final caption with the technical writer. */}
-          {sent
-            ? "Thank you. Your message is ready in your email app. Press Send there and we will reply within one business day."
-            : "Opens your email app with your details filled in, addressed to our team."}
-        </p>
+        {/* A live region, so the result is announced when it appears. */}
+        <div role="status" aria-live="polite" className={phase === "idle" || phase === "sending" ? undefined : "mt-5"}>
+          {(phase === "sent" || phase === "mail") && <EnquiryThanks mode={phase} />}
+          {phase === "error" && <EnquiryError message={errorMessage} contactEmail={contactEmail} />}
+        </div>
       </div>
     </form>
   );
