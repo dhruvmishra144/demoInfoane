@@ -6,7 +6,7 @@ import { HomeAi, HomeServices } from "@/components/home/HomeServices";
 import { HomeApproach } from "@/components/home/HomeApproach";
 import { HomeContact, HomeIndustries } from "@/components/home/HomeIndustriesContact";
 import { HomeColdFusion, HomeWhy } from "@/components/home/HomeWhyColdFusion";
-import { HomeFaq, HomeReviews, HomeTechnology } from "@/components/home/HomeMore";
+import { HomeFaq, HomeTechnology } from "@/components/home/HomeMore";
 import { home as homeCopy } from "@/content/redesign";
 import { pageSchema } from "@/lib/schema";
 import { getItemOrFallback, getSettingsOrFallback } from "@/server/content/with-fallback";
@@ -63,7 +63,6 @@ export default async function HomePage() {
       <HomeApproach />
       <HomeWhy />
       <HomeIndustries />
-      <HomeReviews />
       <HomeFaq />
       <HomeContact email={settings.contact.email} />
     </>

@@ -19,7 +19,7 @@ export function AboutSuccess() {
         <div className="flex flex-wrap items-end justify-between gap-8">
           <ScrollReveal stagger={0.12}>
             <div data-reveal-item>
-              <Eyebrow dot>{s.eyebrow}</Eyebrow>
+              <Eyebrow dot className="!text-white">{s.eyebrow}</Eyebrow>
             </div>
             <h2 data-split className="mt-5 max-w-[32rem] text-3xl font-bold leading-[1.2] text-white sm:text-4xl lg:text-[40px] lg:leading-[48px]">
               {s.title}
@@ -60,10 +60,13 @@ export function AboutSuccess() {
                     }`}
                     aria-hidden="true"
                   >
-                    {q.role.charAt(0)}
+                    {(q.author || q.role).charAt(0)}
                   </span>
                   <div>
-                    <p className="text-[13px] font-semibold leading-5 text-white">{q.role}</p>
+                    {q.author && <p className="text-[13px] font-semibold leading-5 text-white">{q.author}</p>}
+                    <p className={q.author ? "text-[12px] leading-4 text-white/85" : "text-[13px] font-semibold leading-5 text-white"}>
+                      {q.role}
+                    </p>
                     <p className={`text-[11px] ${coral ? "text-white/80" : "text-ink-500"}`}>{q.company}</p>
                   </div>
                 </div>
