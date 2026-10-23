@@ -15,6 +15,12 @@
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
 	},
+	// Cloudflare Images binding: the OpenNext image handler behind /_next/image
+	// uses it to resize and convert to AVIF/WebP. Without it every image request
+	// logs "env.IMAGES binding is not defined" and the originals are served as-is.
+	"images": {
+		"binding": "IMAGES"
+	},
 	"observability": {
 		"enabled": true
 	},
