@@ -301,12 +301,8 @@ export function SiteNav({ items, ctaLabel }: { items: NavItem[]; ctaLabel: strin
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href={`${routes.home}#approach`}
-            className="group inline-flex items-center gap-2 rounded-full bg-ink-900 px-6 py-3 text-[14px] font-semibold leading-5 text-white shadow-[0_8px_20px_-8px_rgba(20,21,31,0.5),inset_0_1px_0_rgba(255,255,255,0.12)] transition-all duration-300 hover:-translate-y-px hover:bg-ink-800"
-          >
-            See how we work
-          </Link>
+          {/* No "See how we work" button: the header menu (edited in the admin)
+              already links to that section as "How We Work". */}
           <Link
             href={routes.contact}
             aria-current={isActive(routes.contact) ? "page" : undefined}
